@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -16,6 +17,7 @@ const config: Config = {
         secondary: '#5C5E64',
         terciary: '#767D92',
         placeholder: '#ABB0B4',
+        contrast: '#7741FB',
       },
       colors: {
         button: {
@@ -33,6 +35,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animate')],
 }
 export default config
