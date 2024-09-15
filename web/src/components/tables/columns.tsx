@@ -94,6 +94,7 @@ export const columns: ColumnDef<Customer>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>Visualizar pedidos</DropdownMenuItem>
             <DropdownMenuItem>Editar cliente</DropdownMenuItem>
             <DropdownMenuSeparator />

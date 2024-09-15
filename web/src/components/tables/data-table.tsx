@@ -3,6 +3,9 @@
 import CustomPagination from '../ui/pagination'
 import TableSearchField from '../ui/table-search-field'
 import React from 'react'
+
+import { CaretDown } from '@phosphor-icons/react/dist/ssr'
+import { Button } from '../shadcnui/button'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -23,6 +26,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/shadcnui/table'
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '../shadcnui/dropdown-menu'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -64,13 +76,35 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <TableSearchField
-        placeholder="Buscar por nome..."
-        value={(table.getColumn('customer')?.getFilterValue() as string) ?? ''}
-        onChange={(event) =>
-          table.getColumn('customer')?.setFilterValue(event.target.value)
-        }
-      />
+      <div className="flex justify-between items-center">
+        <TableSearchField
+          placeholder="Buscar por nome..."
+          value={
+            (table.getColumn('customer')?.getFilterValue() as string) ?? ''
+          }
+          onChange={(event) =>
+            table.getColumn('customer')?.setFilterValue(event.target.value)
+          }
+          className="flex-1 max-w-sm"
+        />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant={'outline'} className="gap-1 font-normal">
+              <span>Mais ações</span>
+              <CaretDown size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              Deletar selecionados (
+              {table.getFilteredSelectedRowModel().rows.length})
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
 
       <div className="rounded-md border">
         <Table>
