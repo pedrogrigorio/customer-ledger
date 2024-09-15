@@ -6,8 +6,10 @@ import Content from '@/components/ui/tabs/content'
 
 import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/customer-tabs'
-import { columns, Customer } from '@/components/tables/columns'
+import { columns } from '@/components/tables/columns'
 import { DataTable } from '@/components/tables/data-table'
+import { Customer } from '@/types/customer'
+import { customers } from '@/data/customers-data'
 
 const tabs = [
   {
@@ -28,35 +30,14 @@ const tabs = [
 ]
 
 function getData(): Customer[] {
-  return [
-    {
-      id: '1',
-      customer: 'Pedro Grigorio',
-      imgUrl:
-        'https://img.freepik.com/fotos-gratis/close-up-do-homem-moreno-sorriso-cheio-de-dentes_1187-5800.jpg',
-      phone: '(88) 91234-1234',
-      email: 'pedro@example.com',
-      balance: 25,
-      orders: 30,
-    },
-    {
-      id: '2',
-      customer: 'João Ferreira Silva',
-      imgUrl:
-        'https://img.freepik.com/fotos-premium/closeup-retrato-de-bonito-e-inteligente-sorrindo-com-sorriso-masculino-posando-para-propaganda-social-isolada-no-fundo-branco-com-espaco-de-copia-para-suas-informacoes-ou-conteudo-promocional_616427-3101.jpg',
-      phone: '(88) 91111-2222',
-      email: 'joao@example.com',
-      balance: 40,
-      orders: 23,
-    },
-  ]
+  return customers
 }
 
 export default function Customers() {
   const data = getData()
 
   return (
-    <div className="h-full px-12">
+    <div className="h-full px-12 overflow-y-auto">
       {/* Header */}
       <div className="my-8">
         <button>

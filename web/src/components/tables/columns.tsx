@@ -1,6 +1,7 @@
-import Image from 'next/image'
-import { MoreHorizontal } from 'lucide-react'
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
+import { Checkbox } from '../shadcnui/checkbox'
+import { Customer } from '@/types/customer'
 import { Button } from '../shadcnui/button'
 import {
   DropdownMenu,
@@ -11,37 +12,46 @@ import {
   DropdownMenuTrigger,
 } from '../shadcnui/dropdown-menu'
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Customer = {
-  id: string
-  customer: string
-  imgUrl: string
-  phone: string
-  email: string
-  balance: number
-  orders: number
-}
-
 export const columns: ColumnDef<Customer>[] = [
   {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: 'customer',
-    header: 'Cliente',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          className="pl-0"
+        >
+          Cliente
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const name = row.getValue('customer') as string
-      const imgUrl = row.original.imgUrl
-      return (
-        <div className="flex gap-2 font-medium items-center">
-          <Image
-            src={imgUrl}
-            alt=""
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-full"
-          ></Image>{' '}
-          <span>{name}</span>
-        </div>
-      )
+      return <span className="font-medium">{name}</span>
     },
   },
   {
