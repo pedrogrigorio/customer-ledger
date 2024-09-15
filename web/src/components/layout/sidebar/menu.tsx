@@ -1,27 +1,47 @@
 'use client'
 
+import Link from 'next/link'
+
 import { usePathname } from 'next/navigation'
 import { menu } from '@/data/sidebar-menu'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
 
-export default function Menu() {
+interface MenuProps {
+  sidebarIsOpen: boolean
+}
+export default function Menu({ sidebarIsOpen }: MenuProps) {
   const pathname = usePathname()
 
   return (
-    <div className="mt-20">
-      <span className="text-xs px-3">MENU</span>
+    <div className="mt-20 flex flex-col gap-2">
+      {/* Title */}
+      <span className="text-xs w-14 text-center">MENU</span>
+
+      {/* Menu */}
       <ul className="flex flex-col gap-2">
         {menu.map((item) => (
           <Link key={item.id} href={item.path}>
             <li
               className={cn(
-                'flex gap-2 items-center h-10 px-3 hover:bg-table-header cursor-pointer rounded-lg',
+                'flex items-center h-10 cursor-pointer rounded-lg',
                 pathname === item.path && 'text-contrast bg-table-header',
+                pathname !== item.path && 'hover:text-primary',
               )}
             >
-              {item.icon}
-              <span className="text-sm">{item.label}</span>
+              {/* Icon */}
+              <div className="min-w-14 flex items-center justify-center">
+                {item.icon}
+              </div>
+
+              {/* Label */}
+              <span
+                className={cn(
+                  'text-sm opacity-100 transition-opacity duration-200 delay-200',
+                  !sidebarIsOpen && 'opacity-0 pointer-events-none delay-0',
+                )}
+              >
+                {item.label}
+              </span>
             </li>
           </Link>
         ))}

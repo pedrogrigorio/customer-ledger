@@ -20,6 +20,7 @@ const config: Config = {
         contrast: '#7741FB',
       },
       colors: {
+        contrast: '#7741FB',
         button: {
           primary: {
             DEFAULT: '#7741FB',
