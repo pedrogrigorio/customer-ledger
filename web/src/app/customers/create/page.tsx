@@ -12,6 +12,17 @@ import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
 import { z } from 'zod'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/shadcnui/alert-dialog'
 
 const customerFormSchema = z.object({
   name: z
@@ -24,7 +35,9 @@ const customerFormSchema = z.object({
   ]),
   district: z.string(),
   street: z.string(),
-  number: z.string().transform((value) => parseInt(value)),
+  number: z
+    .string()
+    .max(6, { message: 'O campo "Número" aceita no máximo 6 caracteres.' }),
   complement: z.string(),
   landmark: z.string(),
 })
@@ -35,12 +48,23 @@ export default function CreateCustomer() {
   const router = useRouter()
   const customerForm = useForm<CustomerFormData>({
     resolver: zodResolver(customerFormSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      phone: '',
+      email: '',
+      district: '',
+      street: '',
+      number: '',
+      complement: '',
+      landmark: '',
+    },
   })
 
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = customerForm
 
   const onSubmit = (data: CustomerFormData) => {
@@ -58,9 +82,40 @@ export default function CreateCustomer() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl">Novo cliente</h1>
         <div className="flex gap-2">
-          <Button variant="ghost" onClick={router.back}>
-            <span>Cancelar</span>
-          </Button>
+          {isDirty ? (
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button variant="ghost">
+                  <span>Cancelar</span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Tem certeza que deseja cancelar?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Existem dados não salvos no formulário. Se você cancelar
+                    agora, todas as informações inseridas serão perdidas.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Voltar</AlertDialogCancel>
+                  <AlertDialogAction
+                    className="bg-button-warning hover:bg-button-warning-hover"
+                    onClick={router.back}
+                  >
+                    Sim, cancelar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          ) : (
+            <Button variant="ghost" onClick={router.back}>
+              <span>Cancelar</span>
+            </Button>
+          )}
+
           <Button
             className="bg-button-primary hover:bg-button-primary-hover"
             type="submit"
@@ -145,7 +200,8 @@ export default function CreateCustomer() {
               <div className="col-span-4 xl:col-span-1">
                 <Label htmlFor="number">Número</Label>
                 <Input
-                  placeholder="Ex: 22"
+                  placeholder="Ex: 103"
+                  type="text"
                   id="number"
                   {...register('number')}
                   className="mt-1"

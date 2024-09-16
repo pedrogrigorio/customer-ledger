@@ -28,6 +28,14 @@ const config: Config = {
             DEFAULT: '#7741FB',
             hover: '#6b3be2',
           },
+          danger: {
+            DEFAULT: '#A94442',
+            hover: '#983d3b',
+          },
+          warning: {
+            DEFAULT: '#F28000',
+            hover: '#da7300',
+          },
         },
         table: {
           header: '#F9F8FA',
