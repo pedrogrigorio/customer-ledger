@@ -99,8 +99,8 @@ export function DataTable<TData extends { id: number }, TValue>({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              Deletar selecionados (
+            <DropdownMenuItem className="text-danger">
+              Excluir selecionados (
               {table.getFilteredSelectedRowModel().rows.length})
             </DropdownMenuItem>
           </DropdownMenuContent>

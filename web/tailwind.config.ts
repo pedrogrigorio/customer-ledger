@@ -23,6 +23,7 @@ const config: Config = {
         danger: '#A94442',
         warning: '#F28000',
         contrast: '#7741FB',
+        currency: '#43B682',
         button: {
           primary: {
             DEFAULT: '#7741FB',
@@ -42,6 +43,10 @@ const config: Config = {
         },
         sidebar: {
           hover: '#F6F6F6',
+        },
+        status: {
+          paid: '#43B682',
+          pending: '#F28000',
         },
       },
     },

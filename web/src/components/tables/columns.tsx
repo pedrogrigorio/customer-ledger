@@ -23,6 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogFooter,
 } from '../shadcnui/alert-dialog'
+import { priceToCurrency } from '@/utils/priceToCurrency'
 
 export const columns: ColumnDef<Customer>[] = [
   {
@@ -80,10 +81,7 @@ export const columns: ColumnDef<Customer>[] = [
     header: 'Saldo',
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('balance'))
-      const formatted = Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(amount)
+      const formatted = priceToCurrency(amount)
 
       return <div>{formatted}</div>
     },
@@ -129,16 +127,16 @@ export const columns: ColumnDef<Customer>[] = [
                   href={`customers/edit/${customer.id}`}
                   onClick={(event) => event.stopPropagation()}
                 >
-                  Editar cliente
+                  Editar
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <AlertDialogTrigger
-                  className="w-full"
+                  className="w-full text-danger"
                   onClick={(event) => event.stopPropagation()}
                 >
-                  Deletar cliente
+                  Excluir
                 </AlertDialogTrigger>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -151,8 +149,8 @@ export const columns: ColumnDef<Customer>[] = [
                 Tem certeza que deseja excluir esse cliente?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                Esta ação não pode ser desfeita. Isso vai permanentemente
-                deletar o cliente e todos seus pedidos.
+                Esta ação não pode ser desfeita. Isso vai excluir
+                permanentemente o cliente e todos seus pedidos.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
