@@ -46,8 +46,12 @@ const config: Config = {
         },
         status: {
           paid: '#43B682',
-          pending: '#F28000',
+          pending: {
+            DEFAULT: '#F28000',
+            alternative: '#A94442',
+          },
         },
+        border: '#D9D9D9',
       },
     },
   },

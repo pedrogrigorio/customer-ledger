@@ -23,7 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogFooter,
 } from '../shadcnui/alert-dialog'
-import { priceToCurrency } from '@/utils/priceToCurrency'
+import { formatCurrency } from '@/utils/formatCurrency'
 
 export const columns: ColumnDef<Customer>[] = [
   {
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Customer>[] = [
     header: 'Saldo',
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('balance'))
-      const formatted = priceToCurrency(amount)
+      const formatted = formatCurrency(amount)
 
       return <div>{formatted}</div>
     },

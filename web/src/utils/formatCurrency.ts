@@ -1,4 +1,4 @@
-export function priceToCurrency(valor: number): string {
+export function formatCurrency(valor: number): string {
   return valor.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',

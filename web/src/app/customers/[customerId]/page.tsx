@@ -27,7 +27,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from '@/components/shadcnui/dropdown-menu'
-import { priceToCurrency } from '@/utils/priceToCurrency'
+import { formatCurrency } from '@/utils/formatCurrency'
+import Selectors from '@/components/ui/tabs/selectors'
+import TabsProvider from '@/components/ui/tabs/tabs-context'
+import { Tabs } from '@/types/customer-tabs'
+import Content from '@/components/ui/tabs/content'
+import Galery from '@/components/ui/galery'
+import { orders } from '@/data/orders'
+import { OrderStatus } from '@/enums/order-status'
+
+const tabs = [
+  {
+    id: 'all',
+    label: 'Todos',
+    value: orders.length,
+  },
+  {
+    id: 'paid',
+    label: 'Pagos',
+    value: orders.filter((order) => order.status === OrderStatus.PAID).length,
+  },
+  {
+    id: 'pending',
+    label: 'Pendentes',
+    value: orders.filter((order) => order.status === OrderStatus.PENDING)
+      .length,
+  } as Tabs,
+]
 
 export default function Customer() {
   const { customerId } = useParams()
@@ -42,12 +68,12 @@ export default function Customer() {
     <Page.Container>
       <Page.Header>
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl">Customer {customerId}</h1>
+          <h1 className="text-2xl">{customer.name}</h1>
           <div className="flex gap-2 justify-between items-center">
             <div className="border border-primary rounded-lg font-medium h-10 flex gap-1 items-center px-4 text-sm">
               <span>Saldo: </span>
               <span className="text-currency">
-                {priceToCurrency(customer.balance)}
+                {formatCurrency(customer.balance)}
               </span>
             </div>
 
@@ -124,6 +150,27 @@ export default function Customer() {
           </div>
         </div>
       </Page.Header>
+
+      <TabsProvider tabs={tabs}>
+        <Selectors />
+        <Content value="all">
+          <Galery data={orders} />
+        </Content>
+
+        <Content value="paid">
+          <Galery
+            data={orders.filter((order) => order.status === OrderStatus.PAID)}
+          />
+        </Content>
+
+        <Content value="pending">
+          <Galery
+            data={orders.filter(
+              (order) => order.status === OrderStatus.PENDING,
+            )}
+          />
+        </Content>
+      </TabsProvider>
     </Page.Container>
   )
 }
