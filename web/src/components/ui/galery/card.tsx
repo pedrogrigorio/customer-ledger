@@ -1,7 +1,29 @@
-import { OrderStatus } from '@/enums/order-status'
 import { MoreHorizontal } from 'lucide-react'
+import { OrderStatus } from '@/enums/order-status'
 import { formatDate } from '@/utils/formatDate'
 import { Order } from '@/types/order'
+import { Button } from '@/components/shadcnui/button'
+import {
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/shadcnui/alert-dialog'
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
+} from '@/components/shadcnui/dropdown-menu'
+import Link from 'next/link'
 
 interface CardProps {
   order: Order
@@ -13,7 +35,76 @@ export default function Card({ order }: CardProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="font-medium">Pedido {order.id}</h2>
-        <MoreHorizontal size={16} />
+        <AlertDialog>
+          {/* Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+
+            {/* Dropdown Content */}
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Ações</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`/orders/${order.id}`}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Visualizar
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`/orders/edit/${order.id}`}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Editar
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <AlertDialogTrigger
+                  className="w-full text-danger"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Excluir
+                </AlertDialogTrigger>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Dialog */}
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Tem certeza que deseja excluir esse pedido?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Esta ação não pode ser desfeita. Isso vai excluir
+                permanentemente o pedido.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-button-danger hover:bg-button-danger-hover"
+                onClick={(event) => event.stopPropagation()}
+              >
+                Sim, excluir
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
 
       {/* Body */}
