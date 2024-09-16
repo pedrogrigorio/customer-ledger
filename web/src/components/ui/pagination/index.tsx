@@ -18,11 +18,12 @@ interface PaginationProps {
   firstPage: () => void
   lastPage: () => void
   setPageIndex: (page: number) => void
+  className?: string
 }
 
 export default function CustomPagination(props: PaginationProps) {
   return (
-    <Pagination>
+    <Pagination className={props.className}>
       <PaginationContent>
         <PaginationItem>
           <Button

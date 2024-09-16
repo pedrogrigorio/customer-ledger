@@ -35,6 +35,7 @@ import Content from '@/components/ui/tabs/content'
 import Galery from '@/components/ui/galery'
 import { orders } from '@/data/orders'
 import { OrderStatus } from '@/enums/order-status'
+import { useRef } from 'react'
 
 const tabs = [
   {
@@ -57,6 +58,7 @@ const tabs = [
 
 export default function Customer() {
   const { customerId } = useParams()
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const customer = customers.find(
     (customer) => customer.id === parseInt(customerId[0]),
@@ -65,7 +67,7 @@ export default function Customer() {
   if (!customer) return null
 
   return (
-    <Page.Container>
+    <Page.Container ref={containerRef}>
       <Page.Header>
         <div className="flex justify-between items-center">
           <h1 className="text-2xl">{customer.name}</h1>
@@ -154,12 +156,13 @@ export default function Customer() {
       <TabsProvider tabs={tabs}>
         <Selectors />
         <Content value="all">
-          <Galery data={orders} />
+          <Galery data={orders} containerRef={containerRef} />
         </Content>
 
         <Content value="paid">
           <Galery
             data={orders.filter((order) => order.status === OrderStatus.PAID)}
+            containerRef={containerRef}
           />
         </Content>
 
@@ -168,6 +171,7 @@ export default function Customer() {
             data={orders.filter(
               (order) => order.status === OrderStatus.PENDING,
             )}
+            containerRef={containerRef}
           />
         </Content>
       </TabsProvider>

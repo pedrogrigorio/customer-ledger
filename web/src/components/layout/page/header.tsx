@@ -12,7 +12,7 @@ export default function Header({ children }: HeaderProps) {
 
   return (
     <>
-      <div className="my-8 flex items-center justify-between">
+      <div className="h-[84px] flex items-center justify-between">
         <button onClick={router.back}>
           <ArrowLeft size={20} />
         </button>

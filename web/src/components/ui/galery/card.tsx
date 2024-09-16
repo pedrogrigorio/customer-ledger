@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { MoreHorizontal } from 'lucide-react'
 import { OrderStatus } from '@/enums/order-status'
 import { formatDate } from '@/utils/formatDate'
@@ -23,7 +24,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from '@/components/shadcnui/dropdown-menu'
-import Link from 'next/link'
 
 interface CardProps {
   order: Order
@@ -31,7 +31,7 @@ interface CardProps {
 
 export default function Card({ order }: CardProps) {
   return (
-    <div className="border rounded-xl flex flex-col border-primary p-6 text-secondary">
+    <div className="border h-[300px] rounded-xl flex flex-col border-primary p-6 text-secondary">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="font-medium">Pedido {order.id}</h2>
@@ -109,7 +109,7 @@ export default function Card({ order }: CardProps) {
 
       {/* Body */}
       <div className="mt-5 flex-1">
-        <span className="text-xs text-terciary">10 itens</span>
+        <span className="text-xs text-terciary">{order.items.length} {order.items.length === 1 ? 'item' : 'itens'}</span>
         <ul className="text-sm">
           {order.items.length > 3 ? (
             <>
