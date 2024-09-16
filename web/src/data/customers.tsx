@@ -8,6 +8,11 @@ export const customers: Customer[] = [
     email: 'ana@example.com',
     balance: 150,
     orders: 12,
+    district: 'Jardins',
+    street: 'Rua 10',
+    number: '101',
+    complement: 'Apartamento A',
+    landmark: 'Próximo ao bar do João',
   },
   {
     id: 2,

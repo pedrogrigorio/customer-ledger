@@ -3,7 +3,6 @@
 import InputError from '@/components/ui/input-error'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { useRouter } from 'next/navigation'
 import { phoneMask } from '@/utils/phoneMask'
 import { useForm } from 'react-hook-form'
@@ -33,13 +32,14 @@ const customerFormSchema = z.object({
     z.literal(''),
     z.string().email({ message: 'Digite um e-mail válido' }),
   ]),
-  district: z.string(),
-  street: z.string(),
+  district: z.string().optional(),
+  street: z.string().optional(),
   number: z
     .string()
-    .max(6, { message: 'O campo "Número" aceita no máximo 6 caracteres.' }),
-  complement: z.string(),
-  landmark: z.string(),
+    .max(6, { message: 'O campo "Número" aceita no máximo 6 caracteres.' })
+    .optional(),
+  complement: z.string().optional(),
+  landmark: z.string().optional(),
 })
 
 type CustomerFormData = z.infer<typeof customerFormSchema>
@@ -74,57 +74,53 @@ export default function CreateCustomer() {
   return (
     <Page.Container>
       <Page.Header>
-        <button onClick={router.back}>
-          <ArrowLeft size={20} />
-        </button>
-      </Page.Header>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl">Novo cliente</h1>
+          <div className="flex gap-2">
+            {isDirty ? (
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button variant="ghost">
+                    <span>Cancelar</span>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Tem certeza que deseja cancelar?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Existem dados não salvos no formulário. Se você cancelar
+                      agora, todas as informações inseridas serão perdidas.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Voltar</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-button-warning hover:bg-button-warning-hover"
+                      onClick={router.back}
+                    >
+                      Sim, cancelar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Button variant="ghost" onClick={router.back}>
+                <span>Cancelar</span>
+              </Button>
+            )}
 
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Novo cliente</h1>
-        <div className="flex gap-2">
-          {isDirty ? (
-            <AlertDialog>
-              <AlertDialogTrigger>
-                <Button variant="ghost">
-                  <span>Cancelar</span>
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Tem certeza que deseja cancelar?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Existem dados não salvos no formulário. Se você cancelar
-                    agora, todas as informações inseridas serão perdidas.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Voltar</AlertDialogCancel>
-                  <AlertDialogAction
-                    className="bg-button-warning hover:bg-button-warning-hover"
-                    onClick={router.back}
-                  >
-                    Sim, cancelar
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          ) : (
-            <Button variant="ghost" onClick={router.back}>
-              <span>Cancelar</span>
+            <Button
+              className="bg-button-primary hover:bg-button-primary-hover"
+              type="submit"
+              form="customer-form"
+            >
+              <span>Cadastrar cliente</span>
             </Button>
-          )}
-
-          <Button
-            className="bg-button-primary hover:bg-button-primary-hover"
-            type="submit"
-            form="customer-form"
-          >
-            <span>Cadastrar cliente</span>
-          </Button>
+          </div>
         </div>
-      </div>
+      </Page.Header>
 
       <div className="mt-4">
         <form

@@ -4,7 +4,7 @@ import TabsProvider from '@/components/ui/tabs/tabs-context'
 import Selectors from '@/components/ui/tabs/selectors'
 import Content from '@/components/ui/tabs/content'
 
-import { ArrowLeft, Plus } from '@phosphor-icons/react/dist/ssr'
+import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/customer-tabs'
 import { columns } from '@/components/tables/columns'
 import { DataTable } from '@/components/tables/data-table'
@@ -13,7 +13,6 @@ import { customers } from '@/data/customers'
 import { Button } from '@/components/shadcnui/button'
 import Link from 'next/link'
 import { Page } from '@/components/layout/page'
-import { useRouter } from 'next/navigation'
 
 const tabs = [
   {
@@ -39,31 +38,26 @@ function getData(): Customer[] {
 
 export default function Customers() {
   const data = getData()
-  const router = useRouter()
 
   return (
     <Page.Container>
       {/* Header */}
       <Page.Header>
-        <button onClick={router.back}>
-          <ArrowLeft size={20} />
-        </button>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl">Clientes</h1>
+          <Button
+            className="bg-button-primary gap-1 hover:bg-button-primary-hover"
+            asChild
+          >
+            <Link href="customers/create">
+              <Plus size={20} weight="bold" className="text-white" />
+              <span>Novo cliente</span>
+            </Link>
+          </Button>
+        </div>
       </Page.Header>
 
       {/* Content */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Clientes</h1>
-        <Button
-          className="bg-button-primary gap-1 hover:bg-button-primary-hover"
-          asChild
-        >
-          <Link href="customers/create">
-            <Plus size={20} weight="bold" className="text-white" />
-            <span>Novo cliente</span>
-          </Link>
-        </Button>
-      </div>
-
       <TabsProvider tabs={tabs}>
         <Selectors />
         <Content value="all">

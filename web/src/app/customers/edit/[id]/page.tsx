@@ -4,7 +4,6 @@ import InputError from '@/components/ui/input-error'
 
 import { useParams, useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { customers } from '@/data/customers'
 import { phoneMask } from '@/utils/phoneMask'
 import { useForm } from 'react-hook-form'
@@ -13,6 +12,17 @@ import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
 import { z } from 'zod'
+import {
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/shadcnui/alert-dialog'
 
 const customerFormSchema = z.object({
   name: z
@@ -25,7 +35,9 @@ const customerFormSchema = z.object({
   ]),
   district: z.string(),
   street: z.string(),
-  number: z.string().transform((value) => parseInt(value)),
+  number: z
+    .string()
+    .max(6, { message: 'O campo "Número" aceita no máximo 6 caracteres.' }),
   complement: z.string(),
   landmark: z.string(),
 })
@@ -36,17 +48,27 @@ export default function UpdateCustomer() {
   const { id } = useParams()
   const router = useRouter()
 
-  const customer = customers.find((customer) => customer.id === id)
+  const customer = customers.find((customer) => customer.id === parseInt(id[0]))
 
   const customerForm = useForm<CustomerFormData>({
     resolver: zodResolver(customerFormSchema),
-    defaultValues: customer,
+    mode: 'onTouched',
+    defaultValues: {
+      name: customer?.name ?? '',
+      phone: customer?.phone ?? '',
+      email: customer?.email ?? '',
+      district: customer?.district ?? '',
+      street: customer?.street ?? '',
+      number: customer?.number ?? '',
+      complement: customer?.complement ?? '',
+      landmark: customer?.landmark ?? '',
+    },
   })
 
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = customerForm
 
   const onSubmit = (data: CustomerFormData) => {
@@ -56,26 +78,53 @@ export default function UpdateCustomer() {
   return (
     <Page.Container>
       <Page.Header>
-        <button onClick={router.back}>
-          <ArrowLeft size={20} />
-        </button>
-      </Page.Header>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl">Novo cliente</h1>
+          <div className="flex gap-2">
+            {isDirty ? (
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button variant="ghost">
+                    <span>Cancelar</span>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Tem certeza que deseja cancelar?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Existem dados não salvos no formulário. Se você cancelar
+                      agora, todas as informações inseridas serão perdidas.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Voltar</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-button-warning hover:bg-button-warning-hover"
+                      onClick={router.back}
+                    >
+                      Sim, cancelar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <Button variant="ghost" onClick={router.back}>
+                <span>Cancelar</span>
+              </Button>
+            )}
 
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Novo cliente</h1>
-        <div className="flex gap-2">
-          <Button variant="ghost" onClick={router.back}>
-            <span>Cancelar</span>
-          </Button>
-          <Button
-            className="bg-button-primary hover:bg-button-primary-hover"
-            type="submit"
-            form="customer-form"
-          >
-            <span>Cadastrar cliente</span>
-          </Button>
+            <Button
+              className="bg-button-primary hover:bg-button-primary-hover"
+              type="submit"
+              form="customer-form"
+            >
+              <span>Editar cliente</span>
+            </Button>
+          </div>
         </div>
-      </div>
+      </Page.Header>
 
       <div className="mt-4">
         <form

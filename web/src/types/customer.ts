@@ -7,7 +7,7 @@ export type Customer = {
   orders: number
   district?: string
   street?: string
-  number?: number
+  number?: string
   complement?: string
   landmark?: string
 }
