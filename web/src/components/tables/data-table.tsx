@@ -35,16 +35,20 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '../shadcnui/dropdown-menu'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { id: number }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter()
+  const pathname = usePathname()
+
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -78,11 +82,9 @@ export function DataTable<TData, TValue>({
       <div className="flex justify-between items-center">
         <TableSearchField
           placeholder="Buscar por nome..."
-          value={
-            (table.getColumn('customer')?.getFilterValue() as string) ?? ''
-          }
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('customer')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className="flex-1 max-w-sm"
         />
@@ -135,6 +137,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  onClick={() => router.push(`${pathname}/${row.original.id}`)}
                 >
                   {row.getVisibleCells().map((cell, index) => (
                     <TableCell

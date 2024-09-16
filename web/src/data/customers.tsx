@@ -2,7 +2,7 @@ import { Customer } from '@/types/customer'
 
 export const customers: Customer[] = [
   {
-    id: '1',
+    id: 1,
     name: 'Ana Oliveira',
     phone: '(88) 91234-5678',
     email: 'ana@example.com',
@@ -10,7 +10,7 @@ export const customers: Customer[] = [
     orders: 12,
   },
   {
-    id: '2',
+    id: 2,
     name: 'Carlos Souza',
     phone: '(88) 91123-4567',
     email: 'carlos@example.com',
@@ -18,7 +18,7 @@ export const customers: Customer[] = [
     orders: 7,
   },
   {
-    id: '3',
+    id: 3,
     name: 'Beatriz Lima',
     phone: '(88) 91345-6789',
     email: 'beatriz@example.com',
@@ -26,7 +26,7 @@ export const customers: Customer[] = [
     orders: 16,
   },
   {
-    id: '4',
+    id: 4,
     name: 'Daniel Alves',
     phone: '(88) 91456-7890',
     email: 'daniel@example.com',
@@ -34,7 +34,7 @@ export const customers: Customer[] = [
     orders: 5,
   },
   {
-    id: '5',
+    id: 5,
     name: 'Eduarda Campos',
     phone: '(88) 91567-8901',
     email: 'eduarda@example.com',
@@ -42,7 +42,7 @@ export const customers: Customer[] = [
     orders: 25,
   },
   {
-    id: '6',
+    id: 6,
     name: 'Felipe Andrade',
     phone: '(88) 91678-9012',
     email: 'felipe@example.com',
@@ -50,7 +50,7 @@ export const customers: Customer[] = [
     orders: 9,
   },
   {
-    id: '7',
+    id: 7,
     name: 'Gabriela Souza',
 
     phone: '(88) 91789-0123',
@@ -59,7 +59,7 @@ export const customers: Customer[] = [
     orders: 20,
   },
   {
-    id: '8',
+    id: 8,
     name: 'Henrique Matos',
     phone: '(88) 91890-1234',
     email: 'henrique@example.com',
@@ -67,7 +67,7 @@ export const customers: Customer[] = [
     orders: 15,
   },
   {
-    id: '9',
+    id: 9,
     name: 'Maria Oliveira',
     phone: '(88) 92123-4567',
     email: 'maria@example.com',
@@ -75,7 +75,7 @@ export const customers: Customer[] = [
     orders: 12,
   },
   {
-    id: '10',
+    id: 10,
     name: 'Ana Souza',
     phone: '(88) 92234-5678',
     email: 'ana@example.com',
@@ -83,7 +83,7 @@ export const customers: Customer[] = [
     orders: 20,
   },
   {
-    id: '11',
+    id: 11,
     name: 'Carlos Mendes',
     phone: '(88) 92345-6789',
     email: 'carlos@example.com',
@@ -91,7 +91,7 @@ export const customers: Customer[] = [
     orders: 8,
   },
   {
-    id: '12',
+    id: 12,
     name: 'Fernanda Costa',
     phone: '(88) 92456-7890',
     email: 'fernanda@example.com',
@@ -99,7 +99,7 @@ export const customers: Customer[] = [
     orders: 17,
   },
   {
-    id: '13',
+    id: 13,
     name: 'Rafael Lima',
     phone: '(88) 92567-8901',
     email: 'rafael@example.com',
@@ -107,7 +107,7 @@ export const customers: Customer[] = [
     orders: 25,
   },
   {
-    id: '14',
+    id: 14,
     name: 'Isabela Rocha',
     phone: '(88) 92678-9012',
     email: 'isabela@example.com',
@@ -115,7 +115,7 @@ export const customers: Customer[] = [
     orders: 35,
   },
   {
-    id: '15',
+    id: 15,
     name: 'Lucas Pereira',
     phone: '(88) 92789-0123',
     email: 'lucas@example.com',
@@ -123,7 +123,7 @@ export const customers: Customer[] = [
     orders: 40,
   },
   {
-    id: '16',
+    id: 16,
     name: 'Juliana Santos',
     phone: '(88) 92890-1234',
     email: 'juliana@example.com',
@@ -131,7 +131,7 @@ export const customers: Customer[] = [
     orders: 50,
   },
   {
-    id: '17',
+    id: 17,
     name: 'Pedro Martins',
     phone: '(88) 92901-2345',
     email: 'pedro@example.com',
@@ -139,7 +139,7 @@ export const customers: Customer[] = [
     orders: 30,
   },
   {
-    id: '18',
+    id: 18,
     name: 'Renata Ferreira',
     phone: '(88) 93012-3456',
     email: 'renata@example.com',
@@ -147,7 +147,7 @@ export const customers: Customer[] = [
     orders: 22,
   },
   {
-    id: '19',
+    id: 19,
     name: 'Bruno Silva',
     phone: '(88) 93123-4567',
     email: 'bruno@example.com',
@@ -155,7 +155,7 @@ export const customers: Customer[] = [
     orders: 27,
   },
   {
-    id: '20',
+    id: 20,
     name: 'Carla Figueiredo',
     phone: '(88) 93234-5678',
     email: 'carla@example.com',
@@ -163,7 +163,7 @@ export const customers: Customer[] = [
     orders: 13,
   },
   {
-    id: '21',
+    id: 21,
     name: 'Thiago Nogueira',
     phone: '(88) 93345-6789',
     email: 'thiago@example.com',
@@ -171,7 +171,7 @@ export const customers: Customer[] = [
     orders: 19,
   },
   {
-    id: '22',
+    id: 22,
     name: 'Patrícia Santos',
     phone: '(88) 93456-7890',
     email: 'patricia@example.com',
@@ -179,7 +179,7 @@ export const customers: Customer[] = [
     orders: 21,
   },
   {
-    id: '23',
+    id: 23,
     name: 'Fábio Castro',
     phone: '(88) 93567-8901',
     email: 'fabio@example.com',
@@ -187,7 +187,7 @@ export const customers: Customer[] = [
     orders: 18,
   },
   {
-    id: '24',
+    id: 24,
     name: 'Clara Moreira',
     phone: '(88) 93678-9012',
     email: 'clara@example.com',
@@ -195,7 +195,7 @@ export const customers: Customer[] = [
     orders: 45,
   },
   {
-    id: '25',
+    id: 25,
     name: 'André Almeida',
     phone: '(88) 93789-0123',
     email: 'andre@example.com',
@@ -203,7 +203,7 @@ export const customers: Customer[] = [
     orders: 14,
   },
   {
-    id: '26',
+    id: 26,
     name: 'Leonardo Teixeira',
     phone: '(88) 93890-1234',
     email: 'leonardo@example.com',
@@ -211,7 +211,7 @@ export const customers: Customer[] = [
     orders: 29,
   },
   {
-    id: '27',
+    id: 27,
     name: 'Marta Xavier',
     phone: '(88) 93901-2345',
     email: 'marta@example.com',
@@ -219,7 +219,7 @@ export const customers: Customer[] = [
     orders: 32,
   },
   {
-    id: '28',
+    id: 28,
     name: 'Sérgio Carvalho',
     phone: '(88) 94012-3456',
     email: 'sergio@example.com',
@@ -227,7 +227,7 @@ export const customers: Customer[] = [
     orders: 26,
   },
   {
-    id: '29',
+    id: 29,
     name: 'Priscila Mendes',
     phone: '(88) 94123-4567',
     email: 'priscila@example.com',
@@ -235,7 +235,7 @@ export const customers: Customer[] = [
     orders: 11,
   },
   {
-    id: '30',
+    id: 30,
     name: 'Rodrigo Silva',
     phone: '(88) 94234-5678',
     email: 'rodrigo@example.com',
@@ -243,7 +243,7 @@ export const customers: Customer[] = [
     orders: 34,
   },
   {
-    id: '31',
+    id: 31,
     name: 'Vanessa Pereira',
     phone: '(88) 94345-6789',
     email: 'vanessa@example.com',
@@ -251,7 +251,7 @@ export const customers: Customer[] = [
     orders: 17,
   },
   {
-    id: '32',
+    id: 32,
     name: 'Guilherme Freitas',
     phone: '(88) 94456-7890',
     email: 'guilherme@example.com',
@@ -259,7 +259,7 @@ export const customers: Customer[] = [
     orders: 38,
   },
   {
-    id: '33',
+    id: 33,
     name: 'Luciana Gomes',
     phone: '(88) 94567-8901',
     email: 'luciana@example.com',
@@ -267,7 +267,7 @@ export const customers: Customer[] = [
     orders: 12,
   },
   {
-    id: '34',
+    id: 34,
     name: 'Eduardo Costa',
     phone: '(88) 94678-9012',
     email: 'eduardo@example.com',
@@ -275,7 +275,7 @@ export const customers: Customer[] = [
     orders: 23,
   },
   {
-    id: '35',
+    id: 35,
     name: 'Tatiana Ferreira',
     phone: '(88) 94789-0123',
     email: 'tatiana@example.com',
@@ -283,7 +283,7 @@ export const customers: Customer[] = [
     orders: 15,
   },
   {
-    id: '36',
+    id: 36,
     name: 'Amanda Nogueira',
     phone: '(88) 94890-1234',
     email: 'amanda@example.com',
@@ -291,7 +291,7 @@ export const customers: Customer[] = [
     orders: 18,
   },
   {
-    id: '37',
+    id: 37,
     name: 'Renato Azevedo',
     phone: '(88) 94901-2345',
     email: 'renato@example.com',
@@ -299,7 +299,7 @@ export const customers: Customer[] = [
     orders: 22,
   },
   {
-    id: '38',
+    id: 38,
     name: 'Juliana Costa',
     phone: '(88) 95012-3456',
     email: 'juliana.costa@example.com',
@@ -307,7 +307,7 @@ export const customers: Customer[] = [
     orders: 13,
   },
   {
-    id: '39',
+    id: 39,
     name: 'Gustavo Lima',
     phone: '(88) 95123-4567',
     email: 'gustavo.lima@example.com',
@@ -315,7 +315,7 @@ export const customers: Customer[] = [
     orders: 28,
   },
   {
-    id: '40',
+    id: 40,
     name: 'Larissa Campos',
     phone: '(88) 95234-5678',
     email: 'larissa.campos@example.com',
@@ -323,7 +323,7 @@ export const customers: Customer[] = [
     orders: 20,
   },
   {
-    id: '41',
+    id: 41,
     name: 'Vinícius Rocha',
     phone: '(88) 95345-6789',
     email: 'vinicius.rocha@example.com',
@@ -331,7 +331,7 @@ export const customers: Customer[] = [
     orders: 25,
   },
   {
-    id: '42',
+    id: 42,
     name: 'Mariana Oliveira',
     phone: '(88) 95456-7890',
     email: 'mariana.oliveira@example.com',
@@ -339,7 +339,7 @@ export const customers: Customer[] = [
     orders: 18,
   },
   {
-    id: '43',
+    id: 43,
     name: 'Igor Souza',
     phone: '(88) 95567-8901',
     email: 'igor.souza@example.com',
@@ -347,7 +347,7 @@ export const customers: Customer[] = [
     orders: 30,
   },
   {
-    id: '44',
+    id: 44,
     name: 'Natália Santos',
     phone: '(88) 95678-9012',
     email: 'natalia.santos@example.com',
@@ -355,7 +355,7 @@ export const customers: Customer[] = [
     orders: 12,
   },
   {
-    id: '45',
+    id: 45,
     name: 'Arthur Silva',
     phone: '(88) 95789-0123',
     email: 'arthur.silva@example.com',

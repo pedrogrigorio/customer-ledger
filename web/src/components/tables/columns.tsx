@@ -42,6 +42,7 @@ export const columns: ColumnDef<Customer>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        onClick={(event) => event.stopPropagation()}
       />
     ),
     enableSorting: false,
@@ -101,7 +102,11 @@ export const columns: ColumnDef<Customer>[] = [
           {/* Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0"
+                onClick={(event) => event.stopPropagation()}
+              >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -111,15 +116,28 @@ export const columns: ColumnDef<Customer>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Visualizar pedidos</DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`customers/edit/${customer.id}`}>
+                <Link
+                  href={`customers/${customer.id}`}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Visualizar
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href={`customers/edit/${customer.id}`}
+                  onClick={(event) => event.stopPropagation()}
+                >
                   Editar cliente
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <AlertDialogTrigger className="w-full">
+                <AlertDialogTrigger
+                  className="w-full"
+                  onClick={(event) => event.stopPropagation()}
+                >
                   Deletar cliente
                 </AlertDialogTrigger>
               </DropdownMenuItem>
@@ -138,8 +156,13 @@ export const columns: ColumnDef<Customer>[] = [
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction className="bg-button-danger hover:bg-button-danger-hover">
+              <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-button-danger hover:bg-button-danger-hover"
+                onClick={(event) => event.stopPropagation()}
+              >
                 Sim, excluir
               </AlertDialogAction>
             </AlertDialogFooter>
