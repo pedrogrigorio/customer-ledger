@@ -20,6 +20,8 @@ const config: Config = {
         contrast: '#7741FB',
       },
       colors: {
+        danger: '#A94442',
+        warning: '#F28000',
         contrast: '#7741FB',
         button: {
           primary: {

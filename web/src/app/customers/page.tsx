@@ -19,7 +19,7 @@ const tabs = [
   {
     id: 'all',
     label: 'Todos',
-    value: 80,
+    value: customers.length,
   },
   {
     id: 'pendingOrder',
@@ -29,7 +29,7 @@ const tabs = [
   {
     id: 'noPendingOrder',
     label: 'Sem pedidos pendentes',
-    value: 63,
+    value: 28,
   } as Tabs,
 ]
 
@@ -52,10 +52,7 @@ export default function Customers() {
 
       {/* Content */}
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl">Clientes</h1>
-          <span className="text-terciary">4 resultados encontrados</span>
-        </div>
+        <h1 className="text-2xl">Clientes</h1>
         <Button
           className="bg-button-primary gap-1 hover:bg-button-primary-hover"
           asChild
@@ -74,11 +71,11 @@ export default function Customers() {
         </Content>
 
         <Content value="pendingOrder">
-          <DataTable columns={columns} data={data.slice(5)} />
+          <DataTable columns={columns} data={data.slice(13, 30)} />
         </Content>
 
         <Content value="noPendingOrder">
-          <DataTable columns={columns} data={data.slice(20)} />
+          <DataTable columns={columns} data={data.slice(-28)} />
         </Content>
       </TabsProvider>
     </Page.Container>
