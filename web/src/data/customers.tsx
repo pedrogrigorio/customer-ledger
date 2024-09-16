@@ -3,7 +3,7 @@ import { Customer } from '@/types/customer'
 export const customers: Customer[] = [
   {
     id: '1',
-    customer: 'Ana Oliveira',
+    name: 'Ana Oliveira',
     phone: '(88) 91234-5678',
     email: 'ana@example.com',
     balance: 150,
@@ -11,7 +11,7 @@ export const customers: Customer[] = [
   },
   {
     id: '2',
-    customer: 'Carlos Souza',
+    name: 'Carlos Souza',
     phone: '(88) 91123-4567',
     email: 'carlos@example.com',
     balance: 300,
@@ -19,7 +19,7 @@ export const customers: Customer[] = [
   },
   {
     id: '3',
-    customer: 'Beatriz Lima',
+    name: 'Beatriz Lima',
     phone: '(88) 91345-6789',
     email: 'beatriz@example.com',
     balance: 90,
@@ -27,7 +27,7 @@ export const customers: Customer[] = [
   },
   {
     id: '4',
-    customer: 'Daniel Alves',
+    name: 'Daniel Alves',
     phone: '(88) 91456-7890',
     email: 'daniel@example.com',
     balance: 220,
@@ -35,7 +35,7 @@ export const customers: Customer[] = [
   },
   {
     id: '5',
-    customer: 'Eduarda Campos',
+    name: 'Eduarda Campos',
     phone: '(88) 91567-8901',
     email: 'eduarda@example.com',
     balance: 180,
@@ -43,7 +43,7 @@ export const customers: Customer[] = [
   },
   {
     id: '6',
-    customer: 'Felipe Andrade',
+    name: 'Felipe Andrade',
     phone: '(88) 91678-9012',
     email: 'felipe@example.com',
     balance: 75,
@@ -51,7 +51,7 @@ export const customers: Customer[] = [
   },
   {
     id: '7',
-    customer: 'Gabriela Souza',
+    name: 'Gabriela Souza',
 
     phone: '(88) 91789-0123',
     email: 'gabriela@example.com',
@@ -60,7 +60,7 @@ export const customers: Customer[] = [
   },
   {
     id: '8',
-    customer: 'Henrique Matos',
+    name: 'Henrique Matos',
     phone: '(88) 91890-1234',
     email: 'henrique@example.com',
     balance: 100,
@@ -68,7 +68,7 @@ export const customers: Customer[] = [
   },
   {
     id: '9',
-    customer: 'Maria Oliveira',
+    name: 'Maria Oliveira',
     phone: '(88) 92123-4567',
     email: 'maria@example.com',
     balance: 50,
@@ -76,7 +76,7 @@ export const customers: Customer[] = [
   },
   {
     id: '10',
-    customer: 'Ana Souza',
+    name: 'Ana Souza',
     phone: '(88) 92234-5678',
     email: 'ana@example.com',
     balance: 15,
@@ -84,7 +84,7 @@ export const customers: Customer[] = [
   },
   {
     id: '11',
-    customer: 'Carlos Mendes',
+    name: 'Carlos Mendes',
     phone: '(88) 92345-6789',
     email: 'carlos@example.com',
     balance: 60,
@@ -92,7 +92,7 @@ export const customers: Customer[] = [
   },
   {
     id: '12',
-    customer: 'Fernanda Costa',
+    name: 'Fernanda Costa',
     phone: '(88) 92456-7890',
     email: 'fernanda@example.com',
     balance: 30,
@@ -100,7 +100,7 @@ export const customers: Customer[] = [
   },
   {
     id: '13',
-    customer: 'Rafael Lima',
+    name: 'Rafael Lima',
     phone: '(88) 92567-8901',
     email: 'rafael@example.com',
     balance: 75,
@@ -108,7 +108,7 @@ export const customers: Customer[] = [
   },
   {
     id: '14',
-    customer: 'Isabela Rocha',
+    name: 'Isabela Rocha',
     phone: '(88) 92678-9012',
     email: 'isabela@example.com',
     balance: 90,
@@ -116,7 +116,7 @@ export const customers: Customer[] = [
   },
   {
     id: '15',
-    customer: 'Lucas Pereira',
+    name: 'Lucas Pereira',
     phone: '(88) 92789-0123',
     email: 'lucas@example.com',
     balance: 20,
@@ -124,7 +124,7 @@ export const customers: Customer[] = [
   },
   {
     id: '16',
-    customer: 'Juliana Santos',
+    name: 'Juliana Santos',
     phone: '(88) 92890-1234',
     email: 'juliana@example.com',
     balance: 100,
@@ -132,7 +132,7 @@ export const customers: Customer[] = [
   },
   {
     id: '17',
-    customer: 'Pedro Martins',
+    name: 'Pedro Martins',
     phone: '(88) 92901-2345',
     email: 'pedro@example.com',
     balance: 120,
@@ -140,7 +140,7 @@ export const customers: Customer[] = [
   },
   {
     id: '18',
-    customer: 'Renata Ferreira',
+    name: 'Renata Ferreira',
     phone: '(88) 93012-3456',
     email: 'renata@example.com',
     balance: 250,
@@ -148,7 +148,7 @@ export const customers: Customer[] = [
   },
   {
     id: '19',
-    customer: 'Bruno Silva',
+    name: 'Bruno Silva',
     phone: '(88) 93123-4567',
     email: 'bruno@example.com',
     balance: 80,
@@ -156,7 +156,7 @@ export const customers: Customer[] = [
   },
   {
     id: '20',
-    customer: 'Carla Figueiredo',
+    name: 'Carla Figueiredo',
     phone: '(88) 93234-5678',
     email: 'carla@example.com',
     balance: 95,
@@ -164,7 +164,7 @@ export const customers: Customer[] = [
   },
   {
     id: '21',
-    customer: 'Thiago Nogueira',
+    name: 'Thiago Nogueira',
     phone: '(88) 93345-6789',
     email: 'thiago@example.com',
     balance: 65,
@@ -172,7 +172,7 @@ export const customers: Customer[] = [
   },
   {
     id: '22',
-    customer: 'Patrícia Santos',
+    name: 'Patrícia Santos',
     phone: '(88) 93456-7890',
     email: 'patricia@example.com',
     balance: 130,
@@ -180,7 +180,7 @@ export const customers: Customer[] = [
   },
   {
     id: '23',
-    customer: 'Fábio Castro',
+    name: 'Fábio Castro',
     phone: '(88) 93567-8901',
     email: 'fabio@example.com',
     balance: 110,
@@ -188,7 +188,7 @@ export const customers: Customer[] = [
   },
   {
     id: '24',
-    customer: 'Clara Moreira',
+    name: 'Clara Moreira',
     phone: '(88) 93678-9012',
     email: 'clara@example.com',
     balance: 200,
@@ -196,7 +196,7 @@ export const customers: Customer[] = [
   },
   {
     id: '25',
-    customer: 'André Almeida',
+    name: 'André Almeida',
     phone: '(88) 93789-0123',
     email: 'andre@example.com',
     balance: 50,
@@ -204,7 +204,7 @@ export const customers: Customer[] = [
   },
   {
     id: '26',
-    customer: 'Leonardo Teixeira',
+    name: 'Leonardo Teixeira',
     phone: '(88) 93890-1234',
     email: 'leonardo@example.com',
     balance: 170,
@@ -212,7 +212,7 @@ export const customers: Customer[] = [
   },
   {
     id: '27',
-    customer: 'Marta Xavier',
+    name: 'Marta Xavier',
     phone: '(88) 93901-2345',
     email: 'marta@example.com',
     balance: 140,
@@ -220,7 +220,7 @@ export const customers: Customer[] = [
   },
   {
     id: '28',
-    customer: 'Sérgio Carvalho',
+    name: 'Sérgio Carvalho',
     phone: '(88) 94012-3456',
     email: 'sergio@example.com',
     balance: 210,
@@ -228,7 +228,7 @@ export const customers: Customer[] = [
   },
   {
     id: '29',
-    customer: 'Priscila Mendes',
+    name: 'Priscila Mendes',
     phone: '(88) 94123-4567',
     email: 'priscila@example.com',
     balance: 45,
@@ -236,7 +236,7 @@ export const customers: Customer[] = [
   },
   {
     id: '30',
-    customer: 'Rodrigo Silva',
+    name: 'Rodrigo Silva',
     phone: '(88) 94234-5678',
     email: 'rodrigo@example.com',
     balance: 100,
@@ -244,7 +244,7 @@ export const customers: Customer[] = [
   },
   {
     id: '31',
-    customer: 'Vanessa Pereira',
+    name: 'Vanessa Pereira',
     phone: '(88) 94345-6789',
     email: 'vanessa@example.com',
     balance: 85,
@@ -252,7 +252,7 @@ export const customers: Customer[] = [
   },
   {
     id: '32',
-    customer: 'Guilherme Freitas',
+    name: 'Guilherme Freitas',
     phone: '(88) 94456-7890',
     email: 'guilherme@example.com',
     balance: 240,
@@ -260,7 +260,7 @@ export const customers: Customer[] = [
   },
   {
     id: '33',
-    customer: 'Luciana Gomes',
+    name: 'Luciana Gomes',
     phone: '(88) 94567-8901',
     email: 'luciana@example.com',
     balance: 55,
@@ -268,7 +268,7 @@ export const customers: Customer[] = [
   },
   {
     id: '34',
-    customer: 'Eduardo Costa',
+    name: 'Eduardo Costa',
     phone: '(88) 94678-9012',
     email: 'eduardo@example.com',
     balance: 190,
@@ -276,7 +276,7 @@ export const customers: Customer[] = [
   },
   {
     id: '35',
-    customer: 'Tatiana Ferreira',
+    name: 'Tatiana Ferreira',
     phone: '(88) 94789-0123',
     email: 'tatiana@example.com',
     balance: 95,
@@ -284,7 +284,7 @@ export const customers: Customer[] = [
   },
   {
     id: '36',
-    customer: 'Amanda Nogueira',
+    name: 'Amanda Nogueira',
     phone: '(88) 94890-1234',
     email: 'amanda@example.com',
     balance: 130,
@@ -292,7 +292,7 @@ export const customers: Customer[] = [
   },
   {
     id: '37',
-    customer: 'Renato Azevedo',
+    name: 'Renato Azevedo',
     phone: '(88) 94901-2345',
     email: 'renato@example.com',
     balance: 160,
@@ -300,7 +300,7 @@ export const customers: Customer[] = [
   },
   {
     id: '38',
-    customer: 'Juliana Costa',
+    name: 'Juliana Costa',
     phone: '(88) 95012-3456',
     email: 'juliana.costa@example.com',
     balance: 75,
@@ -308,7 +308,7 @@ export const customers: Customer[] = [
   },
   {
     id: '39',
-    customer: 'Gustavo Lima',
+    name: 'Gustavo Lima',
     phone: '(88) 95123-4567',
     email: 'gustavo.lima@example.com',
     balance: 120,
@@ -316,7 +316,7 @@ export const customers: Customer[] = [
   },
   {
     id: '40',
-    customer: 'Larissa Campos',
+    name: 'Larissa Campos',
     phone: '(88) 95234-5678',
     email: 'larissa.campos@example.com',
     balance: 90,
@@ -324,7 +324,7 @@ export const customers: Customer[] = [
   },
   {
     id: '41',
-    customer: 'Vinícius Rocha',
+    name: 'Vinícius Rocha',
     phone: '(88) 95345-6789',
     email: 'vinicius.rocha@example.com',
     balance: 140,
@@ -332,7 +332,7 @@ export const customers: Customer[] = [
   },
   {
     id: '42',
-    customer: 'Mariana Oliveira',
+    name: 'Mariana Oliveira',
     phone: '(88) 95456-7890',
     email: 'mariana.oliveira@example.com',
     balance: 85,
@@ -340,7 +340,7 @@ export const customers: Customer[] = [
   },
   {
     id: '43',
-    customer: 'Igor Souza',
+    name: 'Igor Souza',
     phone: '(88) 95567-8901',
     email: 'igor.souza@example.com',
     balance: 200,
@@ -348,7 +348,7 @@ export const customers: Customer[] = [
   },
   {
     id: '44',
-    customer: 'Natália Santos',
+    name: 'Natália Santos',
     phone: '(88) 95678-9012',
     email: 'natalia.santos@example.com',
     balance: 60,
@@ -356,7 +356,7 @@ export const customers: Customer[] = [
   },
   {
     id: '45',
-    customer: 'Arthur Silva',
+    name: 'Arthur Silva',
     phone: '(88) 95789-0123',
     email: 'arthur.silva@example.com',
     balance: 180,

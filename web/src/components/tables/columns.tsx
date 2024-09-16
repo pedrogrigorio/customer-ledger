@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '../shadcnui/checkbox'
 import { Customer } from '@/types/customer'
 import { Button } from '../shadcnui/button'
+import Link from 'next/link'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +37,7 @@ export const columns: ColumnDef<Customer>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'customer',
+    accessorKey: 'name',
     header: ({ column }) => {
       return (
         <Button
@@ -50,7 +51,7 @@ export const columns: ColumnDef<Customer>[] = [
       )
     },
     cell: ({ row }) => {
-      const name = row.getValue('customer') as string
+      const name = row.getValue('name') as string
       return <span className="font-medium">{name}</span>
     },
   },
@@ -96,7 +97,9 @@ export const columns: ColumnDef<Customer>[] = [
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Visualizar pedidos</DropdownMenuItem>
-            <DropdownMenuItem>Editar cliente</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`customers/edit/${customer.id}`}>Editar cliente</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Deletar cliente</DropdownMenuItem>
           </DropdownMenuContent>
