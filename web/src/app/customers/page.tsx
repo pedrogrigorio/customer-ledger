@@ -12,6 +12,8 @@ import { Customer } from '@/types/customer'
 import { customers } from '@/data/customers-data'
 import { Button } from '@/components/shadcnui/button'
 import Link from 'next/link'
+import { Page } from '@/components/layout/page'
+import { useRouter } from 'next/navigation'
 
 const tabs = [
   {
@@ -37,15 +39,16 @@ function getData(): Customer[] {
 
 export default function Customers() {
   const data = getData()
+  const router = useRouter()
 
   return (
-    <div className="h-full px-12 overflow-y-auto">
+    <Page.Container>
       {/* Header */}
-      <div className="my-8">
-        <button>
+      <Page.Header>
+        <button onClick={router.back}>
           <ArrowLeft size={20} />
         </button>
-      </div>
+      </Page.Header>
 
       {/* Content */}
       <div className="flex justify-between items-center">
@@ -78,6 +81,6 @@ export default function Customers() {
           <DataTable columns={columns} data={data.slice(20)} />
         </Content>
       </TabsProvider>
-    </div>
+    </Page.Container>
   )
 }
