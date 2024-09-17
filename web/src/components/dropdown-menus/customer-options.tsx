@@ -1,27 +1,22 @@
 import Link from 'next/link'
+import DeleteDialogContent from '../dialogs/delete-dialog-content'
 
 import { Eye, PencilSimple, TrashSimple } from '@phosphor-icons/react/dist/ssr'
 import { MoreHorizontal, MoreVertical } from 'lucide-react'
 import { Customer } from '@/types/customer'
 import { Button } from '../shadcnui/button'
 import {
-  AlertDialog,
   AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
-  AlertDialogHeader,
-  AlertDialogFooter,
+  AlertDialog,
 } from '@/components/shadcnui/alert-dialog'
+
 import {
-  DropdownMenu,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuItem,
+  DropdownMenu,
 } from '@/components/shadcnui/dropdown-menu'
 
 interface CustomerOptionsProps {
@@ -35,6 +30,10 @@ export default function CustomerOptions({
   variant,
   withViewItem,
 }: CustomerOptionsProps) {
+  const onDelete = () => {
+    console.log(customer)
+  }
+
   return (
     <AlertDialog>
       {/* Dropdown */}
@@ -64,6 +63,7 @@ export default function CustomerOptions({
           <DropdownMenuLabel>Ações do cliente</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
+          {/* View option */}
           {withViewItem && (
             <DropdownMenuItem asChild>
               <Link
@@ -77,6 +77,7 @@ export default function CustomerOptions({
             </DropdownMenuItem>
           )}
 
+          {/* Edit option */}
           <DropdownMenuItem asChild>
             <Link
               href={`/customers/edit/${customer.id}`}
@@ -87,7 +88,10 @@ export default function CustomerOptions({
               <span>Editar</span>
             </Link>
           </DropdownMenuItem>
+
           <DropdownMenuSeparator />
+
+          {/* Delete option */}
           <DropdownMenuItem asChild>
             <AlertDialogTrigger
               className="w-full text-danger gap-2"
@@ -101,28 +105,7 @@ export default function CustomerOptions({
       </DropdownMenu>
 
       {/* Dialog */}
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            Tem certeza que deseja excluir esse cliente?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            Esta ação não pode ser desfeita. Isso vai excluir permanentemente o
-            cliente e todos seus pedidos.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
-            Cancelar
-          </AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-button-danger hover:bg-button-danger-hover"
-            onClick={(event) => event.stopPropagation()}
-          >
-            Sim, excluir
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      <DeleteDialogContent onConfirm={onDelete} variant="customer" />
     </AlertDialog>
   )
 }

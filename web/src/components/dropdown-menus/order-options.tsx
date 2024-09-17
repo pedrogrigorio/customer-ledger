@@ -1,3 +1,4 @@
+import DeleteDialogContent from '../dialogs/delete-dialog-content'
 import Link from 'next/link'
 
 import { MoreHorizontal, MoreVertical } from 'lucide-react'
@@ -5,24 +6,18 @@ import { Eye, PencilSimple, TrashSimple } from '@phosphor-icons/react/dist/ssr'
 import { Button } from '../shadcnui/button'
 import { Order } from '@/types/order'
 import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from '@/components/shadcnui/alert-dialog'
-import {
-  DropdownMenu,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuItem,
+  DropdownMenu,
 } from '@/components/shadcnui/dropdown-menu'
+
+import {
+  AlertDialogTrigger,
+  AlertDialog,
+} from '@/components/shadcnui/alert-dialog'
 
 interface OrderOptionsProps {
   order: Order
@@ -35,6 +30,10 @@ export default function OrderOptions({
   variant,
   withViewItem,
 }: OrderOptionsProps) {
+  const onDelete = () => {
+    console.log(order)
+  }
+
   return (
     <AlertDialog>
       <DropdownMenu>
@@ -61,6 +60,8 @@ export default function OrderOptions({
         <DropdownMenuContent align="end" className="min-w-48">
           <DropdownMenuLabel>Ações do pedido</DropdownMenuLabel>
           <DropdownMenuSeparator />
+
+          {/* View option */}
           {withViewItem && (
             <DropdownMenuItem asChild>
               <Link
@@ -73,6 +74,8 @@ export default function OrderOptions({
               </Link>
             </DropdownMenuItem>
           )}
+
+          {/* Edit option */}
           <DropdownMenuItem asChild>
             <Link
               href={`/orders/edit/${order.id}`}
@@ -84,6 +87,8 @@ export default function OrderOptions({
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+
+          {/* Delete option */}
           <DropdownMenuItem asChild>
             <AlertDialogTrigger
               className="w-full text-danger gap-2"
@@ -96,28 +101,8 @@ export default function OrderOptions({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            Tem certeza que deseja excluir esse pedido?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            Esta ação não pode ser desfeita. Isso vai excluir permanentemente o
-            pedido.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={(event) => event.stopPropagation()}>
-            Cancelar
-          </AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-button-danger hover:bg-button-danger-hover"
-            onClick={(event) => event.stopPropagation()}
-          >
-            Sim, excluir
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      {/* Dialog */}
+      <DeleteDialogContent onConfirm={onDelete} variant="order" />
     </AlertDialog>
   )
 }
