@@ -1,9 +1,12 @@
+import { cn } from '@/lib/utils'
+
 interface InputErrorProps {
   error?: string | undefined
+  className?: string
 }
 
-export default function InputError({ error }: InputErrorProps) {
+export default function InputError({ error, className }: InputErrorProps) {
   if (error) {
-    return <span className="text-xs text-danger">{error}</span>
+    return <span className={cn('text-xs text-danger', className)}>{error}</span>
   }
 }

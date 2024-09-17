@@ -1,9 +1,10 @@
+import { OrderStatus } from '@/enums/order-status'
 import { Order } from '@/types/order'
 
 export const orders: Order[] = [
   {
     id: 1,
-    status: 0,
+    status: OrderStatus.PENDING,
     notes: 'Dar desconto de 5% no dia da entrega',
     items: [
       { id: 0, name: 'Produto 1', unit: 'un', quantity: '6' },
@@ -16,7 +17,7 @@ export const orders: Order[] = [
   },
   {
     id: 2,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Incluir nota fiscal com pedido',
     items: [
       { id: 0, name: 'Produto 5', unit: 'kg', quantity: '2' },
@@ -27,7 +28,7 @@ export const orders: Order[] = [
   },
   {
     id: 3,
-    status: 0,
+    status: OrderStatus.PENDING,
     notes: 'Entregar após confirmação do pagamento',
     items: [
       { id: 0, name: 'Produto 7', unit: 'mt', quantity: '5' },
@@ -39,7 +40,7 @@ export const orders: Order[] = [
   },
   {
     id: 4,
-    status: 0,
+    status: OrderStatus.PENDING,
     notes: 'Verificar estoque antes de enviar',
     items: [{ id: 0, name: 'Produto 10', unit: 'kg', quantity: '1' }],
     customerId: 4,
@@ -47,7 +48,7 @@ export const orders: Order[] = [
   },
   {
     id: 5,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Adicionar brinde ao pedido',
     items: [
       { id: 0, name: 'Produto 11', unit: 'un', quantity: '8' },
@@ -59,7 +60,7 @@ export const orders: Order[] = [
   },
   {
     id: 6,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Confirmar endereço de entrega',
     items: [
       { id: 0, name: 'Produto 14', unit: 'mt', quantity: '10' },
@@ -70,7 +71,7 @@ export const orders: Order[] = [
   },
   {
     id: 7,
-    status: 0,
+    status: OrderStatus.PENDING,
     notes: 'Solicitar pagamento antecipado',
     items: [
       { id: 0, name: 'Produto 16', unit: 'un', quantity: '2' },
@@ -83,7 +84,7 @@ export const orders: Order[] = [
   },
   {
     id: 8,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Enviar amostras de produto',
     items: [
       { id: 0, name: 'Produto 20', unit: 'un', quantity: '3' },
@@ -94,7 +95,7 @@ export const orders: Order[] = [
   },
   {
     id: 9,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Garantia de entrega no prazo',
     items: [
       { id: 0, name: 'Produto 22', unit: 'un', quantity: '1' },
@@ -105,7 +106,7 @@ export const orders: Order[] = [
   },
   {
     id: 10,
-    status: 0,
+    status: OrderStatus.PENDING,
     notes: 'Oferecer opção de pagamento parcelado',
     items: [
       { id: 0, name: 'Produto 24', unit: 'un', quantity: '5' },
@@ -116,7 +117,7 @@ export const orders: Order[] = [
   },
   {
     id: 11,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Confirmar dados de contato',
     items: [
       { id: 0, name: 'Produto 26', unit: 'kg', quantity: '7' },
@@ -128,7 +129,7 @@ export const orders: Order[] = [
   },
   {
     id: 12,
-    status: 0,
+    status: OrderStatus.PENDING,
     notes: 'Verificar condição do produto antes do envio',
     items: [
       { id: 0, name: 'Produto 29', unit: 'un', quantity: '8' },
@@ -139,7 +140,7 @@ export const orders: Order[] = [
   },
   {
     id: 13,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Revisar pedido antes de confirmar',
     items: [{ id: 0, name: 'Produto 31', unit: 'un', quantity: '4' }],
     customerId: 13,
@@ -147,7 +148,7 @@ export const orders: Order[] = [
   },
   {
     id: 14,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Enviar confirmação de pedido por e-mail',
     items: [
       { id: 0, name: 'Produto 32', unit: 'kg', quantity: '3' },
@@ -158,7 +159,7 @@ export const orders: Order[] = [
   },
   {
     id: 15,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Agendar entrega com o cliente',
     items: [
       { id: 0, name: 'Produto 34', unit: 'un', quantity: '10' },
@@ -169,7 +170,7 @@ export const orders: Order[] = [
   },
   {
     id: 16,
-    status: 1,
+    status: OrderStatus.PAID,
     notes: 'Solicitar feedback após a entrega',
     items: [
       { id: 0, name: 'Produto 36', unit: 'kg', quantity: '6' },

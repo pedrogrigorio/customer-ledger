@@ -32,7 +32,7 @@ import Selectors from '@/components/ui/tabs/selectors'
 import TabsProvider from '@/components/ui/tabs/tabs-context'
 import { Tabs } from '@/types/customer-tabs'
 import Content from '@/components/ui/tabs/content'
-import Galery from '@/components/ui/galery'
+import Galery from '@/app/customers/[customerId]/_components/galery'
 import { orders } from '@/data/orders'
 import { OrderStatus } from '@/enums/order-status'
 import { useRef } from 'react'
@@ -83,7 +83,7 @@ export default function Customer() {
               className="bg-button-primary gap-1 hover:bg-button-primary-hover"
               asChild
             >
-              <Link href="orders/create">
+              <Link href="/orders/create">
                 <Plus size={20} weight="bold" className="text-white" />
                 <span>Novo pedido</span>
               </Link>

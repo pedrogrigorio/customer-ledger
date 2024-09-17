@@ -1,7 +1,7 @@
 'use client'
 
 import { RefObject, useEffect, useRef } from 'react'
-import CustomPagination from '../pagination'
+import CustomPagination from '../../../../../components/ui/pagination'
 import Card from './card'
 import { Order } from '@/types/order'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -31,16 +31,16 @@ export default function Galery({ data, containerRef }: GaleryProps) {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollIntoView({behavior: 'smooth' })
+      containerRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [page])
+  }, [page, containerRef])
 
   return (
     <div ref={testRef}>
-      <div 
-        className="mt-4 grid grid-rows-2 gap-4" 
+      <div
+        className="mt-4 grid grid-rows-2 gap-4"
         style={{
-          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
         }}
       >
         {entries.map((order) => (
@@ -53,12 +53,12 @@ export default function Galery({ data, containerRef }: GaleryProps) {
         lastPage={() => router.push('?page=1')}
         nextPage={() => router.push(`?page=${Number(page) + 1}`)}
         previousPage={() => router.push(`?page=${Number(page) - 1}`)}
-        setPageIndex={(p) => router.push(`?page=${p+1}`)}
+        setPageIndex={(p) => router.push(`?page=${p + 1}`)}
         pageIndex={Number(page) - 1}
         totalPages={totalPages}
         canNextPage={Number(page) < totalPages}
         canPreviousPage={Number(page) > 1}
-        className='mt-4'
+        className="mt-4"
       />
     </div>
   )
