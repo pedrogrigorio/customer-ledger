@@ -28,8 +28,8 @@ export const customers: Customer[] = [
   {
     id: 3,
     name: 'Beatriz Lima',
-    phone: '(88) 91345-6789',
-    email: 'beatriz@example.com',
+    phone: '',
+    email: '',
     balance: 90,
     orders: 16,
     district: 'Cohab',
@@ -40,8 +40,6 @@ export const customers: Customer[] = [
   {
     id: 4,
     name: 'Daniel Alves',
-    phone: '(88) 91456-7890',
-    email: 'daniel@example.com',
     balance: 220,
     orders: 5,
     street: 'Rua João Martins',

@@ -1,34 +1,26 @@
 'use client'
 
-import { useParams } from 'next/navigation'
-import { customers } from '@/data/customers'
+import OrderOptions from '@/components/dropdown-menus/order-options'
 
+import { formatCurrency } from '@/utils/formatCurrency'
+import { OrderStatus } from '@/enums/order-status'
+import { formatDate } from '@/utils/formatDate'
+import { customers } from '@/data/customers'
+import { useParams } from 'next/navigation'
+import { orders } from '@/data/orders'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcnui/select'
-import { orders } from '@/data/orders'
-
-import OrderOptions from '@/components/dropdown-menus/order-options'
-
-import { formatDate } from '@/utils/formatDate'
 import { User } from 'lucide-react'
 import {
   ClockClockwise,
   EnvelopeSimple,
   MapPin,
   Phone,
+  Trash,
   Wallet,
 } from '@phosphor-icons/react/dist/ssr'
-import { formatCurrency } from '@/utils/formatCurrency'
-import { OrderStatus } from '@/enums/order-status'
+import { Button } from '@/components/shadcnui/button'
 
 export default function Order() {
   const { orderId } = useParams()
@@ -64,50 +56,42 @@ export default function Order() {
       </Page.Header>
 
       <div className="mt-4">
-        <form className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           {/* Items */}
           <div className="border-primary h-fit flex flex-col gap-4 flex-[3] border p-6 pt-4 rounded-xl text-primary">
             <h2 className="font-medium">Produtos</h2>
 
-            <div className="mt-2 flex flex-col gap-4">
+            <div className="mt-2 flex flex-col gap-2">
               {order.items.map((item, index) => (
                 <div key={item.id} className="flex items-center gap-4">
                   <div className="flex-1">
-                    <Label htmlFor={`name.${index}`}>Nome *</Label>
+                    <Label htmlFor={`name.${index}`}>Nome</Label>
                     <Input
                       disabled
                       placeholder="Insira o nome"
                       id={`name.${index}`}
                       value={item.name}
-                      className="mt-1"
+                      className="mt-1 disabled:opacity-100 disabled:cursor-text"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor={`unit.${index}`}>Unidade *</Label>
-
-                    <Select name={`unit.${index}`} disabled value={item.unit}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Selecione uma opção" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="UN">UN</SelectItem>
-                        <SelectItem value="MT">MT</SelectItem>
-                        <SelectItem value="KG">KG</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor={`quantity.${index}`}>Quantidade *</Label>
+                    <Label htmlFor={`quantity.${index}`}>Quantidade</Label>
                     <Input
                       disabled
                       type="number"
                       placeholder="Insira a quantidade"
                       id={`quantity.${index}`}
                       value={item.quantity}
-                      className="mt-1"
+                      className="mt-1 disabled:opacity-100 disabled:cursor-text"
                     />
+                  </div>
+
+                  <div>
+                    <Label htmlFor={`unit.${index}`}>Unidade</Label>
+                    <div className="mt-1 flex h-10 w-16 items-center justify-between rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm">
+                      {item.unit}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -118,7 +102,11 @@ export default function Order() {
           <div className="flex flex-col gap-4 flex-[2]">
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
               <h2 className="font-medium">Detalhes do Pedido</h2>
-              <p className="text-terciary text-sm">{order.notes}</p>
+              <p className="text-terciary text-sm">
+                {!order.notes || order.notes === ''
+                  ? 'Nenhuma nota especificada.'
+                  : order.notes}
+              </p>
             </div>
 
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
@@ -148,11 +136,19 @@ export default function Order() {
                 </li>
                 <li className="flex gap-2 text-sm items-center">
                   <Phone size={16} />
-                  <span className="text-terciary">{customer.phone}</span>
+                  <span className="text-terciary">
+                    {!customer.phone || customer.phone === ''
+                      ? 'Telefone não informado.'
+                      : customer.phone}
+                  </span>
                 </li>
                 <li className="flex gap-2 text-sm items-center">
                   <EnvelopeSimple size={16} />
-                  <span className="text-terciary">{customer.email}</span>
+                  <span className="text-terciary">
+                    {!customer.email || customer.email === ''
+                      ? 'E-mail não informado.'
+                      : customer.email}
+                  </span>
                 </li>
                 <li className="flex gap-2 text-sm items-center">
                   <Wallet size={16} />
@@ -172,8 +168,54 @@ export default function Order() {
                 </span>
               </div>
             </div>
+
+            <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
+              <h2 className="font-medium">Controle de pagamento</h2>
+              {!order.payments || order.payments.length === 0 ? (
+                <p className="text-terciary text-sm">
+                  Nenhum registro de pagamento
+                </p>
+              ) : (
+                <>
+                  <div>
+                    {order.payments.map((payment) => (
+                      <div
+                        key={payment.id}
+                        className="flex gap-2 text-sm items-center text-terciary"
+                      >
+                        <span className="flex-1">
+                          {payment.fromBalance
+                            ? 'Saldo descontado'
+                            : `Pagamento ${payment.id}`}
+                        </span>
+                        <span>{formatCurrency(payment.value)}</span>
+                        <Button variant="ghost" className="h-10 w-10 p-0">
+                          <Trash size={20} />
+                        </Button>
+                      </div>
+                    ))}
+                    <button className="text-button-primary hover:text-button-primary-hover text-sm text-right w-full px-[10px]">
+                      Adicionar pagamento
+                    </button>
+                  </div>
+                  {/* Divider */}
+                  <div className="h-px bg-border my-4" />
+
+                  <div className="items-center justify-center flex">
+                    <span className="text-currency font-medium text-2xl">
+                      {formatCurrency(
+                        order.payments?.reduce(
+                          (total, payment) => total + payment.value,
+                          0,
+                        ),
+                      )}
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </Page.Container>
   )

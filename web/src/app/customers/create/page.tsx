@@ -1,5 +1,6 @@
 'use client'
 
+import CancelDialog from '@/components/dialogs/cancel-dialog'
 import InputError from '@/components/ui/input-error'
 
 import { customerFormSchema } from '@/lib/validations/customer-form-schema'
@@ -12,17 +13,6 @@ import { Button } from '@/components/shadcnui/button'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/shadcnui/alert-dialog'
 
 export default function CreateCustomer() {
   const router = useRouter()
@@ -58,33 +48,11 @@ export default function CreateCustomer() {
           <h1 className="text-2xl">Novo cliente</h1>
           <div className="flex gap-2">
             {isDirty ? (
-              <AlertDialog>
-                <AlertDialogTrigger>
-                  <Button variant="ghost">
-                    <span>Cancelar</span>
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Tem certeza que deseja cancelar?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Existem dados não salvos no formulário. Se você cancelar
-                      agora, todas as informações inseridas serão perdidas.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Voltar</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="bg-button-warning hover:bg-button-warning-hover"
-                      onClick={router.back}
-                    >
-                      Sim, cancelar
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <CancelDialog>
+                <Button variant="ghost">
+                  <span>Cancelar</span>
+                </Button>
+              </CancelDialog>
             ) : (
               <Button variant="ghost" onClick={router.back}>
                 <span>Cancelar</span>

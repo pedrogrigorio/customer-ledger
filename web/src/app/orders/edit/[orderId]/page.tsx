@@ -1,5 +1,6 @@
 'use client'
 
+import CancelDialog from '@/components/dialogs/cancel-dialog'
 import InputError from '@/components/ui/input-error'
 
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
@@ -10,23 +11,11 @@ import { useParams, useRouter } from 'next/navigation'
 import { customers } from '@/data/customers'
 import { Textarea } from '@/components/shadcnui/textarea'
 import { Button } from '@/components/shadcnui/button'
+import { orders } from '@/data/orders'
 import { Trash } from '@phosphor-icons/react/dist/ssr'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/shadcnui/alert-dialog'
-
 import {
   Select,
   SelectContent,
@@ -34,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcnui/select'
-import { orders } from '@/data/orders'
 
 export default function EditOrder() {
   const { orderId } = useParams()
@@ -86,33 +74,11 @@ export default function EditOrder() {
           <h1 className="text-2xl">Editar pedido</h1>
           <div className="flex gap-2">
             {isDirty ? (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="ghost">
-                    <span>Cancelar</span>
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Tem certeza que deseja cancelar?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Existem dados não salvos no formulário. Se você cancelar
-                      agora, todas as informações inseridas serão perdidas.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Voltar</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="bg-button-warning hover:bg-button-warning-hover"
-                      onClick={router.back}
-                    >
-                      Sim, cancelar
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <CancelDialog>
+                <Button variant="ghost">
+                  <span>Cancelar</span>
+                </Button>
+              </CancelDialog>
             ) : (
               <Button variant="ghost" onClick={router.back}>
                 <span>Cancelar</span>
@@ -150,10 +116,9 @@ export default function EditOrder() {
                   })
                   clearErrors()
                 }}
+                className="text-button-primary hover:text-button-primary-hover text-sm"
               >
-                <span className="text-button-primary hover:text-button-primary-hover text-sm">
-                  Adicionar novo item personalizado
-                </span>
+                Adicionar novo item personalizado
               </button>
             </div>
             <div className="mt-2 flex flex-col gap-4">

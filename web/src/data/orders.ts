@@ -12,13 +12,17 @@ export const orders: Order[] = [
       { id: 2, name: 'Produto 3', unit: 'MT', quantity: 14 },
       { id: 3, name: 'Produto 4', unit: 'UN', quantity: 500 },
     ],
+    payments: [
+      { id: 1, value: 15, fromBalance: true },
+      { id: 2, value: 40, fromBalance: false },
+      { id: 3, value: 120, fromBalance: false },
+    ],
     customerId: 1,
     createdAt: '2024-08-28T00:41:03.230Z',
   },
   {
     id: 2,
     status: OrderStatus.PAID,
-    notes: 'Incluir nota fiscal com pedido',
     items: [
       { id: 0, name: 'Produto 5', unit: 'KG', quantity: 2 },
       { id: 1, name: 'Produto 6', unit: 'UN', quantity: 10 },
@@ -29,7 +33,7 @@ export const orders: Order[] = [
   {
     id: 3,
     status: OrderStatus.PENDING,
-    notes: 'Entregar após confirmação do pagamento',
+    notes: '',
     items: [
       { id: 0, name: 'Produto 7', unit: 'MT', quantity: 5 },
       { id: 1, name: 'Produto 8', unit: 'UN', quantity: 1 },
