@@ -25,7 +25,7 @@ import {
   AlertDialogAction,
 } from '@/components/shadcnui/alert-dialog'
 
-export default function UpdateCustomer() {
+export default function EditCustomer() {
   const { customerId } = useParams()
   const router = useRouter()
 
@@ -62,7 +62,7 @@ export default function UpdateCustomer() {
     <Page.Container>
       <Page.Header>
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl">Novo cliente</h1>
+          <h1 className="text-2xl">Editar cliente</h1>
           <div className="flex gap-2">
             {isDirty ? (
               <AlertDialog>

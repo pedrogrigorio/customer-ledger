@@ -9,10 +9,11 @@ export const customers: Customer[] = [
     balance: 150,
     orders: 12,
     district: 'Jardins',
-    street: 'Rua 10',
+    street: 'Rua Tavares',
     number: '101',
     complement: 'Apartamento A',
-    landmark: 'Próximo ao bar do João',
+    landmark:
+      'Próximo ao bar do João na esquina e na rua da academia Fitness Life',
   },
   {
     id: 2,
@@ -21,6 +22,8 @@ export const customers: Customer[] = [
     email: 'carlos@example.com',
     balance: 300,
     orders: 7,
+    landmark:
+      'Próximo ao bar do João na esquina e na rua da academia Fitness Life',
   },
   {
     id: 3,
@@ -29,6 +32,10 @@ export const customers: Customer[] = [
     email: 'beatriz@example.com',
     balance: 90,
     orders: 16,
+    district: 'Cohab',
+    street: 'Rua Fulano',
+    number: '143',
+    complement: 'Casa 2',
   },
   {
     id: 4,
@@ -37,6 +44,8 @@ export const customers: Customer[] = [
     email: 'daniel@example.com',
     balance: 220,
     orders: 5,
+    street: 'Rua João Martins',
+    number: '55',
   },
   {
     id: 5,

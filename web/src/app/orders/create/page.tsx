@@ -15,6 +15,7 @@ import { Trash } from '@phosphor-icons/react/dist/ssr'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -242,7 +243,7 @@ export default function CreateOrder() {
           </div>
 
           {/* Order Details */}
-          <div className="border-primary flex flex-col gap-4 flex-[2] border px-6 py-4 rounded-xl text-primary">
+          <div className="border-primary flex h-fit flex-col gap-4 flex-[2] border px-6 py-4 rounded-xl text-primary">
             <h2 className="font-medium">Detalhes do Pedido</h2>
             <div className="mt-2 flex flex-col gap-4">
               <div>
