@@ -1,12 +1,11 @@
 'use client'
 
+import TableMoreActions from '../dropdown-menus/table-more-actions'
 import CustomPagination from '../ui/pagination'
 import TableSearchField from '../ui/table-search-field'
 import React from 'react'
 
 import { usePathname, useRouter } from 'next/navigation'
-import { CaretDown } from '@phosphor-icons/react/dist/ssr'
-import { Button } from '../shadcnui/button'
 import {
   getPaginationRowModel,
   ColumnFiltersState,
@@ -20,15 +19,6 @@ import {
 } from '@tanstack/react-table'
 
 import {
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-  DropdownMenu,
-} from '../shadcnui/dropdown-menu'
-
-import {
   TableHeader,
   TableBody,
   TableHead,
@@ -36,13 +26,17 @@ import {
   TableRow,
   Table,
 } from '@/components/shadcnui/table'
+import { Customer } from '@/types/customer'
+import { Order } from '@/types/order'
 
-interface DataTableProps<TData, TValue> {
+type DataType = Customer | Order
+
+interface DataTableProps<TData extends DataType, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData extends { id: number }, TValue>({
+export function DataTable<TData extends DataType, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -89,22 +83,11 @@ export function DataTable<TData extends { id: number }, TValue>({
           className="flex-1 max-w-sm"
         />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant={'outline'} className="gap-1 font-normal">
-              <span>Mais ações</span>
-              <CaretDown size={16} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-danger">
-              Excluir selecionados (
-              {table.getFilteredSelectedRowModel().rows.length})
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <TableMoreActions
+          data={table
+            .getFilteredSelectedRowModel()
+            .rows.map((row) => row.original)}
+        />
       </div>
 
       <div className="rounded-md border">

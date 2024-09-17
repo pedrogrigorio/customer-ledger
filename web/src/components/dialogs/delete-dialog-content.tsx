@@ -27,8 +27,8 @@ export default function DeleteDialogContent({
         </AlertDialogTitle>
         <AlertDialogDescription>
           {variant === 'customer'
-            ? 'Esta ação não pode ser desfeita. Isso vai excluir permanentemente o cliente e todos seus pedidos.'
-            : 'Esta ação não pode ser desfeita. Isso vai excluir permanentemente o pedido.'}
+            ? 'Esta ação não pode ser desfeita. Isso vai excluir o cliente e todos seus pedidos permanentemente.'
+            : 'Esta ação não pode ser desfeita. Isso vai excluir o pedido permanentemente.'}
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
