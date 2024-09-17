@@ -11,7 +11,7 @@ import { Customer } from '@/types/customer'
 import { columns } from '@/components/tables/columns'
 import { Button } from '@/components/shadcnui/button'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
-import { Tabs } from '@/types/customer-tabs'
+import { Tabs } from '@/types/tabs'
 import { Page } from '@/components/layout/page'
 
 const tabs = [

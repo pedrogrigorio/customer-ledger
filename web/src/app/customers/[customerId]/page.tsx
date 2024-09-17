@@ -1,13 +1,23 @@
 'use client'
 
+import TabsProvider from '@/components/ui/tabs/tabs-context'
+import Selectors from '@/components/ui/tabs/selectors'
+import Content from '@/components/ui/tabs/content'
+import Galery from '@/app/customers/[customerId]/_components/galery'
 import Link from 'next/link'
 
+import { formatCurrency } from '@/utils/formatCurrency'
 import { MoreVertical } from 'lucide-react'
+import { OrderStatus } from '@/enums/order-status'
 import { useParams } from 'next/navigation'
 import { customers } from '@/data/customers'
 import { Button } from '@/components/shadcnui/button'
+import { orders } from '@/data/orders'
+import { useRef } from 'react'
+import { Tabs } from '@/types/tabs'
 import { Page } from '@/components/layout/page'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
+
 import {
   AlertDialogHeader,
   AlertDialogFooter,
@@ -27,15 +37,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from '@/components/shadcnui/dropdown-menu'
-import { formatCurrency } from '@/utils/formatCurrency'
-import Selectors from '@/components/ui/tabs/selectors'
-import TabsProvider from '@/components/ui/tabs/tabs-context'
-import { Tabs } from '@/types/customer-tabs'
-import Content from '@/components/ui/tabs/content'
-import Galery from '@/app/customers/[customerId]/_components/galery'
-import { orders } from '@/data/orders'
-import { OrderStatus } from '@/enums/order-status'
-import { useRef } from 'react'
 
 const tabs = [
   {
@@ -61,7 +62,7 @@ export default function Customer() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   const customer = customers.find(
-    (customer) => customer.id === parseInt(customerId[0]),
+    (customer) => customer.id === Number(customerId),
   )
 
   if (!customer) return null
