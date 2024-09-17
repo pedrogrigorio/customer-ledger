@@ -2,6 +2,8 @@
 
 import InputError from '@/components/ui/input-error'
 
+import { customerFormSchema } from '@/lib/validations/customer-form-schema'
+import { CustomerFormData } from '@/types/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { phoneMask } from '@/utils/phoneMask'
@@ -10,7 +12,6 @@ import { Button } from '@/components/shadcnui/button'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
-import { z } from 'zod'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,27 +23,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/shadcnui/alert-dialog'
-
-const customerFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'Insira um nome com pelo menos 2 caracteres.' }),
-  phone: z.string(),
-  email: z.union([
-    z.literal(''),
-    z.string().email({ message: 'Digite um e-mail válido' }),
-  ]),
-  district: z.string().optional(),
-  street: z.string().optional(),
-  number: z
-    .string()
-    .max(6, { message: 'O campo "Número" aceita no máximo 6 caracteres.' })
-    .optional(),
-  complement: z.string().optional(),
-  landmark: z.string().optional(),
-})
-
-type CustomerFormData = z.infer<typeof customerFormSchema>
 
 export default function CreateCustomer() {
   const router = useRouter()

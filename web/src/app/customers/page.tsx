@@ -3,15 +3,15 @@
 import TabsProvider from '@/components/ui/tabs/tabs-context'
 import Selectors from '@/components/ui/tabs/selectors'
 import Content from '@/components/ui/tabs/content'
+import Link from 'next/link'
 
+import { DataTable } from '@/components/tables/data-table'
+import { customers } from '@/data/customers'
+import { Customer } from '@/types/customer'
+import { columns } from '@/components/tables/columns'
+import { Button } from '@/components/shadcnui/button'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/customer-tabs'
-import { columns } from '@/components/tables/columns'
-import { DataTable } from '@/components/tables/data-table'
-import { Customer } from '@/types/customer'
-import { customers } from '@/data/customers'
-import { Button } from '@/components/shadcnui/button'
-import Link from 'next/link'
 import { Page } from '@/components/layout/page'
 
 const tabs = [

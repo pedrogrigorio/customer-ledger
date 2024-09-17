@@ -3,6 +3,8 @@
 import InputError from '@/components/ui/input-error'
 
 import { useParams, useRouter } from 'next/navigation'
+import { customerFormSchema } from '@/lib/validations/customer-form-schema'
+import { CustomerFormData } from '@/types/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { customers } from '@/data/customers'
 import { phoneMask } from '@/utils/phoneMask'
@@ -11,7 +13,6 @@ import { Button } from '@/components/shadcnui/button'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
-import { z } from 'zod'
 import {
   AlertDialogHeader,
   AlertDialogFooter,
@@ -24,31 +25,13 @@ import {
   AlertDialogAction,
 } from '@/components/shadcnui/alert-dialog'
 
-const customerFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'Insira um nome com pelo menos 2 caracteres.' }),
-  phone: z.string(),
-  email: z.union([
-    z.literal(''),
-    z.string().email({ message: 'Digite um e-mail válido' }),
-  ]),
-  district: z.string(),
-  street: z.string(),
-  number: z
-    .string()
-    .max(6, { message: 'O campo "Número" aceita no máximo 6 caracteres.' }),
-  complement: z.string(),
-  landmark: z.string(),
-})
-
-type CustomerFormData = z.infer<typeof customerFormSchema>
-
 export default function UpdateCustomer() {
-  const { id } = useParams()
+  const { customerId } = useParams()
   const router = useRouter()
 
-  const customer = customers.find((customer) => customer.id === parseInt(id[0]))
+  const customer = customers.find(
+    (customer) => customer.id === Number(customerId),
+  )
 
   const customerForm = useForm<CustomerFormData>({
     resolver: zodResolver(customerFormSchema),
@@ -83,7 +66,7 @@ export default function UpdateCustomer() {
           <div className="flex gap-2">
             {isDirty ? (
               <AlertDialog>
-                <AlertDialogTrigger>
+                <AlertDialogTrigger asChild>
                   <Button variant="ghost">
                     <span>Cancelar</span>
                   </Button>

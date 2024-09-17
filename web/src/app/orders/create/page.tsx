@@ -3,6 +3,8 @@
 import InputError from '@/components/ui/input-error'
 
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import { orderFormSchema } from '@/lib/validations/order-form-schema'
+import { OrderFormData } from '@/types/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { OrderStatus } from '@/enums/order-status'
 import { useRouter } from 'next/navigation'
@@ -13,7 +15,6 @@ import { Trash } from '@phosphor-icons/react/dist/ssr'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
-import { z } from 'zod'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -33,27 +34,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcnui/select'
-
-const itemSchema = z.object({
-  name: z.string().min(1, { message: 'Campo obrigatório.' }),
-  unit: z.enum(['KG', 'MT', 'UN'], {
-    message: 'Selecione uma opção.',
-  }),
-  quantity: z
-    .number({ message: 'Campo obrigatório.' })
-    .positive({ message: 'A quantidade deve ser maior que 0.' }),
-})
-
-const orderFormSchema = z.object({
-  items: z
-    .array(itemSchema)
-    .nonempty({ message: 'Pelo menos um item deve ser adicionado.' }),
-  notes: z.string(),
-  customer: z.number({ message: 'Campo obrigatório.' }),
-  status: z.enum(['PENDING', 'PAID'], { message: 'Selecione um status.' }),
-})
-
-type OrderFormData = z.infer<typeof orderFormSchema>
 
 export default function CreateOrder() {
   const router = useRouter()
