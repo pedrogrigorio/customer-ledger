@@ -5,10 +5,10 @@ import Selectors from '@/components/ui/tabs/selectors'
 import Content from '@/components/ui/tabs/content'
 import Link from 'next/link'
 
+import { costumerColumns } from '@/components/tables/customer-columns'
 import { DataTable } from '@/components/tables/data-table'
 import { customers } from '@/data/customers'
 import { Customer } from '@/types/customer'
-import { columns } from '@/components/tables/columns'
 import { Button } from '@/components/shadcnui/button'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/tabs'
@@ -61,15 +61,15 @@ export default function Customers() {
       <TabsProvider tabs={tabs}>
         <Selectors />
         <Content value="all">
-          <DataTable columns={columns} data={data} />
+          <DataTable columns={costumerColumns} data={data} />
         </Content>
 
         <Content value="pendingOrder">
-          <DataTable columns={columns} data={data.slice(13, 30)} />
+          <DataTable columns={costumerColumns} data={data.slice(13, 30)} />
         </Content>
 
         <Content value="noPendingOrder">
-          <DataTable columns={columns} data={data.slice(-28)} />
+          <DataTable columns={costumerColumns} data={data.slice(-28)} />
         </Content>
       </TabsProvider>
     </Page.Container>

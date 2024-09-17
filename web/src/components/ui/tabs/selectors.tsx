@@ -1,7 +1,7 @@
 import Badge from '../badge'
 
-import { cn } from '@/lib/utils'
 import { useTabsContext } from './tabs-context'
+import { cn } from '@/lib/utils'
 
 export default function Selectors() {
   const { tabs, selectedTab, setSelectedTab } = useTabsContext()

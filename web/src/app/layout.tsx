@@ -1,5 +1,5 @@
-import Sidebar from '@/components/layout/sidebar'
 import './globals.css'
+import Sidebar from '@/components/layout/sidebar'
 
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'

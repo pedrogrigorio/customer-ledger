@@ -1,10 +1,10 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { Button } from '@/components/shadcnui/button'
 import {
+  PaginationEllipsis,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationEllipsis,
   Pagination,
 } from '@/components/shadcnui/pagination'
 

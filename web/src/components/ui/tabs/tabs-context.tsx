@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
-import { Tabs } from '@/types/customer-tabs'
+import { Tabs } from '@/types/tabs'
 
 interface TabsProviderProps {
   children?: ReactNode

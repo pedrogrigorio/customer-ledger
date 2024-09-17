@@ -1,12 +1,13 @@
+import CustomerOptions from '../dropdown-menus/customer-options'
+
+import { formatCurrency } from '@/utils/formatCurrency'
 import { ArrowUpDown } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '../shadcnui/checkbox'
 import { Customer } from '@/types/customer'
 import { Button } from '../shadcnui/button'
-import { formatCurrency } from '@/utils/formatCurrency'
-import CustomerOptions from '../dropdown-menus/customer-options'
 
-export const columns: ColumnDef<Customer>[] = [
+export const costumerColumns: ColumnDef<Customer>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -52,10 +53,22 @@ export const columns: ColumnDef<Customer>[] = [
   {
     accessorKey: 'phone',
     header: 'Telefone',
+    cell: ({ row }) => {
+      const phone = row.getValue('phone') as string
+      const notExists = !phone || phone === ''
+
+      return <span className="text-center">{notExists ? '-' : phone}</span>
+    },
   },
   {
     accessorKey: 'email',
     header: 'E-mail',
+    cell: ({ row }) => {
+      const email = row.getValue('email') as string
+      const notExists = !email || email === ''
+
+      return <span className="text-center">{notExists ? '-' : email}</span>
+    },
   },
   {
     accessorKey: 'balance',

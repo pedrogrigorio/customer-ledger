@@ -34,7 +34,7 @@ export default function EditOrder() {
     resolver: zodResolver(orderFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      customer: order?.customerId,
+      customer: order?.customer.id,
       notes: order?.notes ?? '',
       status: order?.status,
       items: order?.items ?? [

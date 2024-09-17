@@ -1,10 +1,11 @@
 'use client'
 
-import { RefObject, useEffect, useRef } from 'react'
-import CustomPagination from '../../../../../components/ui/pagination'
+import CustomPagination from '@/components/ui/pagination'
 import Card from './card'
-import { Order } from '@/types/order'
+
 import { useRouter, useSearchParams } from 'next/navigation'
+import { RefObject, useEffect, useRef } from 'react'
+import { Order } from '@/types/order'
 
 interface GaleryProps {
   data: Order[]

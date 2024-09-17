@@ -5,8 +5,8 @@ import OrderOptions from '@/components/dropdown-menus/order-options'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { OrderStatus } from '@/enums/order-status'
 import { formatDate } from '@/utils/formatDate'
-import { customers } from '@/data/customers'
 import { useParams } from 'next/navigation'
+import { Button } from '@/components/shadcnui/button'
 import { orders } from '@/data/orders'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
@@ -20,7 +20,6 @@ import {
   Trash,
   Wallet,
 } from '@phosphor-icons/react/dist/ssr'
-import { Button } from '@/components/shadcnui/button'
 
 export default function Order() {
   const { orderId } = useParams()
@@ -29,11 +28,7 @@ export default function Order() {
 
   if (!order) return null
 
-  const customer = customers.find(
-    (customer) => customer.id === order.customerId,
-  )
-
-  if (!customer) return null
+  const customer = order.customer
 
   const address = [
     customer.district,

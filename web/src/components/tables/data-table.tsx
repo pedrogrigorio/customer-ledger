@@ -4,38 +4,38 @@ import CustomPagination from '../ui/pagination'
 import TableSearchField from '../ui/table-search-field'
 import React from 'react'
 
+import { usePathname, useRouter } from 'next/navigation'
 import { CaretDown } from '@phosphor-icons/react/dist/ssr'
 import { Button } from '../shadcnui/button'
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
   getSortedRowModel,
-  SortingState,
+  getCoreRowModel,
   useReactTable,
+  SortingState,
+  flexRender,
+  ColumnDef,
 } from '@tanstack/react-table'
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/shadcnui/table'
-
-import {
-  DropdownMenu,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenu,
 } from '../shadcnui/dropdown-menu'
-import { usePathname, useRouter } from 'next/navigation'
+
+import {
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableCell,
+  TableRow,
+  Table,
+} from '@/components/shadcnui/table'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

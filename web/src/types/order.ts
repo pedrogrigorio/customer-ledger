@@ -1,13 +1,14 @@
 import { OrderStatus } from '@/enums/order-status'
-import { Item } from './item'
+import { Customer } from './customer'
 import { Payment } from './payment'
+import { Item } from './item'
 
 export interface Order {
   id: number
   status: OrderStatus
   notes?: string
-  items: Item[]
-  customerId: number
   createdAt: string
+  items: Item[]
+  customer: Customer
   payments?: Payment[]
 }
