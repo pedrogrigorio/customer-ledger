@@ -240,6 +240,7 @@ export default function CreateOrder() {
                 />
                 <InputError error={errors.customer?.message?.toString()} />
               </div>
+
               <div>
                 <Label htmlFor="notes">Notas</Label>
                 <Textarea
@@ -250,6 +251,7 @@ export default function CreateOrder() {
                 />
                 <InputError error={errors.notes?.message?.toString()} />
               </div>
+
               <div>
                 <Label htmlFor="status">Status *</Label>
                 <Controller

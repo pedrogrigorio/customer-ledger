@@ -15,15 +15,23 @@ import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
 import { User } from 'lucide-react'
 import {
-  ClockClockwise,
   EnvelopeSimple,
+  ClockClockwise,
+  PencilSimple,
   MapPin,
-  Phone,
-  Trash,
   Wallet,
+  Trash,
+  Phone,
 } from '@phosphor-icons/react/dist/ssr'
+import { useState } from 'react'
+import UpdateStatusForm from '@/components/forms/update-status-form'
+import { NotesFormData, StatusFormData } from '@/types/validations'
+import UpdateNotesForm from '@/components/forms/update-notes-form'
 
 export default function Order() {
+  const [editStatus, setEditStatus] = useState(false)
+  const [editNotes, setEditNotes] = useState(false)
+
   const { orderId } = useParams()
 
   const order = orders.find((order) => order.id === Number(orderId))
@@ -41,6 +49,16 @@ export default function Order() {
 
   const onPaymentDelete = (payment: Payment) => {
     console.log(payment)
+  }
+
+  const onStatusUpdate = (data: StatusFormData) => {
+    console.log(data)
+    setEditStatus(false)
+  }
+
+  const onNotesUpdate = (data: NotesFormData) => {
+    console.log(data)
+    setEditNotes(false)
   }
 
   return (
@@ -103,12 +121,33 @@ export default function Order() {
           <div className="flex flex-col gap-4 flex-[2]">
             {/* Notes */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
-              <h2 className="font-medium">Notas</h2>
-              <p className="text-terciary text-sm">
-                {!order.notes || order.notes === ''
-                  ? 'Nenhuma nota especificada.'
-                  : order.notes}
-              </p>
+              {/* Header */}
+              <div className="flex items-center justify-between">
+                <h2 className="font-medium">Notas</h2>
+                {!editNotes && (
+                  <Button
+                    variant="ghost"
+                    className="h-8 w-8 p-0 text-terciary"
+                    onClick={() => setEditNotes(true)}
+                  >
+                    <PencilSimple size={16} />
+                  </Button>
+                )}
+              </div>
+
+              {/* Body */}
+              {!editNotes ? (
+                <p className="text-terciary text-sm">
+                  {!order.notes || order.notes === ''
+                    ? 'Nenhuma nota especificada.'
+                    : order.notes}
+                </p>
+              ) : (
+                <UpdateNotesForm
+                  notes={order.notes ?? ''}
+                  onSubmit={onNotesUpdate}
+                />
+              )}
             </div>
 
             {/* Customer */}
@@ -164,18 +203,41 @@ export default function Order() {
 
             {/* Order Status */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
-              <h2 className="font-medium">Status</h2>
-              <div className="flex gap-2 text-sm items-center">
-                <ClockClockwise size={16} />
-                <span>
-                  {order.status === OrderStatus.PENDING ? 'Pendente' : 'Pago'}
-                </span>
+              {/* Header */}
+              <div className="flex items-center justify-between">
+                <h2 className="font-medium">Status</h2>
+                {!editStatus && (
+                  <Button
+                    variant="ghost"
+                    className="h-8 w-8 p-0 text-terciary"
+                    onClick={() => setEditStatus(true)}
+                  >
+                    <PencilSimple size={16} />
+                  </Button>
+                )}
               </div>
+
+              {/* Body */}
+              {!editStatus ? (
+                <div className="flex gap-2 text-sm items-center">
+                  <ClockClockwise size={16} />
+                  <span>
+                    {order.status === OrderStatus.PENDING ? 'Pendente' : 'Pago'}
+                  </span>
+                </div>
+              ) : (
+                <UpdateStatusForm
+                  status={order.status}
+                  onSubmit={onStatusUpdate}
+                />
+              )}
             </div>
 
             {/* Payments */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
               <h2 className="font-medium">Controle de pagamento</h2>
+
+              {/* Payments */}
               <div>
                 {!order.payments || order.payments.length === 0 ? (
                   <p className="text-terciary text-sm">
@@ -191,16 +253,17 @@ export default function Order() {
                       <span>{formatCurrency(payment.value)}</span>
                       <Button
                         variant="ghost"
-                        className="h-10 w-10 p-0"
+                        className="h-8 w-8 p-0"
                         onClick={() => onPaymentDelete(payment)}
                       >
-                        <Trash size={20} />
+                        <Trash size={16} />
                       </Button>
                     </div>
                   ))
                 )}
               </div>
 
+              {/* Add payment */}
               <div className="flex justify-end items-center">
                 <AddPaymentDialog>
                   <button className="text-button-primary hover:text-button-primary-hover text-sm text-right px-[10px]">
@@ -209,6 +272,7 @@ export default function Order() {
                 </AddPaymentDialog>
               </div>
 
+              {/* Total payment */}
               {order.payments && order.payments.length > 0 && (
                 <>
                   {/* Divider */}

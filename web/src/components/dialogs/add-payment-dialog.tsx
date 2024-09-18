@@ -38,7 +38,7 @@ export default function AddPaymentDialog({ children }: AddPaymentDialogProps) {
             <Button
               type="submit"
               form="balance-form"
-              className="bg-button-warning hover:bg-button-warning-hover"
+              className="bg-button-primary hover:bg-button-primary-hover"
             >
               Adicionar
             </Button>
