@@ -6,32 +6,69 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Customer {
-  id      Int     @id @default(autoincrement())
-  name    String
-  email   String?
-  phone   String?
-  address String?
-  imgUrl  String? @map("img_url")
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String?
+  phone String?
 
-  transactions Transaction[]
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId Int
+
+  Order Order[]
 
   @@map("customers")
 }
 
-model Transaction {
-  id          Int      @id @default(autoincrement())
-  value       Float
-  description String?
-  type        Int
-  createdAt   DateTime @default(now()) @map("created_at")
+model Order {
+  id        Int      @id @default(autoincrement())
+  notes     String?
+  status    String
+  createdAt DateTime @default(now()) @map("created_at")
 
-  Customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId Int      @map("customer_id")
+  items      Item[]
+  payments   Payment[]
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId Int?
 
-  @@map("transactions")
+  @@map("orders")
+}
+
+model Item {
+  id       Int    @id @default(autoincrement())
+  name     String
+  unit     String
+  quantity Int
+
+  Order   Order? @relation(fields: [orderId], references: [id])
+  orderId Int?
+
+  @@map("items")
+}
+
+model Payment {
+  id    Int   @id @default(autoincrement())
+  value Float
+
+  Order   Order? @relation(fields: [orderId], references: [id])
+  orderId Int?
+
+  @@map("payments")
+}
+
+model Address {
+  id         Int     @id @default(autoincrement())
+  district   String?
+  street     String?
+  number     String?
+  complement String?
+  landmark   String?
+
+  Customer Customer[]
+
+  @@map("addresses")
 }
