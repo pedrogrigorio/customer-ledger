@@ -82,7 +82,7 @@ export const costumerColumns: ColumnDef<Customer>[] = [
   },
   {
     accessorKey: 'orders',
-    header: 'Pedidos',
+    accessorFn: (row) => row.orders.length,
   },
   {
     id: 'actions',
