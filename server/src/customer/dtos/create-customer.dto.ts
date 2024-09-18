@@ -10,7 +10,13 @@ export class CreateCustomerDto {
 
   phone: string;
 
-  address: string;
+  district: string;
 
-  imgUrl: string;
+  street: string;
+
+  number: string;
+
+  complement: string;
+
+  landmark: string;
 }

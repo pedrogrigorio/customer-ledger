@@ -1,14 +1,18 @@
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
+import { DeleteCustomersDto } from '../dtos/delete-customers.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
 import { CustomerService } from '../services/customer.service';
 import {
-  Body,
   Controller,
   Delete,
-  Get,
   Param,
+  Body,
   Post,
   Put,
+  Get,
+  Query,
+  ParseBoolPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 
 @Controller('customers')
@@ -21,10 +25,14 @@ export class CustomerController {
   }
 
   @Get(':id')
-  async getCustomerById(@Param('id') customerId: string) {
+  async getCustomerById(
+    @Param('id') customerId: string,
+    @Query('includeOrders', new DefaultValuePipe(false), ParseBoolPipe)
+    includeOrders: boolean,
+  ) {
     const id = parseInt(customerId);
 
-    return await this.customerService.getCustomerById(id);
+    return await this.customerService.getCustomerById(id, includeOrders);
   }
 
   @Post()
@@ -47,5 +55,12 @@ export class CustomerController {
     const id = parseInt(customerId);
 
     await this.customerService.deleteCustomer(id);
+  }
+
+  @Delete()
+  async deleteCustomers(@Body() deleteCustomersDto: DeleteCustomersDto) {
+    const { customerIds } = deleteCustomersDto;
+
+    return await this.customerService.deleteCustomers(customerIds);
   }
 }

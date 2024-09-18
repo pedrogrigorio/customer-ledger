@@ -11,15 +11,14 @@ datasource db {
 }
 
 model Customer {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String?
-  phone String?
+  id      Int     @id @default(autoincrement())
+  name    String
+  email   String?
+  phone   String?
+  balance Float   @default(0)
 
-  address   Address? @relation(fields: [addressId], references: [id])
-  addressId Int
-
-  Order Order[]
+  orders  Order[]
+  address Address?
 
   @@map("customers")
 }
@@ -32,8 +31,8 @@ model Order {
 
   items      Item[]
   payments   Payment[]
-  Customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId Int?
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId Int
 
   @@map("orders")
 }
@@ -44,7 +43,7 @@ model Item {
   unit     String
   quantity Int
 
-  Order   Order? @relation(fields: [orderId], references: [id])
+  order   Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId Int?
 
   @@map("items")
@@ -54,7 +53,7 @@ model Payment {
   id    Int   @id @default(autoincrement())
   value Float
 
-  Order   Order? @relation(fields: [orderId], references: [id])
+  order   Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId Int?
 
   @@map("payments")
@@ -68,7 +67,8 @@ model Address {
   complement String?
   landmark   String?
 
-  Customer Customer[]
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId Int      @unique
 
   @@map("addresses")
 }

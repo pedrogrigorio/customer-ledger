@@ -11,8 +11,12 @@ export class CustomerRepository {
     return await this.prisma.customer.findMany();
   }
 
-  async findById(customerId: number) {
+  async findById(customerId: number, includeOrders = false) {
     return await this.prisma.customer.findUnique({
+      include: {
+        address: true,
+        orders: includeOrders,
+      },
       where: {
         id: customerId,
       },
@@ -24,9 +28,16 @@ export class CustomerRepository {
       data: {
         name: customer.name,
         email: customer.email,
-        address: customer.address,
-        imgUrl: customer.imgUrl,
         phone: customer.phone,
+        address: {
+          create: {
+            complement: customer.complement,
+            district: customer.district,
+            landmark: customer.landmark,
+            street: customer.street,
+            number: customer.number,
+          },
+        },
       },
     });
   }
@@ -39,9 +50,16 @@ export class CustomerRepository {
       data: {
         name: customer.name,
         email: customer.email,
-        address: customer.address,
-        imgUrl: customer.imgUrl,
         phone: customer.phone,
+        address: {
+          update: {
+            complement: customer.complement,
+            district: customer.district,
+            landmark: customer.landmark,
+            street: customer.street,
+            number: customer.number,
+          },
+        },
       },
     });
   }
@@ -50,6 +68,16 @@ export class CustomerRepository {
     return await this.prisma.customer.delete({
       where: {
         id: customerId,
+      },
+    });
+  }
+
+  async deleteMany(customerIds: number[]) {
+    return await this.prisma.customer.deleteMany({
+      where: {
+        id: {
+          in: customerIds,
+        },
       },
     });
   }

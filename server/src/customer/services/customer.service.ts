@@ -12,8 +12,11 @@ export class CustomerService {
     return customers;
   }
 
-  async getCustomerById(customerId: number) {
-    const customer = await this.customerRepository.findById(customerId);
+  async getCustomerById(customerId: number, includeOrders: boolean) {
+    const customer = await this.customerRepository.findById(
+      customerId,
+      includeOrders,
+    );
 
     if (!customer) {
       throw new Error(`Customer not found`);
@@ -51,5 +54,18 @@ export class CustomerService {
     }
 
     await this.customerRepository.delete(customerId);
+  }
+
+  async deleteCustomers(customerIds: number[]) {
+    for (const customerId of customerIds) {
+      const existingCustomer =
+        await this.customerRepository.findById(customerId);
+
+      if (!existingCustomer) {
+        throw new Error(`Customer with ID ${customerId} not found`);
+      }
+    }
+
+    await this.customerRepository.deleteMany(customerIds);
   }
 }
