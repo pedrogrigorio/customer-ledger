@@ -66,14 +66,14 @@ export const orderColumns: ColumnDef<Order>[] = [
 
       if (status === OrderStatus.PENDING) {
         return (
-          <div className="bg-status-pending rounded-full bg-opacity-25 px-4 w-fit border border-status-pending flex gap-2 items-center justify-center h-10">
+          <div className="bg-status-pending rounded-full bg-opacity-25 px-4 w-fit border border-status-pending flex gap-2 items-center justify-center h-8">
             <div className="w-2 h-2 rounded-full bg-status-pending" />
             <span className="text-status-pending text-sm">Pendente</span>
           </div>
         )
       } else {
         return (
-          <div className="bg-status-paid rounded-full bg-opacity-25 px-4 w-fit flex gap-2 border border-status-paid items-center justify-center h-10">
+          <div className="bg-status-paid rounded-full bg-opacity-25 px-4 w-fit flex gap-2 border border-status-paid items-center justify-center h-8">
             <div className="w-2 h-2 rounded-full bg-status-paid" />
             <span className="text-status-paid text-sm">Pago</span>
           </div>

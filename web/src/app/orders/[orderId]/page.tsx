@@ -1,11 +1,13 @@
 'use client'
 
+import AddPaymentDialog from '@/components/dialogs/add-payment-dialog'
 import OrderOptions from '@/components/dropdown-menus/order-options'
 
 import { formatCurrency } from '@/utils/formatCurrency'
 import { OrderStatus } from '@/enums/order-status'
 import { formatDate } from '@/utils/formatDate'
 import { useParams } from 'next/navigation'
+import { Payment } from '@/types/payment'
 import { Button } from '@/components/shadcnui/button'
 import { orders } from '@/data/orders'
 import { Input } from '@/components/shadcnui/input'
@@ -20,7 +22,6 @@ import {
   Trash,
   Wallet,
 } from '@phosphor-icons/react/dist/ssr'
-import AddPaymentDialog from '@/components/dialogs/add-payment-dialog'
 
 export default function Order() {
   const { orderId } = useParams()
@@ -37,6 +38,10 @@ export default function Order() {
     customer.number,
     customer.complement,
   ].filter(Boolean)
+
+  const onPaymentDelete = (payment: Payment) => {
+    console.log(payment)
+  }
 
   return (
     <Page.Container>
@@ -171,32 +176,41 @@ export default function Order() {
             {/* Payments */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
               <h2 className="font-medium">Controle de pagamento</h2>
-              {!order.payments || order.payments.length === 0 ? (
-                <p className="text-terciary text-sm">
-                  Nenhum registro de pagamento
-                </p>
-              ) : (
-                <>
-                  <div>
-                    {order.payments.map((payment) => (
-                      <div
-                        key={payment.id}
-                        className="flex gap-2 text-sm items-center text-terciary"
+              <div>
+                {!order.payments || order.payments.length === 0 ? (
+                  <p className="text-terciary text-sm">
+                    Nenhum registro de pagamento encontrado.
+                  </p>
+                ) : (
+                  order.payments.map((payment) => (
+                    <div
+                      key={payment.id}
+                      className="flex gap-2 text-sm items-center text-terciary"
+                    >
+                      <span className="flex-1">Pagamento {payment.id}</span>
+                      <span>{formatCurrency(payment.value)}</span>
+                      <Button
+                        variant="ghost"
+                        className="h-10 w-10 p-0"
+                        onClick={() => onPaymentDelete(payment)}
                       >
-                        <span className="flex-1">Pagamento {payment.id}</span>
-                        <span>{formatCurrency(payment.value)}</span>
-                        <Button variant="ghost" className="h-10 w-10 p-0">
-                          <Trash size={20} />
-                        </Button>
-                      </div>
-                    ))}
-                    <AddPaymentDialog>
-                      <button className="text-button-primary hover:text-button-primary-hover text-sm text-right w-full px-[10px]">
-                        Adicionar pagamento
-                      </button>
-                    </AddPaymentDialog>
-                  </div>
+                        <Trash size={20} />
+                      </Button>
+                    </div>
+                  ))
+                )}
+              </div>
 
+              <div className="flex justify-end items-center">
+                <AddPaymentDialog>
+                  <button className="text-button-primary hover:text-button-primary-hover text-sm text-right px-[10px]">
+                    Adicionar pagamento
+                  </button>
+                </AddPaymentDialog>
+              </div>
+
+              {order.payments && order.payments.length > 0 && (
+                <>
                   {/* Divider */}
                   <div className="h-px bg-border my-4" />
 

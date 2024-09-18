@@ -8,15 +8,15 @@ import {
   AlertDialogTitle,
 } from '@/components/shadcnui/alert-dialog'
 
-interface DeleteDialogContentProps {
+interface DeleteDialogProps {
   onConfirm: () => void
   variant: 'customer' | 'order'
 }
 
-export default function DeleteDialogContent({
+export default function DeleteDialog({
   onConfirm,
   variant,
-}: DeleteDialogContentProps) {
+}: DeleteDialogProps) {
   return (
     <AlertDialogContent>
       <AlertDialogHeader>

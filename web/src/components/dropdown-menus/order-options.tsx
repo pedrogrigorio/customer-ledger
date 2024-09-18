@@ -1,4 +1,4 @@
-import DeleteDialogContent from '../dialogs/delete-dialog-content'
+import DeleteDialog from '../dialogs/delete-dialog'
 import Link from 'next/link'
 
 import { MoreHorizontal, MoreVertical } from 'lucide-react'
@@ -102,7 +102,7 @@ export default function OrderOptions({
       </DropdownMenu>
 
       {/* Dialog */}
-      <DeleteDialogContent onConfirm={onDelete} variant="order" />
+      <DeleteDialog onConfirm={onDelete} variant="order" />
     </AlertDialog>
   )
 }

@@ -1,15 +1,13 @@
-import UpdateBalanceDialogContent from '../dialogs/update-balance-dialog-content'
-import DeleteDialogContent from '../dialogs/delete-dialog-content'
+import UpdateBalanceDialog from '../dialogs/update-balance-dialog'
+import DeleteDialog from '../dialogs/delete-dialog'
 import Link from 'next/link'
 
 import { MoreHorizontal, MoreVertical } from 'lucide-react'
+import { AlertDialog } from '@/components/shadcnui/alert-dialog'
+import { useDialog } from '@/hooks/use-dialogs'
 import { Customer } from '@/types/customer'
+import { Dialog } from '../shadcnui/dialog'
 import { Button } from '../shadcnui/button'
-import {
-  AlertDialogTrigger,
-  AlertDialog,
-} from '@/components/shadcnui/alert-dialog'
-
 import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -45,8 +43,12 @@ export default function CustomerOptions({
     console.log(customer)
   }
 
+  const balanceDialog = useDialog()
+  const deleteDialog = useDialog()
+
   return (
-    <AlertDialog>
+    <>
+      {/* <AlertDialog> */}
       {/* Dropdown */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -92,15 +94,16 @@ export default function CustomerOptions({
 
           {/* Edit balance option */}
           {showBalanceItem && (
-            <UpdateBalanceDialogContent balance={customer.balance}>
-              <DropdownMenuItem
-                onSelect={(e) => e.preventDefault()}
-                className="gap-2"
-              >
-                <Wallet size={16} />
-                <span>Editar saldo</span>
-              </DropdownMenuItem>
-            </UpdateBalanceDialogContent>
+            <DropdownMenuItem
+              className="gap-2"
+              onClick={(event) => {
+                event.stopPropagation()
+                balanceDialog.trigger()
+              }}
+            >
+              <Wallet size={16} />
+              <span>Editar saldo</span>
+            </DropdownMenuItem>
           )}
 
           {/* Edit option */}
@@ -118,22 +121,29 @@ export default function CustomerOptions({
           <DropdownMenuSeparator />
 
           {/* Delete option */}
-          <DropdownMenuItem asChild>
-            <AlertDialogTrigger
-              className="w-full text-danger gap-2"
-              onClick={(event) => {
-                event.stopPropagation()
-              }}
-            >
-              <TrashSimple size={16} />
-              <span>{useLongLabel ? 'Excluir cliente' : 'Excluir'}</span>
-            </AlertDialogTrigger>
+          <DropdownMenuItem
+            onClick={(event) => {
+              event.stopPropagation()
+              deleteDialog.trigger()
+            }}
+            className="text-danger gap-2"
+          >
+            <TrashSimple size={16} />
+            <span>{useLongLabel ? 'Excluir cliente' : 'Excluir'}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Dialog Content */}
-      <DeleteDialogContent onConfirm={onDelete} variant="customer" />
-    </AlertDialog>
+      <Dialog {...balanceDialog.props}>
+        <UpdateBalanceDialog
+          balance={customer.balance}
+          isOpen={balanceDialog.props.open}
+        />
+      </Dialog>
+
+      <AlertDialog {...deleteDialog.props}>
+        <DeleteDialog onConfirm={onDelete} variant="customer" />
+      </AlertDialog>
+    </>
   )
 }

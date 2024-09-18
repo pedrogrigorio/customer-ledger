@@ -8,17 +8,17 @@ import {
   AlertDialogTitle,
 } from '@/components/shadcnui/alert-dialog'
 
-interface DeleteManyDialogContentProps {
+interface DeleteManyDialogProps {
   onConfirm: () => void
   quantity: number
   variant: 'customer' | 'order' | 'unknown'
 }
 
-export default function DeleteManyDialogContent({
+export default function DeleteManyDialog({
   onConfirm,
   quantity,
   variant,
-}: DeleteManyDialogContentProps) {
+}: DeleteManyDialogProps) {
   if (variant === 'unknown') {
     return (
       <AlertDialogContent>

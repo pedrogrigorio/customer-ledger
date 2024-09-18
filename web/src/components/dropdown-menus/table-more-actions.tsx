@@ -1,4 +1,4 @@
-import DeleteManyDialogContent from '../dialogs/delete-many-dialog-content'
+import DeleteManyDialog from '../dialogs/delete-many-dialog'
 
 import { AlertDialog, AlertDialogTrigger } from '../shadcnui/alert-dialog'
 import { TrashSimple } from '@phosphor-icons/react/dist/ssr'
@@ -55,7 +55,7 @@ export default function TableMoreActions<TData extends DataType>({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <DeleteManyDialogContent
+      <DeleteManyDialog
         onConfirm={onDelete}
         variant={variant}
         quantity={data.length}
