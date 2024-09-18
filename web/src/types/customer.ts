@@ -1,3 +1,5 @@
+import { Address } from './address'
+
 export type Customer = {
   id: number
   name: string
@@ -5,9 +7,5 @@ export type Customer = {
   email?: string
   balance: number
   orders: number
-  district?: string
-  street?: string
-  number?: string
-  complement?: string
-  landmark?: string
+  address: Address
 }

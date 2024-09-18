@@ -30,11 +30,11 @@ export default function EditCustomer() {
       name: customer?.name ?? '',
       phone: customer?.phone ?? '',
       email: customer?.email ?? '',
-      district: customer?.district ?? '',
-      street: customer?.street ?? '',
-      number: customer?.number ?? '',
-      complement: customer?.complement ?? '',
-      landmark: customer?.landmark ?? '',
+      district: customer?.address.district ?? '',
+      street: customer?.address.street ?? '',
+      number: customer?.address.number ?? '',
+      complement: customer?.address.complement ?? '',
+      landmark: customer?.address.landmark ?? '',
     },
   })
 

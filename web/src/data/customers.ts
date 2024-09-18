@@ -8,12 +8,15 @@ export const customers: Customer[] = [
     email: 'ana@example.com',
     balance: 150,
     orders: 12,
-    district: 'Jardins',
-    street: 'Rua Tavares',
-    number: '101',
-    complement: 'Apartamento A',
-    landmark:
-      'Próximo ao bar do João na esquina e na rua da academia Fitness Life',
+    address: {
+      id: 1,
+      district: 'Jardins',
+      street: 'Rua Tavares',
+      number: '101',
+      complement: 'Apartamento A',
+      landmark:
+        'Próximo ao bar do João na esquina e na rua da academia Fitness Life',
+    },
   },
   {
     id: 2,
@@ -22,8 +25,11 @@ export const customers: Customer[] = [
     email: 'carlos@example.com',
     balance: 300,
     orders: 7,
-    landmark:
-      'Próximo ao bar do João na esquina e na rua da academia Fitness Life',
+    address: {
+      id: 2,
+      landmark:
+        'Próximo ao bar do João na esquina e na rua da academia Fitness Life',
+    },
   },
   {
     id: 3,
@@ -32,18 +38,24 @@ export const customers: Customer[] = [
     email: '',
     balance: 90,
     orders: 16,
-    district: 'Cohab',
-    street: 'Rua Fulano',
-    number: '143',
-    complement: 'Casa 2',
+    address: {
+      id: 3,
+      district: 'Cohab',
+      street: 'Rua Fulano',
+      number: '143',
+      complement: 'Casa 2',
+    },
   },
   {
     id: 4,
     name: 'Daniel Alves',
     balance: 220,
     orders: 5,
-    street: 'Rua João Martins',
-    number: '55',
+    address: {
+      id: 4,
+      street: 'Rua João Martins',
+      number: '55',
+    },
   },
   {
     id: 5,
@@ -52,6 +64,9 @@ export const customers: Customer[] = [
     email: 'eduarda@example.com',
     balance: 180,
     orders: 25,
+    address: {
+      id: 5,
+    },
   },
   {
     id: 6,
@@ -60,15 +75,20 @@ export const customers: Customer[] = [
     email: 'felipe@example.com',
     balance: 75,
     orders: 9,
+    address: {
+      id: 6,
+    },
   },
   {
     id: 7,
     name: 'Gabriela Souza',
-
     phone: '(88) 91789-0123',
     email: 'gabriela@example.com',
     balance: 60,
     orders: 20,
+    address: {
+      id: 7,
+    },
   },
   {
     id: 8,
@@ -77,6 +97,9 @@ export const customers: Customer[] = [
     email: 'henrique@example.com',
     balance: 100,
     orders: 15,
+    address: {
+      id: 8,
+    },
   },
   {
     id: 9,
@@ -85,6 +108,9 @@ export const customers: Customer[] = [
     email: 'maria@example.com',
     balance: 50,
     orders: 12,
+    address: {
+      id: 9,
+    },
   },
   {
     id: 10,
@@ -93,6 +119,9 @@ export const customers: Customer[] = [
     email: 'ana@example.com',
     balance: 15,
     orders: 20,
+    address: {
+      id: 10,
+    },
   },
   {
     id: 11,
@@ -101,6 +130,9 @@ export const customers: Customer[] = [
     email: 'carlos@example.com',
     balance: 60,
     orders: 8,
+    address: {
+      id: 11,
+    },
   },
   {
     id: 12,
@@ -109,6 +141,9 @@ export const customers: Customer[] = [
     email: 'fernanda@example.com',
     balance: 30,
     orders: 17,
+    address: {
+      id: 12,
+    },
   },
   {
     id: 13,
@@ -117,6 +152,9 @@ export const customers: Customer[] = [
     email: 'rafael@example.com',
     balance: 75,
     orders: 25,
+    address: {
+      id: 13,
+    },
   },
   {
     id: 14,
@@ -125,6 +163,9 @@ export const customers: Customer[] = [
     email: 'isabela@example.com',
     balance: 90,
     orders: 35,
+    address: {
+      id: 14,
+    },
   },
   {
     id: 15,
@@ -133,6 +174,9 @@ export const customers: Customer[] = [
     email: 'lucas@example.com',
     balance: 20,
     orders: 40,
+    address: {
+      id: 15,
+    },
   },
   {
     id: 16,
@@ -141,6 +185,9 @@ export const customers: Customer[] = [
     email: 'juliana@example.com',
     balance: 100,
     orders: 50,
+    address: {
+      id: 16,
+    },
   },
   {
     id: 17,
@@ -149,6 +196,9 @@ export const customers: Customer[] = [
     email: 'pedro@example.com',
     balance: 120,
     orders: 30,
+    address: {
+      id: 17,
+    },
   },
   {
     id: 18,
@@ -157,6 +207,9 @@ export const customers: Customer[] = [
     email: 'renata@example.com',
     balance: 250,
     orders: 22,
+    address: {
+      id: 18,
+    },
   },
   {
     id: 19,
@@ -165,6 +218,9 @@ export const customers: Customer[] = [
     email: 'bruno@example.com',
     balance: 80,
     orders: 27,
+    address: {
+      id: 19,
+    },
   },
   {
     id: 20,
@@ -173,205 +229,8 @@ export const customers: Customer[] = [
     email: 'carla@example.com',
     balance: 95,
     orders: 13,
-  },
-  {
-    id: 21,
-    name: 'Thiago Nogueira',
-    phone: '(88) 93345-6789',
-    email: 'thiago@example.com',
-    balance: 65,
-    orders: 19,
-  },
-  {
-    id: 22,
-    name: 'Patrícia Santos',
-    phone: '(88) 93456-7890',
-    email: 'patricia@example.com',
-    balance: 130,
-    orders: 21,
-  },
-  {
-    id: 23,
-    name: 'Fábio Castro',
-    phone: '(88) 93567-8901',
-    email: 'fabio@example.com',
-    balance: 110,
-    orders: 18,
-  },
-  {
-    id: 24,
-    name: 'Clara Moreira',
-    phone: '(88) 93678-9012',
-    email: 'clara@example.com',
-    balance: 200,
-    orders: 45,
-  },
-  {
-    id: 25,
-    name: 'André Almeida',
-    phone: '(88) 93789-0123',
-    email: 'andre@example.com',
-    balance: 50,
-    orders: 14,
-  },
-  {
-    id: 26,
-    name: 'Leonardo Teixeira',
-    phone: '(88) 93890-1234',
-    email: 'leonardo@example.com',
-    balance: 170,
-    orders: 29,
-  },
-  {
-    id: 27,
-    name: 'Marta Xavier',
-    phone: '(88) 93901-2345',
-    email: 'marta@example.com',
-    balance: 140,
-    orders: 32,
-  },
-  {
-    id: 28,
-    name: 'Sérgio Carvalho',
-    phone: '(88) 94012-3456',
-    email: 'sergio@example.com',
-    balance: 210,
-    orders: 26,
-  },
-  {
-    id: 29,
-    name: 'Priscila Mendes',
-    phone: '(88) 94123-4567',
-    email: 'priscila@example.com',
-    balance: 45,
-    orders: 11,
-  },
-  {
-    id: 30,
-    name: 'Rodrigo Silva',
-    phone: '(88) 94234-5678',
-    email: 'rodrigo@example.com',
-    balance: 100,
-    orders: 34,
-  },
-  {
-    id: 31,
-    name: 'Vanessa Pereira',
-    phone: '(88) 94345-6789',
-    email: 'vanessa@example.com',
-    balance: 85,
-    orders: 17,
-  },
-  {
-    id: 32,
-    name: 'Guilherme Freitas',
-    phone: '(88) 94456-7890',
-    email: 'guilherme@example.com',
-    balance: 240,
-    orders: 38,
-  },
-  {
-    id: 33,
-    name: 'Luciana Gomes',
-    phone: '(88) 94567-8901',
-    email: 'luciana@example.com',
-    balance: 55,
-    orders: 12,
-  },
-  {
-    id: 34,
-    name: 'Eduardo Costa',
-    phone: '(88) 94678-9012',
-    email: 'eduardo@example.com',
-    balance: 190,
-    orders: 23,
-  },
-  {
-    id: 35,
-    name: 'Tatiana Ferreira',
-    phone: '(88) 94789-0123',
-    email: 'tatiana@example.com',
-    balance: 95,
-    orders: 15,
-  },
-  {
-    id: 36,
-    name: 'Amanda Nogueira',
-    phone: '(88) 94890-1234',
-    email: 'amanda@example.com',
-    balance: 130,
-    orders: 18,
-  },
-  {
-    id: 37,
-    name: 'Renato Azevedo',
-    phone: '(88) 94901-2345',
-    email: 'renato@example.com',
-    balance: 160,
-    orders: 22,
-  },
-  {
-    id: 38,
-    name: 'Juliana Costa',
-    phone: '(88) 95012-3456',
-    email: 'juliana.costa@example.com',
-    balance: 75,
-    orders: 13,
-  },
-  {
-    id: 39,
-    name: 'Gustavo Lima',
-    phone: '(88) 95123-4567',
-    email: 'gustavo.lima@example.com',
-    balance: 120,
-    orders: 28,
-  },
-  {
-    id: 40,
-    name: 'Larissa Campos',
-    phone: '(88) 95234-5678',
-    email: 'larissa.campos@example.com',
-    balance: 90,
-    orders: 20,
-  },
-  {
-    id: 41,
-    name: 'Vinícius Rocha',
-    phone: '(88) 95345-6789',
-    email: 'vinicius.rocha@example.com',
-    balance: 140,
-    orders: 25,
-  },
-  {
-    id: 42,
-    name: 'Mariana Oliveira',
-    phone: '(88) 95456-7890',
-    email: 'mariana.oliveira@example.com',
-    balance: 85,
-    orders: 18,
-  },
-  {
-    id: 43,
-    name: 'Igor Souza',
-    phone: '(88) 95567-8901',
-    email: 'igor.souza@example.com',
-    balance: 200,
-    orders: 30,
-  },
-  {
-    id: 44,
-    name: 'Natália Santos',
-    phone: '(88) 95678-9012',
-    email: 'natalia.santos@example.com',
-    balance: 60,
-    orders: 12,
-  },
-  {
-    id: 45,
-    name: 'Arthur Silva',
-    phone: '(88) 95789-0123',
-    email: 'arthur.silva@example.com',
-    balance: 180,
-    orders: 21,
+    address: {
+      id: 20,
+    },
   },
 ]

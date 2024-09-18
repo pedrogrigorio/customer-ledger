@@ -41,10 +41,10 @@ export default function Order() {
   const customer = order.customer
 
   const address = [
-    customer.district,
-    customer.street,
-    customer.number,
-    customer.complement,
+    customer.address.district,
+    customer.address.street,
+    customer.address.number,
+    customer.address.complement,
   ].filter(Boolean)
 
   const onPaymentDelete = (payment: Payment) => {
@@ -162,17 +162,19 @@ export default function Order() {
                   <div className="flex gap-2 text-sm items-center">
                     <MapPin size={16} className="min-w-4 min-h-4" />
                     <span className="text-terciary">
-                      {address.length === 0 && !customer.landmark
+                      {address.length === 0 && !customer.address.landmark
                         ? 'Endereço não informado'
                         : address.length > 0
                           ? address.join(', ')
-                          : customer.landmark}
+                          : customer.address.landmark}
                     </span>
                   </div>
-                  {customer.landmark && address.length > 0 && (
+                  {customer.address.landmark && address.length > 0 && (
                     <div className="flex gap-2 text-sm items-center">
                       <div className="min-w-4 min-h-4" />
-                      <span className="text-terciary">{customer.landmark}</span>
+                      <span className="text-terciary">
+                        {customer.address.landmark}
+                      </span>
                     </div>
                   )}
                 </li>
