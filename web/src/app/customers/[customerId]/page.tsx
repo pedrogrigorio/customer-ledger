@@ -64,7 +64,7 @@ export default function Customer() {
               className="bg-button-primary gap-1 hover:bg-button-primary-hover"
               asChild
             >
-              <Link href="/orders/create">
+              <Link href={`/orders/create?customer=${customer.id}`}>
                 <Plus size={20} weight="bold" className="text-white" />
                 <span>Novo pedido</span>
               </Link>

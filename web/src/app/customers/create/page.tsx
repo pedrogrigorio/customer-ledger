@@ -16,6 +16,7 @@ import { Page } from '@/components/layout/page'
 
 export default function CreateCustomer() {
   const router = useRouter()
+
   const customerForm = useForm<CustomerFormData>({
     resolver: zodResolver(customerFormSchema),
     mode: 'onTouched',

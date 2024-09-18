@@ -8,7 +8,7 @@ import { orderFormSchema } from '@/lib/validations/order-form-schema'
 import { OrderFormData } from '@/types/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { OrderStatus } from '@/enums/order-status'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { customers } from '@/data/customers'
 import { Textarea } from '@/components/shadcnui/textarea'
 import { Button } from '@/components/shadcnui/button'
@@ -26,11 +26,15 @@ import {
 
 export default function CreateOrder() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const customerId = Number(searchParams.get('customer'))
+
   const orderForm = useForm<OrderFormData>({
     resolver: zodResolver(orderFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      customer: undefined,
+      customer: customerId ?? undefined,
       notes: '',
       status: OrderStatus.PENDING,
       items: [
@@ -219,6 +223,7 @@ export default function CreateOrder() {
                   render={({ field }) => (
                     <Select
                       name={field.name}
+                      disabled={!!customerId}
                       defaultValue={field.value ? field.value.toString() : ''}
                       onValueChange={(value) => field.onChange(Number(value))}
                     >
