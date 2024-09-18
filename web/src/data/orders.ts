@@ -14,9 +14,9 @@ export const orders: Order[] = [
       { id: 3, name: 'Produto 4', unit: 'UN', quantity: 500 },
     ],
     payments: [
-      { id: 1, value: 15, fromBalance: true },
-      { id: 2, value: 40, fromBalance: false },
-      { id: 3, value: 120, fromBalance: false },
+      { id: 1, value: 15 },
+      { id: 2, value: 40 },
+      { id: 3, value: 120 },
     ],
     customer: customers[0],
     createdAt: '2024-08-28T00:41:03.230Z',

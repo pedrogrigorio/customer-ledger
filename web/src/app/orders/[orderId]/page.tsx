@@ -20,6 +20,7 @@ import {
   Trash,
   Wallet,
 } from '@phosphor-icons/react/dist/ssr'
+import AddPaymentDialog from '@/components/dialogs/add-payment-dialog'
 
 export default function Order() {
   const { orderId } = useParams()
@@ -95,8 +96,9 @@ export default function Order() {
 
           {/* Order Details */}
           <div className="flex flex-col gap-4 flex-[2]">
+            {/* Notes */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
-              <h2 className="font-medium">Detalhes do Pedido</h2>
+              <h2 className="font-medium">Notas</h2>
               <p className="text-terciary text-sm">
                 {!order.notes || order.notes === ''
                   ? 'Nenhuma nota especificada.'
@@ -104,6 +106,7 @@ export default function Order() {
               </p>
             </div>
 
+            {/* Customer */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
               <h2 className="font-medium">Cliente</h2>
               <ul className="flex flex-col gap-2">
@@ -154,6 +157,7 @@ export default function Order() {
               </ul>
             </div>
 
+            {/* Order Status */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
               <h2 className="font-medium">Status</h2>
               <div className="flex gap-2 text-sm items-center">
@@ -164,6 +168,7 @@ export default function Order() {
               </div>
             </div>
 
+            {/* Payments */}
             <div className="border-primary flex h-fit flex-col gap-4 border px-6 pt-4 pb-6 rounded-xl text-primary">
               <h2 className="font-medium">Controle de pagamento</h2>
               {!order.payments || order.payments.length === 0 ? (
@@ -178,24 +183,24 @@ export default function Order() {
                         key={payment.id}
                         className="flex gap-2 text-sm items-center text-terciary"
                       >
-                        <span className="flex-1">
-                          {payment.fromBalance
-                            ? 'Saldo descontado'
-                            : `Pagamento ${payment.id}`}
-                        </span>
+                        <span className="flex-1">Pagamento {payment.id}</span>
                         <span>{formatCurrency(payment.value)}</span>
                         <Button variant="ghost" className="h-10 w-10 p-0">
                           <Trash size={20} />
                         </Button>
                       </div>
                     ))}
-                    <button className="text-button-primary hover:text-button-primary-hover text-sm text-right w-full px-[10px]">
-                      Adicionar pagamento
-                    </button>
+                    <AddPaymentDialog>
+                      <button className="text-button-primary hover:text-button-primary-hover text-sm text-right w-full px-[10px]">
+                        Adicionar pagamento
+                      </button>
+                    </AddPaymentDialog>
                   </div>
+
                   {/* Divider */}
                   <div className="h-px bg-border my-4" />
 
+                  {/* Total payment */}
                   <div className="items-center justify-center flex">
                     <span className="text-currency font-medium text-2xl">
                       {formatCurrency(

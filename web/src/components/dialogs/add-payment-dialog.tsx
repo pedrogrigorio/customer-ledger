@@ -2,9 +2,9 @@
 
 import InputError from '../ui/input-error'
 
-import { balanceFormSchema } from '@/lib/validations/balance-form-schema'
+import { paymentFormSchema } from '@/lib/validations/payment-form-schema'
+import { PaymentFormData } from '@/types/validations'
 import { currencyToFloat } from '@/utils/currencyToFloat'
-import { BalanceFormData } from '@/types/validations'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { currencyMask } from '@/utils/currencyMask'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,35 +22,31 @@ import {
   Dialog,
 } from '@/components/shadcnui/dialog'
 
-interface UpdateBalanceDialogProps {
+interface AddPaymentDialogProps {
   children?: React.ReactNode
-  balance: number
 }
 
-export default function UpdateBalanceDialogContent({
-  children,
-  balance,
-}: UpdateBalanceDialogProps) {
-  const balanceForm = useForm<BalanceFormData>({
-    resolver: zodResolver(balanceFormSchema),
+export default function AddPaymentDialog({ children }: AddPaymentDialogProps) {
+  const paymentForm = useForm<PaymentFormData>({
+    resolver: zodResolver(paymentFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      balance: formatCurrency(balance),
+      payment: formatCurrency(0),
     },
   })
 
   const {
-    reset,
-    register,
-    handleSubmit,
     formState: { errors },
-  } = balanceForm
+    handleSubmit,
+    register,
+    reset,
+  } = paymentForm
 
-  const onSubmit = (data: BalanceFormData) => {
+  const onSubmit = (data: PaymentFormData) => {
     console.log(data)
-    const { balance } = data
+    const { payment } = data
 
-    const formatedBalance = currencyToFloat(balance)
+    const formatedBalance = currencyToFloat(payment)
     console.log(formatedBalance)
 
     reset()
@@ -61,7 +57,7 @@ export default function UpdateBalanceDialogContent({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Editar saldo</DialogTitle>
+          <DialogTitle>Adicionar pagamento</DialogTitle>
         </DialogHeader>
         <form
           className="py-4"
@@ -69,17 +65,17 @@ export default function UpdateBalanceDialogContent({
           id="balance-form"
         >
           <Label htmlFor="balance" className="text-right">
-            Saldo
+            Valor do pagamento
           </Label>
           <Input
-            id="balance"
+            id="payment"
             type="text"
             className="col-span-3"
-            {...register('balance', {
+            {...register('payment', {
               onChange: currencyMask,
             })}
           />
-          <InputError error={errors.balance?.message?.toString()} />
+          <InputError error={errors.payment?.message?.toString()} />
         </form>
         <DialogFooter>
           <DialogClose asChild>
@@ -94,7 +90,7 @@ export default function UpdateBalanceDialogContent({
               form="balance-form"
               className="bg-button-warning hover:bg-button-warning-hover"
             >
-              Salvar
+              Adicionar
             </Button>
           </DialogClose>
         </DialogFooter>
