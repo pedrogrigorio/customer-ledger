@@ -48,9 +48,9 @@ export default function CustomerOptions({
 
   return (
     <>
-      {/* <AlertDialog> */}
       {/* Dropdown */}
       <DropdownMenu>
+        {/* Trigger */}
         <DropdownMenuTrigger asChild>
           {variant === 'ghost' ? (
             <Button
@@ -134,11 +134,9 @@ export default function CustomerOptions({
         </DropdownMenuContent>
       </DropdownMenu>
 
+      {/* Dialogs */}
       <Dialog {...balanceDialog.props}>
-        <UpdateBalanceDialog
-          balance={customer.balance}
-          isOpen={balanceDialog.props.open}
-        />
+        <UpdateBalanceDialog balance={customer.balance} />
       </Dialog>
 
       <AlertDialog {...deleteDialog.props}>
