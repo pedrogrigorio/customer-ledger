@@ -16,7 +16,7 @@ export default function Card({ order }: CardProps) {
         {/* Header */}
         <div className="flex justify-between items-center">
           <h2 className="font-medium">Pedido {order.id}</h2>
-          <OrderOptions order={order} variant="ghost" withViewItem />
+          <OrderOptions order={order} variant="ghost" showViewItem />
         </div>
 
         {/* Body */}

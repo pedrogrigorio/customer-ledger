@@ -96,7 +96,7 @@ export const orderColumns: ColumnDef<Order>[] = [
     cell: ({ row }) => {
       const order = row.original
 
-      return <OrderOptions order={order} variant="ghost" withViewItem />
+      return <OrderOptions order={order} variant="ghost" showViewItem />
     },
   },
 ]

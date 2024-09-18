@@ -1,5 +1,11 @@
 import DeleteManyDialogContent from '../dialogs/delete-many-dialog-content'
 
+import { AlertDialog, AlertDialogTrigger } from '../shadcnui/alert-dialog'
+import { TrashSimple } from '@phosphor-icons/react/dist/ssr'
+import { CaretDown } from '@phosphor-icons/react'
+import { Customer } from '@/types/customer'
+import { Button } from '../shadcnui/button'
+import { Order } from '@/types/order'
 import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -8,12 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenu,
 } from '@/components/shadcnui/dropdown-menu'
-import { CaretDown } from '@phosphor-icons/react'
-import { Button } from '../shadcnui/button'
-import { AlertDialog, AlertDialogTrigger } from '../shadcnui/alert-dialog'
-import { TrashSimple } from '@phosphor-icons/react/dist/ssr'
-import { Customer } from '@/types/customer'
-import { Order } from '@/types/order'
 
 type DataType = Customer | Order
 

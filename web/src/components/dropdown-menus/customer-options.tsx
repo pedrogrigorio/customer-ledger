@@ -1,7 +1,7 @@
-import Link from 'next/link'
+import UpdateBalanceDialogContent from '../dialogs/update-balance-dialog-content'
 import DeleteDialogContent from '../dialogs/delete-dialog-content'
+import Link from 'next/link'
 
-import { Eye, PencilSimple, TrashSimple } from '@phosphor-icons/react/dist/ssr'
 import { MoreHorizontal, MoreVertical } from 'lucide-react'
 import { Customer } from '@/types/customer'
 import { Button } from '../shadcnui/button'
@@ -19,16 +19,27 @@ import {
   DropdownMenu,
 } from '@/components/shadcnui/dropdown-menu'
 
+import {
+  PencilSimple,
+  TrashSimple,
+  Wallet,
+  Eye,
+} from '@phosphor-icons/react/dist/ssr'
+
 interface CustomerOptionsProps {
   customer: Customer
   variant?: 'primary' | 'ghost'
-  withViewItem?: boolean
+  useLongLabel?: boolean
+  showViewItem?: boolean
+  showBalanceItem?: boolean
 }
 
 export default function CustomerOptions({
   customer,
   variant,
-  withViewItem,
+  useLongLabel,
+  showViewItem,
+  showBalanceItem,
 }: CustomerOptionsProps) {
   const onDelete = () => {
     console.log(customer)
@@ -64,7 +75,7 @@ export default function CustomerOptions({
           <DropdownMenuSeparator />
 
           {/* View option */}
-          {withViewItem && (
+          {showViewItem && (
             <DropdownMenuItem asChild>
               <Link
                 href={`/customers/${customer.id}`}
@@ -72,9 +83,24 @@ export default function CustomerOptions({
                 className="gap-2"
               >
                 <Eye size={16} />
-                <span>Visualizar</span>
+                <span>
+                  {useLongLabel ? 'Visualizar cliente' : 'Visualizar'}
+                </span>
               </Link>
             </DropdownMenuItem>
+          )}
+
+          {/* Edit balance option */}
+          {showBalanceItem && (
+            <UpdateBalanceDialogContent balance={customer.balance}>
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="gap-2"
+              >
+                <Wallet size={16} />
+                <span>Editar saldo</span>
+              </DropdownMenuItem>
+            </UpdateBalanceDialogContent>
           )}
 
           {/* Edit option */}
@@ -85,7 +111,7 @@ export default function CustomerOptions({
               className="gap-2"
             >
               <PencilSimple size={16} />
-              <span>Editar</span>
+              <span>{useLongLabel ? 'Editar dados' : 'Editar'}</span>
             </Link>
           </DropdownMenuItem>
 
@@ -95,16 +121,18 @@ export default function CustomerOptions({
           <DropdownMenuItem asChild>
             <AlertDialogTrigger
               className="w-full text-danger gap-2"
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation()
+              }}
             >
               <TrashSimple size={16} />
-              <span>Excluir</span>
+              <span>{useLongLabel ? 'Excluir cliente' : 'Excluir'}</span>
             </AlertDialogTrigger>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Dialog */}
+      {/* Dialog Content */}
       <DeleteDialogContent onConfirm={onDelete} variant="customer" />
     </AlertDialog>
   )

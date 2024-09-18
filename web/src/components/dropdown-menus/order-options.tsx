@@ -22,13 +22,13 @@ import {
 interface OrderOptionsProps {
   order: Order
   variant?: 'primary' | 'ghost'
-  withViewItem?: boolean
+  showViewItem?: boolean
 }
 
 export default function OrderOptions({
   order,
   variant,
-  withViewItem,
+  showViewItem,
 }: OrderOptionsProps) {
   const onDelete = () => {
     console.log(order)
@@ -62,7 +62,7 @@ export default function OrderOptions({
           <DropdownMenuSeparator />
 
           {/* View option */}
-          {withViewItem && (
+          {showViewItem && (
             <DropdownMenuItem asChild>
               <Link
                 href={`/orders/${order.id}`}

@@ -90,7 +90,7 @@ export const costumerColumns: ColumnDef<Customer>[] = [
       const customer = row.original
 
       return (
-        <CustomerOptions customer={customer} variant="ghost" withViewItem />
+        <CustomerOptions customer={customer} variant="ghost" showViewItem />
       )
     },
   },

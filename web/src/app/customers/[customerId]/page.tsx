@@ -70,7 +70,12 @@ export default function Customer() {
               </Link>
             </Button>
 
-            <CustomerOptions customer={customer} variant="primary" />
+            <CustomerOptions
+              customer={customer}
+              variant="primary"
+              showBalanceItem
+              useLongLabel
+            />
           </div>
         </div>
       </Page.Header>
