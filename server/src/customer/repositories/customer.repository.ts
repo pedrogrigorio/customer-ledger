@@ -1,5 +1,6 @@
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
+import { UpdateBalanceDto } from '../dtos/update-balance.dto';
 import { PrismaService } from 'src/common/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -60,6 +61,17 @@ export class CustomerRepository {
             number: customer.number,
           },
         },
+      },
+    });
+  }
+
+  async updateBalance(customerId: number, updateBalanceDto: UpdateBalanceDto) {
+    return await this.prisma.customer.update({
+      where: {
+        id: customerId,
+      },
+      data: {
+        balance: updateBalanceDto.balance,
       },
     });
   }

@@ -1,18 +1,19 @@
-import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { DeleteCustomersDto } from '../dtos/delete-customers.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
+import { CreateCustomerDto } from '../dtos/create-customer.dto';
+import { UpdateBalanceDto } from '../dtos/update-balance.dto';
 import { CustomerService } from '../services/customer.service';
 import {
+  DefaultValuePipe,
+  ParseBoolPipe,
   Controller,
   Delete,
   Param,
+  Query,
   Body,
   Post,
   Put,
   Get,
-  Query,
-  ParseBoolPipe,
-  DefaultValuePipe,
 } from '@nestjs/common';
 
 @Controller('customers')
@@ -48,6 +49,16 @@ export class CustomerController {
     const id = parseInt(customerId);
 
     return await this.customerService.updateCustomer(id, updateCustomerDto);
+  }
+
+  @Put(':id/balance')
+  async updateBalance(
+    @Param('id') customerId: string,
+    updateBalanceDto: UpdateBalanceDto,
+  ) {
+    const id = parseInt(customerId);
+
+    return await this.customerService.updateBalance(id, updateBalanceDto);
   }
 
   @Delete(':id')
