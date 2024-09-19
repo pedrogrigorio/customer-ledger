@@ -26,6 +26,7 @@ import { createOrder } from '@/services/order-service'
 import { useQuery } from '@tanstack/react-query'
 import { Customer } from '@/types/customer'
 import { getCustomers } from '@/services/customer-service'
+import { toast } from '@/hooks/use-toast'
 
 export default function CreateOrder() {
   const searchParams = useSearchParams()
@@ -74,6 +75,10 @@ export default function CreateOrder() {
 
   const onSubmit = async (data: OrderFormData) => {
     await createOrder(data)
+
+    toast({
+      title: 'Pedido criado com sucesso',
+    })
 
     reset()
   }

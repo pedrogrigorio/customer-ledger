@@ -4,6 +4,7 @@ import Sidebar from '@/components/layout/sidebar'
 
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+import { Toaster } from '@/components/shadcnui/toaster'
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -29,6 +30,7 @@ export default function RootLayout({
         <main className="flex-1 h-full">
           <Providers>{children}</Providers>
         </main>
+        <Toaster />
       </body>
     </html>
   )

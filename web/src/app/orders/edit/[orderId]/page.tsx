@@ -27,6 +27,7 @@ import {
   Select,
 } from '@/components/shadcnui/select'
 import { useEffect } from 'react'
+import { toast } from '@/hooks/use-toast'
 
 export default function EditOrder() {
   const { orderId } = useParams()
@@ -78,6 +79,10 @@ export default function EditOrder() {
 
   const onSubmit = async (data: OrderFormData) => {
     await updateOrder(orderId as string, data)
+
+    toast({
+      title: 'Pedido editado com sucesso',
+    })
 
     reset(data)
   }

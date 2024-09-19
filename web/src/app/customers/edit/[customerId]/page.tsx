@@ -17,6 +17,7 @@ import { Button } from '@/components/shadcnui/button'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
+import { toast } from '@/hooks/use-toast'
 
 export default function EditCustomer() {
   const { customerId } = useParams()
@@ -50,9 +51,11 @@ export default function EditCustomer() {
   } = customerForm
 
   const onSubmit = async (data: CustomerFormData) => {
-    console.log(data)
-
     await updateCustomer(customerId as string, data)
+
+    toast({
+      title: 'Cliente editado com sucesso',
+    })
 
     reset(data)
   }

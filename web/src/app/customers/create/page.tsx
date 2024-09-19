@@ -14,6 +14,7 @@ import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
 import { createCustomer } from '@/services/customer-service'
+import { toast } from '@/hooks/use-toast'
 
 export default function CreateCustomer() {
   const router = useRouter()
@@ -42,6 +43,10 @@ export default function CreateCustomer() {
 
   const onSubmit = async (data: CustomerFormData) => {
     await createCustomer(data)
+
+    toast({
+      title: 'Cliente criado com sucesso',
+    })
 
     reset()
   }
