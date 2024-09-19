@@ -6,42 +6,49 @@ import Content from '@/components/ui/tabs/content'
 import Link from 'next/link'
 
 import { costumerColumns } from '@/components/tables/customer-columns'
+import { getCustomers } from '@/services/customer-service'
+import { OrderStatus } from '@/enums/order-status'
 import { DataTable } from '@/components/tables/data-table'
-import { customers } from '@/data/customers'
+import { useQuery } from '@tanstack/react-query'
 import { Customer } from '@/types/customer'
 import { Button } from '@/components/shadcnui/button'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/tabs'
 import { Page } from '@/components/layout/page'
-import { useQuery } from '@tanstack/react-query'
-import { getCustomers } from '@/services/customer-service'
-import { OrderStatus } from '@/enums/order-status'
-
-const tabs = [
-  {
-    id: 'all',
-    label: 'Todos',
-    value: customers.length,
-  },
-  {
-    id: 'pendingOrder',
-    label: 'Com pedidos pendentes',
-    value: 17,
-  },
-  {
-    id: 'noPendingOrder',
-    label: 'Sem pedidos pendentes',
-    value: 28,
-  } as Tabs,
-]
 
 export default function Customers() {
-  const { data } = useQuery<Customer[]>({
+  const { data: customers } = useQuery<Customer[]>({
     queryKey: ['customers'],
     queryFn: getCustomers,
   })
 
-  if (!data) return null
+  if (!customers) return null
+
+  const customersWithPendingOrders = customers.filter((customer) =>
+    customer.orders.some((order) => order.status === OrderStatus.PENDING),
+  )
+
+  const customersWithNoPendingOrders = customers.filter((customer) =>
+    customer.orders.every((order) => order.status !== OrderStatus.PENDING),
+  )
+
+  const tabs = [
+    {
+      id: 'all',
+      label: 'Todos',
+      value: customers.length,
+    },
+    {
+      id: 'pendingOrder',
+      label: 'Com pedidos pendentes',
+      value: customersWithPendingOrders.length,
+    },
+    {
+      id: 'noPendingOrder',
+      label: 'Sem pedidos pendentes',
+      value: customersWithNoPendingOrders.length,
+    } as Tabs,
+  ]
 
   return (
     <Page.Container>
@@ -65,28 +72,20 @@ export default function Customers() {
       <TabsProvider tabs={tabs}>
         <Selectors />
         <Content value="all">
-          <DataTable columns={costumerColumns} data={data} />
+          <DataTable columns={costumerColumns} data={customers} />
         </Content>
 
         <Content value="pendingOrder">
           <DataTable
             columns={costumerColumns}
-            data={data.filter((customer) =>
-              customer.orders.some(
-                (order) => order.status === OrderStatus.PENDING,
-              ),
-            )}
+            data={customersWithPendingOrders}
           />
         </Content>
 
         <Content value="noPendingOrder">
           <DataTable
             columns={costumerColumns}
-            data={data.filter((customer) =>
-              customer.orders.some(
-                (order) => order.status === OrderStatus.PAID,
-              ),
-            )}
+            data={customersWithNoPendingOrders}
           />
         </Content>
       </TabsProvider>

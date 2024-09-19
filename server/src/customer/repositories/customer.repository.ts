@@ -9,7 +9,11 @@ export class CustomerRepository {
   constructor(private prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.customer.findMany();
+    return await this.prisma.customer.findMany({
+      include: {
+        orders: true,
+      },
+    });
   }
 
   async findById(customerId: number, includeOrders = false) {

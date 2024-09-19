@@ -54,7 +54,7 @@ export class CustomerController {
   @Put(':id/balance')
   async updateBalance(
     @Param('id') customerId: string,
-    updateBalanceDto: UpdateBalanceDto,
+    @Body() updateBalanceDto: UpdateBalanceDto,
   ) {
     const id = parseInt(customerId);
 

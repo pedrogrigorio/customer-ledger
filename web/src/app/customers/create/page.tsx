@@ -13,6 +13,7 @@ import { Button } from '@/components/shadcnui/button'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
+import { createCustomer } from '@/services/customer-service'
 
 export default function CreateCustomer() {
   const router = useRouter()
@@ -33,13 +34,18 @@ export default function CreateCustomer() {
   })
 
   const {
-    handleSubmit,
+    reset,
     register,
+    handleSubmit,
     formState: { errors, isDirty },
   } = customerForm
 
-  const onSubmit = (data: CustomerFormData) => {
+  const onSubmit = async (data: CustomerFormData) => {
     console.log(data)
+
+    await createCustomer(data)
+
+    reset()
   }
 
   return (
@@ -135,9 +141,7 @@ export default function CreateCustomer() {
                 <Input
                   placeholder="Insira o nome da rua..."
                   id="street"
-                  {...register('street', {
-                    onChange: phoneMask,
-                  })}
+                  {...register('street')}
                   className="mt-1"
                 />
                 <InputError error={errors.street?.message?.toString()} />

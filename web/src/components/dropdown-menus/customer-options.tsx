@@ -23,6 +23,9 @@ import {
   Wallet,
   Eye,
 } from '@phosphor-icons/react/dist/ssr'
+import { deleteCustomer } from '@/services/customer-service'
+import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface CustomerOptionsProps {
   customer: Customer
@@ -39,8 +42,17 @@ export default function CustomerOptions({
   showViewItem,
   showBalanceItem,
 }: CustomerOptionsProps) {
-  const onDelete = () => {
-    console.log(customer)
+  const router = useRouter()
+  const queryClient = useQueryClient()
+
+  const onDelete = async () => {
+    await deleteCustomer(customer.id)
+
+    queryClient.invalidateQueries({
+      queryKey: ['customers'],
+    })
+
+    router.replace('/customers')
   }
 
   const balanceDialog = useDialog()

@@ -14,6 +14,9 @@ import {
   DropdownMenuItem,
   DropdownMenu,
 } from '@/components/shadcnui/dropdown-menu'
+import { deleteManyCustomers } from '@/services/customer-service'
+import { useQueryClient } from '@tanstack/react-query'
+import { deleteManyOrders } from '@/services/order-service'
 
 type DataType = Customer | Order
 
@@ -24,11 +27,28 @@ interface TableMoreActionsProps<TData extends DataType> {
 export default function TableMoreActions<TData extends DataType>({
   data,
 }: TableMoreActionsProps<TData>) {
+  const queryClient = useQueryClient()
   const variant =
     data.length > 0 ? ('customer' in data[0] ? 'order' : 'customer') : 'unknown'
 
-  const onDelete = () => {
-    console.log(data)
+  const onDeleteCustomers = async () => {
+    const customerIds = data.map((customer) => customer.id)
+
+    await deleteManyCustomers(customerIds)
+
+    queryClient.invalidateQueries({
+      queryKey: ['customers'],
+    })
+  }
+
+  const onDeleteOrders = async () => {
+    const orderIds = data.map((order) => order.id)
+
+    await deleteManyOrders(orderIds)
+
+    queryClient.invalidateQueries({
+      queryKey: ['orders'],
+    })
   }
 
   return (
@@ -56,7 +76,7 @@ export default function TableMoreActions<TData extends DataType>({
       </DropdownMenu>
 
       <DeleteManyDialog
-        onConfirm={onDelete}
+        onConfirm={variant === 'customer' ? onDeleteCustomers : onDeleteOrders}
         variant={variant}
         quantity={data.length}
       />
