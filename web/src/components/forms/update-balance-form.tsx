@@ -11,12 +11,19 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Label } from '../shadcnui/label'
 import { Input } from '../shadcnui/input'
+import { updateBalance } from '@/services/customer-service'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface UpdateBalanceFormProps {
   balance: number
+  customerId: number
 }
 
-export default function UpdateBalanceForm({ balance }: UpdateBalanceFormProps) {
+export default function UpdateBalanceForm({
+  balance,
+  customerId,
+}: UpdateBalanceFormProps) {
+  const queryClient = useQueryClient()
   const balanceForm = useForm<BalanceFormData>({
     resolver: zodResolver(balanceFormSchema),
     mode: 'onSubmit',
@@ -31,12 +38,17 @@ export default function UpdateBalanceForm({ balance }: UpdateBalanceFormProps) {
     formState: { errors },
   } = balanceForm
 
-  const onSubmit = (data: BalanceFormData) => {
+  const onSubmit = async (data: BalanceFormData) => {
     console.log(data)
     const { balance } = data
 
-    const formatedBalance = currencyToFloat(balance)
-    console.log(formatedBalance)
+    const formattedBalance = currencyToFloat(balance)
+
+    await updateBalance(customerId, formattedBalance)
+
+    await queryClient.invalidateQueries({
+      queryKey: ['customerById'],
+    })
   }
 
   return (

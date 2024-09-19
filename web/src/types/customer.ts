@@ -1,7 +1,7 @@
 import { Address } from './address'
 import { Order } from './order'
 
-export type Customer = {
+export interface Customer {
   id: number
   name: string
   phone?: string

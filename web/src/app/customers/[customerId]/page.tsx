@@ -7,10 +7,12 @@ import Content from '@/components/ui/tabs/content'
 import Galery from '@/app/customers/[customerId]/_components/galery'
 import Link from 'next/link'
 
+import { Customer as TCustomer } from '@/types/customer'
+import { getCustomerById } from '@/services/customer-service'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { OrderStatus } from '@/enums/order-status'
 import { useParams } from 'next/navigation'
-import { customers } from '@/data/customers'
+import { useQuery } from '@tanstack/react-query'
 import { Button } from '@/components/shadcnui/button'
 import { orders } from '@/data/orders'
 import { useRef } from 'react'
@@ -38,12 +40,13 @@ const tabs = [
 ]
 
 export default function Customer() {
-  const { customerId } = useParams()
   const containerRef = useRef<HTMLDivElement>(null)
+  const { customerId } = useParams()
 
-  const customer = customers.find(
-    (customer) => customer.id === Number(customerId),
-  )
+  const { data: customer } = useQuery<TCustomer>({
+    queryKey: ['customerById'],
+    queryFn: () => getCustomerById(customerId[0]),
+  })
 
   if (!customer) return null
 

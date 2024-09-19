@@ -13,10 +13,12 @@ import {
 
 interface UpdateBalanceDialogProps {
   balance: number
+  customerId: number
 }
 
 export default function UpdateBalanceDialog({
   balance,
+  customerId,
 }: UpdateBalanceDialogProps) {
   return (
     <DialogContent className="sm:max-w-[425px]">
@@ -24,7 +26,7 @@ export default function UpdateBalanceDialog({
         <DialogTitle>Editar saldo</DialogTitle>
       </DialogHeader>
 
-      <UpdateBalanceForm balance={balance} />
+      <UpdateBalanceForm balance={balance} customerId={customerId} />
 
       <DialogFooter>
         <DialogClose asChild>

@@ -1,3 +1,4 @@
+import Providers from '@/components/layout/providers'
 import './globals.css'
 import Sidebar from '@/components/layout/sidebar'
 
@@ -25,7 +26,9 @@ export default function RootLayout({
         className={`${poppins.className} flex overflow-y-hidden h-screen min-w-[650px]`}
       >
         <Sidebar />
-        <main className="flex-1 h-full">{children}</main>
+        <main className="flex-1 h-full">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   )

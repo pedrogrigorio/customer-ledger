@@ -13,6 +13,9 @@ import { Button } from '@/components/shadcnui/button'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/tabs'
 import { Page } from '@/components/layout/page'
+import { useQuery } from '@tanstack/react-query'
+import { getCustomers } from '@/services/customer-service'
+import { OrderStatus } from '@/enums/order-status'
 
 const tabs = [
   {
@@ -32,12 +35,13 @@ const tabs = [
   } as Tabs,
 ]
 
-function getData(): Customer[] {
-  return customers
-}
-
 export default function Customers() {
-  const data = getData()
+  const { data } = useQuery<Customer[]>({
+    queryKey: ['customers'],
+    queryFn: getCustomers,
+  })
+
+  if (!data) return null
 
   return (
     <Page.Container>
@@ -65,11 +69,25 @@ export default function Customers() {
         </Content>
 
         <Content value="pendingOrder">
-          <DataTable columns={costumerColumns} data={data.slice(13, 30)} />
+          <DataTable
+            columns={costumerColumns}
+            data={data.filter((customer) =>
+              customer.orders.some(
+                (order) => order.status === OrderStatus.PENDING,
+              ),
+            )}
+          />
         </Content>
 
         <Content value="noPendingOrder">
-          <DataTable columns={costumerColumns} data={data.slice(-28)} />
+          <DataTable
+            columns={costumerColumns}
+            data={data.filter((customer) =>
+              customer.orders.some(
+                (order) => order.status === OrderStatus.PAID,
+              ),
+            )}
+          />
         </Content>
       </TabsProvider>
     </Page.Container>

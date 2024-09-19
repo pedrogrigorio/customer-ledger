@@ -6,9 +6,12 @@ import InputError from '@/components/ui/input-error'
 import { useParams, useRouter } from 'next/navigation'
 import { customerFormSchema } from '@/lib/validations/customer-form-schema'
 import { CustomerFormData } from '@/types/validations'
+import { getCustomerById, updateCustomer } from '@/services/customer-service'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { customers } from '@/data/customers'
 import { phoneMask } from '@/utils/phoneMask'
+import { useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Customer } from '@/types/customer'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/shadcnui/button'
 import { Input } from '@/components/shadcnui/input'
@@ -19,9 +22,10 @@ export default function EditCustomer() {
   const { customerId } = useParams()
   const router = useRouter()
 
-  const customer = customers.find(
-    (customer) => customer.id === Number(customerId),
-  )
+  const { data: customer } = useQuery<Customer>({
+    queryKey: ['customerById'],
+    queryFn: () => getCustomerById(customerId[0]),
+  })
 
   const customerForm = useForm<CustomerFormData>({
     resolver: zodResolver(customerFormSchema),
@@ -41,12 +45,21 @@ export default function EditCustomer() {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isDirty },
   } = customerForm
 
-  const onSubmit = (data: CustomerFormData) => {
+  const onSubmit = async (data: CustomerFormData) => {
     console.log(data)
+
+    await updateCustomer(customerId[0], data)
+
+    reset(data)
   }
+
+  useEffect(() => {
+    reset(customer)
+  }, [customer, reset])
 
   return (
     <Page.Container>
@@ -141,9 +154,7 @@ export default function EditCustomer() {
                 <Input
                   placeholder="Insira o nome da rua..."
                   id="street"
-                  {...register('street', {
-                    onChange: phoneMask,
-                  })}
+                  {...register('street')}
                   className="mt-1"
                 />
                 <InputError error={errors.street?.message?.toString()} />

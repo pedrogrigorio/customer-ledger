@@ -4,7 +4,7 @@ import CustomPagination from '@/components/ui/pagination'
 import Card from './card'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { RefObject, useEffect, useRef } from 'react'
+import { RefObject, useEffect } from 'react'
 import { Order } from '@/types/order'
 
 interface GaleryProps {
@@ -13,7 +13,6 @@ interface GaleryProps {
 }
 
 export default function Galery({ data, containerRef }: GaleryProps) {
-  const testRef = useRef<HTMLDivElement>(null)
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -36,8 +35,12 @@ export default function Galery({ data, containerRef }: GaleryProps) {
     }
   }, [page, containerRef])
 
+  if (!data) {
+    return <span>Nenhum pedido encontrado.</span>
+  }
+
   return (
-    <div ref={testRef}>
+    <div>
       <div
         className="mt-4 grid grid-rows-2 gap-4"
         style={{

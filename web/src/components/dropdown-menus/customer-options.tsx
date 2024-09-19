@@ -136,7 +136,10 @@ export default function CustomerOptions({
 
       {/* Dialogs */}
       <Dialog {...balanceDialog.props}>
-        <UpdateBalanceDialog balance={customer.balance} />
+        <UpdateBalanceDialog
+          balance={customer.balance}
+          customerId={customer.id}
+        />
       </Dialog>
 
       <AlertDialog {...deleteDialog.props}>
