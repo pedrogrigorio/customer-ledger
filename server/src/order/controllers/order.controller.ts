@@ -11,6 +11,8 @@ import {
   Put,
   Get,
 } from '@nestjs/common';
+import { UpdateStatusDto } from '../dtos/update-status';
+import { UpdateNotesDto } from '../dtos/update-notes';
 
 @Controller('orders')
 export class OrderController {
@@ -41,6 +43,26 @@ export class OrderController {
     const id = parseInt(orderId);
 
     return await this.orderService.updateOrder(id, updateOrderDto);
+  }
+
+  @Put(':id/notes')
+  async updateNotes(
+    @Param('id') orderId: string,
+    @Body() updateNotesDto: UpdateNotesDto,
+  ) {
+    const id = parseInt(orderId);
+
+    return await this.orderService.updateNotes(id, updateNotesDto);
+  }
+
+  @Put(':id/status')
+  async updateStatus(
+    @Param('id') orderId: string,
+    @Body() updateStatusDto: UpdateStatusDto,
+  ) {
+    const id = parseInt(orderId);
+
+    return await this.orderService.updateStatus(id, updateStatusDto);
   }
 
   @Delete(':id')
