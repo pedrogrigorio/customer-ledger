@@ -30,6 +30,8 @@ export default function Customer() {
 
   if (!customer) return null
 
+  console.log(customer.orders)
+
   const tabs = [
     {
       id: 'all',

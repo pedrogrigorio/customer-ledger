@@ -61,7 +61,14 @@ export default function EditCustomer() {
   }
 
   useEffect(() => {
-    reset(customer)
+    if (customer) {
+      const { email, ...data } = customer
+
+      reset({
+        email: email ?? '',
+        ...data,
+      })
+    }
   }, [customer, reset])
 
   return (
