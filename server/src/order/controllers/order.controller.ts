@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Get,
+  Query,
 } from '@nestjs/common';
 import { UpdateStatusDto } from '../dtos/update-status';
 import { UpdateNotesDto } from '../dtos/update-notes';
@@ -28,6 +29,25 @@ export class OrderController {
     const id = parseInt(orderId);
 
     return await this.orderService.getOrderById(id);
+  }
+
+  @Get('customer/:id')
+  async getOrdersByCustomer(
+    @Param('id') customerId: string,
+    @Query('page') page: string,
+    @Query('pageSize') pageSize: string,
+    @Query('status') status?: string,
+  ) {
+    const id = parseInt(customerId);
+    const pageNumber = page ? parseInt(page) : 1;
+    const pageSizeNumber = pageSize ? parseInt(pageSize) : 12;
+
+    return await this.orderService.getOrdersByCustomer(
+      id,
+      pageNumber,
+      pageSizeNumber,
+      status,
+    );
   }
 
   @Post()

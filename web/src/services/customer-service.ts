@@ -7,8 +7,13 @@ export async function getCustomers() {
   return response.data
 }
 
-export async function getCustomerById(customerId: number | string) {
-  const response = await api.get(`customers/${customerId}`)
+export async function getCustomerById(
+  customerId: number | string,
+  includeOrders: boolean = false,
+) {
+  const response = await api.get(`customers/${customerId}`, {
+    params: { includeOrders },
+  })
 
   return response.data
 }

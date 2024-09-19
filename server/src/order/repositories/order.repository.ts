@@ -34,6 +34,39 @@ export class OrderRepository {
     });
   }
 
+  async findByCustomer(
+    customerId: number,
+    page: number = 1,
+    pageSize: number = 12,
+    status?: string,
+  ) {
+    const skip = (page - 1) * pageSize;
+
+    const totalItems = await this.prisma.order.count({
+      where: {
+        customerId: customerId,
+        ...(status && { status: status }),
+      },
+    });
+
+    const orders = await this.prisma.order.findMany({
+      include: {
+        items: true,
+      },
+      where: {
+        customerId: customerId,
+        ...(status && { status: status }),
+      },
+      skip: skip,
+      take: pageSize,
+    });
+
+    return {
+      totalItems,
+      orders,
+    };
+  }
+
   async create(order: CreateOrderDto) {
     console.log(order);
 

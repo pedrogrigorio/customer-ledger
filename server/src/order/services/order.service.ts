@@ -16,19 +16,39 @@ export class OrderService {
   ) {}
 
   async getAllOrders() {
-    const Orders = await this.orderRepository.findAll();
+    const orders = await this.orderRepository.findAll();
 
-    return Orders;
+    return orders;
   }
 
   async getOrderById(orderId: number) {
-    const Order = await this.orderRepository.findById(orderId);
+    const order = await this.orderRepository.findById(orderId);
 
-    if (!Order) {
+    if (!order) {
       throw new Error(`Order not found`);
     }
 
-    return Order;
+    return order;
+  }
+
+  async getOrdersByCustomer(
+    customerId: number,
+    page: number = 1,
+    pageSize: number = 12,
+    status?: string,
+  ) {
+    const costumer = this.customerRepository.findById(customerId);
+
+    if (!costumer) {
+      throw new Error(`Customer not found`);
+    }
+
+    return await this.orderRepository.findByCustomer(
+      customerId,
+      page,
+      pageSize,
+      status,
+    );
   }
 
   async createOrder(order: CreateOrderDto) {

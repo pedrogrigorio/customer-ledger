@@ -24,7 +24,7 @@ export default function EditCustomer() {
 
   const { data: customer } = useQuery<Customer>({
     queryKey: ['customerById'],
-    queryFn: () => getCustomerById(customerId[0]),
+    queryFn: () => getCustomerById(customerId as string),
   })
 
   const customerForm = useForm<CustomerFormData>({
@@ -52,7 +52,7 @@ export default function EditCustomer() {
   const onSubmit = async (data: CustomerFormData) => {
     console.log(data)
 
-    await updateCustomer(customerId[0], data)
+    await updateCustomer(customerId as string, data)
 
     reset(data)
   }

@@ -5,29 +5,38 @@ import Card from './card'
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { RefObject, useEffect } from 'react'
-import { Order } from '@/types/order'
+import { OrdersGalery } from '@/types/orders-galery'
+import { useQuery } from '@tanstack/react-query'
+import { getOrdersByCustomer } from '@/services/order-service'
+import { OrderStatus } from '@/enums/order-status'
+
+// interface GaleryProps {
+//   data: OrdersGalery | undefined
+//   page: number
+//   containerRef: RefObject<HTMLDivElement>
+// }
 
 interface GaleryProps {
-  data: Order[]
+  customerId: string
+  status?: OrderStatus
   containerRef: RefObject<HTMLDivElement>
 }
 
-export default function Galery({ data, containerRef }: GaleryProps) {
+export default function Galery({
+  customerId,
+  containerRef,
+  status,
+}: GaleryProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  // totalItems must come from backend
-  const totalItems = data.length
+  const page = Number(searchParams.get('page') ?? '1')
+  const pageSize = 12
 
-  const page = searchParams.get('page') ?? '1'
-  const itemsPerPage = 12
-
-  const start = (Number(page) - 1) * Number(itemsPerPage)
-  const end = start + Number(itemsPerPage)
-
-  const entries = data.slice(start, end)
-
-  const totalPages = Math.ceil(totalItems / Number(itemsPerPage))
+  const { data } = useQuery<OrdersGalery>({
+    queryKey: ['galery', page],
+    queryFn: () => getOrdersByCustomer(customerId, page, pageSize, status),
+  })
 
   useEffect(() => {
     if (containerRef.current) {
@@ -35,9 +44,15 @@ export default function Galery({ data, containerRef }: GaleryProps) {
     }
   }, [page, containerRef])
 
-  if (!data) {
-    return <span>Nenhum pedido encontrado.</span>
+  if (!data?.totalItems) {
+    return (
+      <div className="mt-4 flex items-center justify-center text-primary">
+        <span>Nenhum pedido encontrado.</span>
+      </div>
+    )
   }
+
+  const totalPages = Math.ceil(data.totalItems / Number(pageSize))
 
   return (
     <div>
@@ -47,9 +62,10 @@ export default function Galery({ data, containerRef }: GaleryProps) {
           gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
         }}
       >
-        {entries.map((order) => (
-          <Card key={order.id} order={order} />
-        ))}
+        {data.orders.map((order, index) => {
+          const orderNumber = (page - 1) * pageSize + index + 1
+          return <Card key={order.id} order={order} orderNumber={orderNumber} />
+        })}
       </div>
 
       <CustomPagination

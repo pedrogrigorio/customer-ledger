@@ -7,15 +7,16 @@ import { Order } from '@/types/order'
 
 interface CardProps {
   order: Order
+  orderNumber: number
 }
 
-export default function Card({ order }: CardProps) {
+export default function Card({ order, orderNumber }: CardProps) {
   return (
     <Link href={`/orders/${order.id}`}>
       <div className="border h-[300px] rounded-xl flex flex-col border-primary p-6 text-secondary">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <h2 className="font-medium">Pedido {order.id}</h2>
+          <h2 className="font-medium">Pedido {orderNumber}</h2>
           <OrderOptions order={order} variant="ghost" showViewItem />
         </div>
 

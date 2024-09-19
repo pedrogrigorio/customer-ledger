@@ -14,6 +14,19 @@ export async function getOrderById(orderId: number | string) {
   return response.data
 }
 
+export async function getOrdersByCustomer(
+  customerId: number | string,
+  page: number = 1,
+  pageSize: number = 12,
+  status?: string,
+) {
+  const response = await api.get(`orders/customer/${customerId}`, {
+    params: { page, pageSize, status },
+  })
+
+  return response.data
+}
+
 export async function createOrder(orderFormData: OrderFormData) {
   console.log(orderFormData)
 

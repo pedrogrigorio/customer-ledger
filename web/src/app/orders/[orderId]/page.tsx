@@ -9,6 +9,7 @@ import { NotesFormData, StatusFormData } from '@/types/validations'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Order as TOder } from '@/types/order'
 import { formatCurrency } from '@/utils/formatCurrency'
+import { deletePayment } from '@/services/payment-service'
 import { OrderStatus } from '@/enums/order-status'
 import { formatDate } from '@/utils/formatDate'
 import { useParams } from 'next/navigation'
@@ -33,18 +34,17 @@ import {
   updateStatus,
   updateNotes,
 } from '@/services/order-service'
-import { deletePayment } from '@/services/payment-service'
 
 export default function Order() {
-  const queryClient = useQueryClient()
   const [editStatus, setEditStatus] = useState(false)
   const [editNotes, setEditNotes] = useState(false)
+  const queryClient = useQueryClient()
 
   const { orderId } = useParams()
 
   const { data: order } = useQuery<TOder>({
     queryKey: ['orderById'],
-    queryFn: () => getOrderById(orderId[0]),
+    queryFn: () => getOrderById(orderId as string),
   })
 
   if (!order) return null

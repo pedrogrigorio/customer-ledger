@@ -39,7 +39,7 @@ export default function EditOrder() {
 
   const { data: order } = useQuery<Order>({
     queryKey: ['orderById'],
-    queryFn: () => getOrderById(orderId[0]),
+    queryFn: () => getOrderById(orderId as string),
   })
 
   const orderForm = useForm<OrderFormData>({
@@ -77,7 +77,7 @@ export default function EditOrder() {
   })
 
   const onSubmit = async (data: OrderFormData) => {
-    await updateOrder(orderId[0], data)
+    await updateOrder(orderId as string, data)
 
     reset(data)
   }

@@ -14,30 +14,10 @@ import { OrderStatus } from '@/enums/order-status'
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { Button } from '@/components/shadcnui/button'
-import { orders } from '@/data/orders'
 import { useRef } from 'react'
 import { Tabs } from '@/types/tabs'
 import { Page } from '@/components/layout/page'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
-
-const tabs = [
-  {
-    id: 'all',
-    label: 'Todos',
-    value: orders.length,
-  },
-  {
-    id: 'paid',
-    label: 'Pagos',
-    value: orders.filter((order) => order.status === OrderStatus.PAID).length,
-  },
-  {
-    id: 'pending',
-    label: 'Pendentes',
-    value: orders.filter((order) => order.status === OrderStatus.PENDING)
-      .length,
-  } as Tabs,
-]
 
 export default function Customer() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -45,10 +25,32 @@ export default function Customer() {
 
   const { data: customer } = useQuery<TCustomer>({
     queryKey: ['customerById'],
-    queryFn: () => getCustomerById(customerId[0]),
+    queryFn: () => getCustomerById(customerId as string, true),
   })
 
   if (!customer) return null
+
+  const tabs = [
+    {
+      id: 'all',
+      label: 'Todos',
+      value: customer.orders.length,
+    },
+    {
+      id: 'paid',
+      label: 'Pagos',
+      value: customer.orders.filter(
+        (order) => order.status === OrderStatus.PAID,
+      ).length,
+    },
+    {
+      id: 'pending',
+      label: 'Pendentes',
+      value: customer.orders.filter(
+        (order) => order.status === OrderStatus.PENDING,
+      ).length,
+    } as Tabs,
+  ]
 
   return (
     <Page.Container ref={containerRef}>
@@ -86,22 +88,25 @@ export default function Customer() {
       <TabsProvider tabs={tabs}>
         <Selectors />
         <Content value="all">
-          <Galery data={orders} containerRef={containerRef} />
+          <Galery
+            customerId={customerId as string}
+            containerRef={containerRef}
+          />
         </Content>
 
         <Content value="paid">
           <Galery
-            data={orders.filter((order) => order.status === OrderStatus.PAID)}
+            customerId={customerId as string}
             containerRef={containerRef}
+            status={OrderStatus.PAID}
           />
         </Content>
 
         <Content value="pending">
           <Galery
-            data={orders.filter(
-              (order) => order.status === OrderStatus.PENDING,
-            )}
+            customerId={customerId as string}
             containerRef={containerRef}
+            status={OrderStatus.PENDING}
           />
         </Content>
       </TabsProvider>
