@@ -1,15 +1,20 @@
 'use client'
 
 import AddPaymentDialog from '@/components/dialogs/add-payment-dialog'
+import UpdateStatusForm from '@/components/forms/update-status-form'
+import UpdateNotesForm from '@/components/forms/update-notes-form'
 import OrderOptions from '@/components/dropdown-menus/order-options'
 
+import { NotesFormData, StatusFormData } from '@/types/validations'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Order as TOder } from '@/types/order'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { OrderStatus } from '@/enums/order-status'
 import { formatDate } from '@/utils/formatDate'
 import { useParams } from 'next/navigation'
+import { useState } from 'react'
 import { Payment } from '@/types/payment'
 import { Button } from '@/components/shadcnui/button'
-import { orders } from '@/data/orders'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
@@ -23,18 +28,24 @@ import {
   Trash,
   Phone,
 } from '@phosphor-icons/react/dist/ssr'
-import { useState } from 'react'
-import UpdateStatusForm from '@/components/forms/update-status-form'
-import { NotesFormData, StatusFormData } from '@/types/validations'
-import UpdateNotesForm from '@/components/forms/update-notes-form'
+import {
+  getOrderById,
+  updateStatus,
+  updateNotes,
+} from '@/services/order-service'
+import { deletePayment } from '@/services/payment-service'
 
 export default function Order() {
+  const queryClient = useQueryClient()
   const [editStatus, setEditStatus] = useState(false)
   const [editNotes, setEditNotes] = useState(false)
 
   const { orderId } = useParams()
 
-  const order = orders.find((order) => order.id === Number(orderId))
+  const { data: order } = useQuery<TOder>({
+    queryKey: ['orderById'],
+    queryFn: () => getOrderById(orderId[0]),
+  })
 
   if (!order) return null
 
@@ -47,17 +58,34 @@ export default function Order() {
     customer.address.complement,
   ].filter(Boolean)
 
-  const onPaymentDelete = (payment: Payment) => {
-    console.log(payment)
+  const onPaymentDelete = async (payment: Payment) => {
+    await deletePayment(payment.id)
+
+    await queryClient.invalidateQueries({
+      queryKey: ['orderById'],
+    })
   }
 
-  const onStatusUpdate = (data: StatusFormData) => {
-    console.log(data)
+  const onStatusUpdate = async (data: StatusFormData) => {
+    const { status } = data
+
+    await updateStatus(order.id, status as OrderStatus)
+
+    await queryClient.invalidateQueries({
+      queryKey: ['orderById'],
+    })
+
     setEditStatus(false)
   }
 
-  const onNotesUpdate = (data: NotesFormData) => {
-    console.log(data)
+  const onNotesUpdate = async (data: NotesFormData) => {
+    const { notes } = data
+
+    await updateNotes(order.id, notes)
+
+    await queryClient.invalidateQueries({
+      queryKey: ['orderById'],
+    })
     setEditNotes(false)
   }
 
@@ -246,12 +274,12 @@ export default function Order() {
                     Nenhum registro de pagamento encontrado.
                   </p>
                 ) : (
-                  order.payments.map((payment) => (
+                  order.payments.map((payment, index) => (
                     <div
                       key={payment.id}
                       className="flex gap-2 text-sm items-center text-terciary"
                     >
-                      <span className="flex-1">Pagamento {payment.id}</span>
+                      <span className="flex-1">Pagamento {index + 1}</span>
                       <span>{formatCurrency(payment.value)}</span>
                       <Button
                         variant="ghost"
@@ -267,7 +295,7 @@ export default function Order() {
 
               {/* Add payment */}
               <div className="flex justify-end items-center">
-                <AddPaymentDialog>
+                <AddPaymentDialog orderId={order.id}>
                   <button className="text-button-primary hover:text-button-primary-hover text-sm text-right px-[10px]">
                     Adicionar pagamento
                   </button>

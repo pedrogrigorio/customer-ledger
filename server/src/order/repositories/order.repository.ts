@@ -10,7 +10,11 @@ export class OrderRepository {
   constructor(private prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.order.findMany();
+    return await this.prisma.order.findMany({
+      include: {
+        customer: true,
+      },
+    });
   }
 
   async findById(orderId: number) {
@@ -31,6 +35,8 @@ export class OrderRepository {
   }
 
   async create(order: CreateOrderDto) {
+    console.log(order);
+
     return await this.prisma.order.create({
       data: {
         customerId: order.customerId,

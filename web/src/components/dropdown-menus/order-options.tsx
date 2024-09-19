@@ -1,8 +1,11 @@
 import DeleteDialog from '../dialogs/delete-dialog'
 import Link from 'next/link'
 
-import { MoreHorizontal, MoreVertical } from 'lucide-react'
 import { Eye, PencilSimple, TrashSimple } from '@phosphor-icons/react/dist/ssr'
+import { MoreHorizontal, MoreVertical } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import { deleteOrder } from '@/services/order-service'
 import { Button } from '../shadcnui/button'
 import { Order } from '@/types/order'
 import {
@@ -30,8 +33,17 @@ export default function OrderOptions({
   variant,
   showViewItem,
 }: OrderOptionsProps) {
-  const onDelete = () => {
-    console.log(order)
+  const router = useRouter()
+  const queryClient = useQueryClient()
+
+  const onDelete = async () => {
+    await deleteOrder(order.id)
+
+    queryClient.invalidateQueries({
+      queryKey: ['orders'],
+    })
+
+    router.replace('/orders')
   }
 
   return (

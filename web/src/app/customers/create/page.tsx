@@ -41,8 +41,6 @@ export default function CreateCustomer() {
   } = customerForm
 
   const onSubmit = async (data: CustomerFormData) => {
-    console.log(data)
-
     await createCustomer(data)
 
     reset()

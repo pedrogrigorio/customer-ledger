@@ -9,37 +9,43 @@ import { orderColumns } from '@/components/tables/order-culumns'
 import { OrderStatus } from '@/enums/order-status'
 import { DataTable } from '@/components/tables/data-table'
 import { Button } from '@/components/shadcnui/button'
-import { orders } from '@/data/orders'
 import { Order } from '@/types/order'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { Tabs } from '@/types/tabs'
 import { Page } from '@/components/layout/page'
-
-const tabs = [
-  {
-    id: 'all',
-    label: 'Todos',
-    value: orders.length,
-  },
-  {
-    id: 'paid',
-    label: 'Pagos',
-    value: orders.filter((order) => order.status === OrderStatus.PAID).length,
-  },
-  {
-    id: 'pending',
-    label: 'Pendentes',
-    value: orders.filter((order) => order.status === OrderStatus.PENDING)
-      .length,
-  } as Tabs,
-]
-
-function getData(): Order[] {
-  return orders
-}
+import { getOrders } from '@/services/order-service'
+import { useQuery } from '@tanstack/react-query'
 
 export default function Orders() {
-  const data = getData()
+  const { data: orders } = useQuery<Order[]>({
+    queryKey: ['orders'],
+    queryFn: getOrders,
+  })
+
+  if (!orders) return null
+
+  const paidOrders = orders.filter((order) => order.status === OrderStatus.PAID)
+  const pendingOrders = orders.filter(
+    (order) => order.status === OrderStatus.PENDING,
+  )
+
+  const tabs = [
+    {
+      id: 'all',
+      label: 'Todos',
+      value: orders.length,
+    },
+    {
+      id: 'paid',
+      label: 'Pagos',
+      value: paidOrders.length,
+    },
+    {
+      id: 'pending',
+      label: 'Pendentes',
+      value: pendingOrders.length,
+    } as Tabs,
+  ]
 
   return (
     <Page.Container>
@@ -63,21 +69,15 @@ export default function Orders() {
       <TabsProvider tabs={tabs}>
         <Selectors />
         <Content value="all">
-          <DataTable columns={orderColumns} data={data} />
+          <DataTable columns={orderColumns} data={orders} />
         </Content>
 
         <Content value="paid">
-          <DataTable
-            columns={orderColumns}
-            data={data.filter((order) => order.status === OrderStatus.PAID)}
-          />
+          <DataTable columns={orderColumns} data={paidOrders} />
         </Content>
 
         <Content value="pending">
-          <DataTable
-            columns={orderColumns}
-            data={data.filter((order) => order.status === OrderStatus.PENDING)}
-          />
+          <DataTable columns={orderColumns} data={pendingOrders} />
         </Content>
       </TabsProvider>
     </Page.Container>

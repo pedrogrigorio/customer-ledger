@@ -16,7 +16,7 @@ export async function getCustomerById(customerId: number | string) {
 export async function createCustomer(customerFormData: CustomerFormData) {
   const { email, ...data } = customerFormData
 
-  const response = await api.post(`customers`, {
+  const response = await api.post('customers', {
     email: email !== '' ? email : undefined,
     ...data,
   })

@@ -9,7 +9,6 @@ import { OrderFormData } from '@/types/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { OrderStatus } from '@/enums/order-status'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { customers } from '@/data/customers'
 import { Textarea } from '@/components/shadcnui/textarea'
 import { Button } from '@/components/shadcnui/button'
 import { Trash } from '@phosphor-icons/react/dist/ssr'
@@ -23,18 +22,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shadcnui/select'
+import { createOrder } from '@/services/order-service'
+import { useQuery } from '@tanstack/react-query'
+import { Customer } from '@/types/customer'
+import { getCustomers } from '@/services/customer-service'
 
 export default function CreateOrder() {
-  const router = useRouter()
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   const customerId = Number(searchParams.get('customer'))
+
+  const { data: customers } = useQuery<Customer[]>({
+    queryKey: ['customers'],
+    queryFn: getCustomers,
+  })
 
   const orderForm = useForm<OrderFormData>({
     resolver: zodResolver(orderFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      customer: customerId ?? undefined,
+      customerId: customerId ?? undefined,
       notes: '',
       status: OrderStatus.PENDING,
       items: [
@@ -48,10 +56,11 @@ export default function CreateOrder() {
   })
 
   const {
-    handleSubmit,
-    register,
+    reset,
     control,
+    register,
     clearErrors,
+    handleSubmit,
     formState: { errors, isDirty },
   } = orderForm
 
@@ -63,9 +72,13 @@ export default function CreateOrder() {
     control,
   })
 
-  const onSubmit = (data: OrderFormData) => {
-    console.log(data)
+  const onSubmit = async (data: OrderFormData) => {
+    await createOrder(data)
+
+    reset()
   }
+
+  if (!customers) return null
 
   return (
     <Page.Container>
@@ -216,9 +229,9 @@ export default function CreateOrder() {
             <h2 className="font-medium">Detalhes do Pedido</h2>
             <div className="mt-2 flex flex-col gap-4">
               <div>
-                <Label htmlFor="customer">Cliente *</Label>
+                <Label htmlFor="customerId">Cliente *</Label>
                 <Controller
-                  name="customer"
+                  name="customerId"
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -227,7 +240,7 @@ export default function CreateOrder() {
                       defaultValue={field.value ? field.value.toString() : ''}
                       onValueChange={(value) => field.onChange(Number(value))}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="mt-1">
                         <SelectValue placeholder="Selecione o cliente" />
                       </SelectTrigger>
                       <SelectContent>
@@ -243,7 +256,7 @@ export default function CreateOrder() {
                     </Select>
                   )}
                 />
-                <InputError error={errors.customer?.message?.toString()} />
+                <InputError error={errors.customerId?.message?.toString()} />
               </div>
 
               <div>
@@ -268,7 +281,7 @@ export default function CreateOrder() {
                       defaultValue={field.value}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="mt-1">
                         <SelectValue placeholder="Selecione o status" />
                       </SelectTrigger>
                       <SelectContent>

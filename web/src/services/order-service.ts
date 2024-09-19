@@ -1,5 +1,6 @@
 import { OrderFormData } from '@/types/validations'
 import { api } from '@/lib/axios'
+import { OrderStatus } from '@/enums/order-status'
 
 export async function getOrders() {
   const response = await api.get('orders')
@@ -14,34 +15,42 @@ export async function getOrderById(orderId: number | string) {
 }
 
 export async function createOrder(orderFormData: OrderFormData) {
-  const response = await api.post(`customers`, orderFormData)
+  console.log(orderFormData)
+
+  const response = await api.post('orders', orderFormData)
 
   console.log(response.data)
 }
 
 export async function updateOrder(
-  customerId: number | string,
+  orderId: number | string,
   orderFormData: OrderFormData,
 ) {
-  const response = await api.put(`customers/${customerId}`, orderFormData)
+  const response = await api.put(`orders/${orderId}`, orderFormData)
 
   console.log(response.data)
 }
 
-// export async function updateBalance(customerId: number, balance: number) {
-//   const response = await api.put(`customers/${customerId}/balance`, { balance })
+export async function updateNotes(orderId: number, notes: string) {
+  const response = await api.put(`orders/${orderId}/notes`, { notes })
 
-//   console.log(response.data)
-// }
-
-export async function deleteOrder(customerId: number | string) {
-  await api.delete(`customers/${customerId}`)
+  console.log(response.data)
 }
 
-export async function deleteManyOrders(customerIds: number[]) {
-  await api.delete('customers', {
+export async function updateStatus(orderId: number, status: OrderStatus) {
+  const response = await api.put(`orders/${orderId}/status`, { status })
+
+  console.log(response.data)
+}
+
+export async function deleteOrder(orderId: number | string) {
+  await api.delete(`orders/${orderId}`)
+}
+
+export async function deleteManyOrders(orderIds: number[]) {
+  await api.delete('orders', {
     data: {
-      customerIds,
+      orderIds,
     },
   })
 }

@@ -4,37 +4,49 @@ import CancelDialog from '@/components/dialogs/cancel-dialog'
 import InputError from '@/components/ui/input-error'
 
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import { getOrderById, updateOrder } from '@/services/order-service'
+import { useParams, useRouter } from 'next/navigation'
 import { orderFormSchema } from '@/lib/validations/order-form-schema'
 import { OrderFormData } from '@/types/validations'
+import { getCustomers } from '@/services/customer-service'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useParams, useRouter } from 'next/navigation'
-import { customers } from '@/data/customers'
 import { Textarea } from '@/components/shadcnui/textarea'
+import { useQuery } from '@tanstack/react-query'
+import { Customer } from '@/types/customer'
 import { Button } from '@/components/shadcnui/button'
-import { orders } from '@/data/orders'
+import { Order } from '@/types/order'
 import { Trash } from '@phosphor-icons/react/dist/ssr'
 import { Input } from '@/components/shadcnui/input'
 import { Label } from '@/components/shadcnui/label'
 import { Page } from '@/components/layout/page'
 import {
-  Select,
   SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectItem,
+  Select,
 } from '@/components/shadcnui/select'
+import { useEffect } from 'react'
 
 export default function EditOrder() {
   const { orderId } = useParams()
   const router = useRouter()
 
-  const order = orders.find((order) => order.id === Number(orderId))
+  const { data: customers } = useQuery<Customer[]>({
+    queryKey: ['customers'],
+    queryFn: getCustomers,
+  })
+
+  const { data: order } = useQuery<Order>({
+    queryKey: ['orderById'],
+    queryFn: () => getOrderById(orderId[0]),
+  })
 
   const orderForm = useForm<OrderFormData>({
     resolver: zodResolver(orderFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      customer: order?.customer.id,
+      customerId: order?.customer.id,
       notes: order?.notes ?? '',
       status: order?.status,
       items: order?.items ?? [
@@ -48,6 +60,7 @@ export default function EditOrder() {
   })
 
   const {
+    reset,
     handleSubmit,
     register,
     control,
@@ -63,9 +76,17 @@ export default function EditOrder() {
     control,
   })
 
-  const onSubmit = (data: OrderFormData) => {
-    console.log(data)
+  const onSubmit = async (data: OrderFormData) => {
+    await updateOrder(orderId[0], data)
+
+    reset(data)
   }
+
+  useEffect(() => {
+    reset(order)
+  }, [order, customers, reset])
+
+  if (!customers || !order) return null
 
   return (
     <Page.Container>
@@ -90,7 +111,7 @@ export default function EditOrder() {
               type="submit"
               form="order-form"
             >
-              <span>Cadastrar pedido</span>
+              <span>Editar pedido</span>
             </Button>
           </div>
         </div>
@@ -216,9 +237,9 @@ export default function EditOrder() {
             <h2 className="font-medium">Detalhes do Pedido</h2>
             <div className="mt-2 flex flex-col gap-4">
               <div>
-                <Label htmlFor="customer">Cliente *</Label>
+                <Label htmlFor="customerId">Cliente *</Label>
                 <Controller
-                  name="customer"
+                  name="customerId"
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -242,7 +263,7 @@ export default function EditOrder() {
                     </Select>
                   )}
                 />
-                <InputError error={errors.customer?.message?.toString()} />
+                <InputError error={errors.customerId?.message?.toString()} />
               </div>
               <div>
                 <Label htmlFor="notes">Notas</Label>

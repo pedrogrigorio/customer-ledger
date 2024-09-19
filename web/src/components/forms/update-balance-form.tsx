@@ -39,7 +39,6 @@ export default function UpdateBalanceForm({
   } = balanceForm
 
   const onSubmit = async (data: BalanceFormData) => {
-    console.log(data)
     const { balance } = data
 
     const formattedBalance = currencyToFloat(balance)

@@ -9,13 +9,19 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Label } from '../shadcnui/label'
 import { Input } from '../shadcnui/input'
+import { createPayment } from '@/services/payment-service'
+import { useQueryClient } from '@tanstack/react-query'
 
-export default function AddPaymentForm() {
+interface AddPaymentFormProps {
+  orderId: number
+}
+export default function AddPaymentForm({ orderId }: AddPaymentFormProps) {
+  const queryClient = useQueryClient()
   const paymentForm = useForm<PaymentFormData>({
     resolver: zodResolver(paymentFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      payment: formatCurrency(0),
+      value: formatCurrency(0),
     },
   })
 
@@ -25,12 +31,16 @@ export default function AddPaymentForm() {
     register,
   } = paymentForm
 
-  const onSubmit = (data: PaymentFormData) => {
-    console.log(data)
-    const { payment } = data
+  const onSubmit = async (data: PaymentFormData) => {
+    const { value } = data
 
-    const formatedBalance = currencyToFloat(payment)
-    console.log(formatedBalance)
+    const formattedValue = currencyToFloat(value)
+
+    await createPayment(orderId, formattedValue)
+
+    queryClient.invalidateQueries({
+      queryKey: ['orderById'],
+    })
   }
 
   return (
@@ -39,14 +49,14 @@ export default function AddPaymentForm() {
         Valor do pagamento
       </Label>
       <Input
-        id="payment"
+        id="value"
         type="text"
         className="col-span-3 mt-1"
-        {...register('payment', {
+        {...register('value', {
           onChange: currencyMask,
         })}
       />
-      <InputError error={errors.payment?.message?.toString()} />
+      <InputError error={errors.value?.message?.toString()} />
     </form>
   )
 }

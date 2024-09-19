@@ -15,9 +15,13 @@ import {
 
 interface AddPaymentDialogProps {
   children?: React.ReactNode
+  orderId: number
 }
 
-export default function AddPaymentDialog({ children }: AddPaymentDialogProps) {
+export default function AddPaymentDialog({
+  children,
+  orderId,
+}: AddPaymentDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -27,7 +31,7 @@ export default function AddPaymentDialog({ children }: AddPaymentDialogProps) {
         </DialogHeader>
 
         {/* Form */}
-        <AddPaymentForm />
+        <AddPaymentForm orderId={orderId} />
 
         <DialogFooter>
           <DialogClose asChild>
