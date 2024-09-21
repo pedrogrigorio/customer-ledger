@@ -46,8 +46,10 @@ export default function Card({ order, orderNumber }: CardProps) {
             ) : (
               order.items.map((item) => (
                 <li key={item.id} className="flex items-center justify-between">
-                  <span>Produto 1</span>
-                  <span>1 un</span>
+                  <span>{item.name}</span>
+                  <span>
+                    {item.quantity} {item.unit.toLowerCase()}
+                  </span>
                 </li>
               ))
             )}
